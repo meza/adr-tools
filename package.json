@@ -1,0 +1,68 @@
+{
+  "name": "@meza/adr-tools",
+  "version": "0.0.0",
+  "main": "dist/index.d.ts",
+  "private": true,
+  "scripts": {
+    "start": "exit 0",
+    "commit": "commit",
+    "ci": "exit 0",
+    "ci:dev": "exit 0",
+    "clean": "rm -rf dist .cache/tsbuildinfo",
+    "clean:all": "yarn clean && rm -rf node_modules .cache",
+    "lint:eslint": "eslint . --ext .ts --ext .json --cache --cache-location .cache",
+    "lint:tsc": "tsc",
+    "lint:fix": "yarn lint:eslint --fix && yarn lint:tsc",
+    "lint": "yarn lint:eslint && yarn lint:tsc",
+    "test": "exit 0",
+    "prepare": "husky install",
+    "report": "exit 0",
+    "release": "standard-version"
+  },
+  "dependencies": {
+    "core-js": "^3.19.1"
+  },
+  "standard-version": {
+    "bumpFiles": [
+      {
+        "filename": "package.json",
+        "type": "json"
+      }
+    ],
+    "packageFiles": [
+      {
+        "filename": "package.json",
+        "type": "json"
+      }
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "post-merge": "install-deps-postmerge",
+      "pre-push": "yarn ci",
+      "pre-commit": "yarn lint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.2",
+    "@commitlint/config-conventional": "^17.0.2",
+    "@commitlint/prompt-cli": "^17.0.0",
+    "@meza/tsconfig-base": "^1.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.3.0",
+    "@typescript-eslint/parser": "^5.3.0",
+    "eslint": "^8.1.0",
+    "eslint-config-tailored-tunes": "^5.0.2",
+    "eslint-plugin-json": "^3.1.0",
+    "husky": "^8.0.1",
+    "install-deps-postmerge": "^2.0.1",
+    "standard-version": "^9.3.2",
+    "typescript": "^4.4.4",
+    "yarn": "^1.22.17"
+  }
+}

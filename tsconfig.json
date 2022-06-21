@@ -1,0 +1,11 @@
+{
+  "extends": "@meza/tsconfig-base",
+  "compilerOptions": {
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "declarationDir": "./dist/types"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

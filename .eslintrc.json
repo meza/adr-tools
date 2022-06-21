@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "tailored-tunes",
+    "plugin:json/recommended"
+  ],
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "json",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "no-console": "off"
+  },
+  "env": {
+    "commonjs": false,
+    "es6": true,
+    "node": true
+  }
+}
