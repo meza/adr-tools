@@ -13,9 +13,6 @@ describe('Funny Characters', () => {
   let adrDirectory: string;
 
   afterEach(() => {
-    fs.readdirSync(path.join(adrDirectory)).forEach(file => {
-      console.log(file);
-    });
     childProcess.execSync(`rm -rf .adr-dir doc tmp ${randomDir}`, { cwd: workDir });
   });
 
