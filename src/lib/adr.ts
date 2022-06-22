@@ -12,7 +12,9 @@ export const newAdr = async (title: string, templateFile?: string) => {
   const paddedNumber = newNum.toString().padStart(4, '0');
   const cleansedTitle = title.toLowerCase().replace(/\W/g, '-').replace(/^(.*)\W$/, '$1').replace(/^\W(.*)$/, '$1');
   const fileName = `${paddedNumber}-${cleansedTitle}.md`;
-  await fs.writeFile(path.resolve(path.join(await getDir(), fileName)), finalDoc);
+  const adrDirectory = await getDir();
+  console.log(adrDirectory);
+  await fs.writeFile(path.resolve(path.join(adrDirectory, fileName)), finalDoc);
   // await generateToc();
 };
 
