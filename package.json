@@ -5,9 +5,9 @@
   "types": "dist/index.d.ts",
   "private": true,
   "scripts": {
-    "start": "exit 0",
+    "start": "ts-node src/index.ts",
     "commit": "commit",
-    "ci": "exit 0",
+    "ci": "yarn lint && yarn test",
     "ci:dev": "exit 0",
     "clean": "rm -rf dist .cache/tsbuildinfo",
     "clean:all": "yarn clean && rm -rf node_modules .cache",
@@ -15,7 +15,7 @@
     "lint:tsc": "tsc",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:tsc",
     "lint": "yarn lint:eslint && yarn lint:tsc",
-    "test": "exit 0",
+    "test": "vitest",
     "prepare": "husky install",
     "report": "exit 0",
     "release": "standard-version"
@@ -57,6 +57,7 @@
     "@commitlint/config-conventional": "^17.0.2",
     "@commitlint/prompt-cli": "^17.0.0",
     "@meza/tsconfig-base": "^1.1.0",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
     "@vitest/ui": "^0.15.2",
@@ -71,6 +72,7 @@
     "standard-version": "^9.3.2",
     "ts-node": "^10.8.1",
     "typescript": "^4.4.4",
+    "uuid": "^8.3.2",
     "vitest": "^0.15.2",
     "yarn": "^1.22.17"
   }

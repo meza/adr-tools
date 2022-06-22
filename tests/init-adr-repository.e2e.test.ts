@@ -5,16 +5,18 @@ import path from 'path';
 import fs from 'fs';
 
 describe('Init an ADR Repository', () => {
+  const workDir = path.dirname(__filename);
+
   afterEach(() => {
-    childProcess.execSync('rm -rf .adr-dir doc tmp', { cwd: __dirname });
+    childProcess.execSync('rm -rf .adr-dir doc tmp', { cwd: workDir });
   });
 
-  const adr: string = path.resolve(__dirname, '../src/index.ts');
+  const adr: string = path.resolve(workDir, '../src/index.ts');
   const command = `npx ts-node ${adr}`;
 
-  it('should use an alternate directory', () => {
-    const directory: string = path.resolve(path.join(__dirname, 'doc/adr'));
-    childProcess.execSync(`${command} init`, { cwd: __dirname });
+  it('should use the default directory', () => {
+    const directory: string = path.resolve(path.join(workDir, 'doc/adr'));
+    childProcess.execSync(`${command} init`, { cwd: workDir });
     const expectedFile: string = path.join(directory, '0001-record-architecture-decisions.md');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
 
@@ -23,9 +25,9 @@ describe('Init an ADR Repository', () => {
   });
 
   it('should use an alternate directory', () => {
-    const directory: string = path.resolve(path.join(__dirname, 'tmp', 'alternative-dir'));
-    childProcess.execSync(`${command} init ${directory}`, { cwd: __dirname });
-    childProcess.execSync(`${command} new Example ADR`, { cwd: __dirname });
+    const directory: string = path.resolve(path.join(workDir, 'tmp', 'alternative-dir'));
+    childProcess.execSync(`${command} init ${directory}`, { cwd: workDir });
+    childProcess.execSync(`${command} new Example ADR`, { cwd: workDir });
 
     const expectedInitFile: string = path.join(directory, '0001-record-architecture-decisions.md');
     expect(fs.existsSync(expectedInitFile)).toBeTruthy();
