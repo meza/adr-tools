@@ -2,7 +2,7 @@
 
 import { Command } from 'commander';
 import { version } from '../package.json';
-import { init, newAdr } from './lib/adr';
+import { init, listAdrs, newAdr } from './lib/adr';
 
 const program = new Command();
 
@@ -14,6 +14,11 @@ program.command('new').argument('<title...>', 'The title of the decision').actio
 
 program.command('init').argument('[directory]', 'Initialize a new ADR directory').action(async (directory?: string) => {
   await init(directory);
+});
+
+program.command('list').action(async () => {
+  const adrs = await listAdrs();
+  console.log(adrs.join('\n').trim());
 });
 
 program.parse();
