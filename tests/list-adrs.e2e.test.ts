@@ -1,23 +1,25 @@
 /* eslint-disable no-sync */
 import { describe, it, expect, afterEach, beforeEach } from 'vitest';
-import childProcess from 'child_process';
-import path from 'path';
+import * as childProcess from 'child_process';
+import * as path from 'path';
+import * as fs from 'fs/promises';
+import * as os from 'os';
 
-import { v4 as uuidv4 } from 'uuid';
-
-describe('Funny Characters', () => {
-  const workDir = path.dirname(__filename);
-  const adr: string = path.resolve(workDir, '../src/index.ts');
+describe('Listing', () => {
+  const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
   const command = `npx ts-node ${adr}`;
-  let randomDir = uuidv4();
 
-  afterEach(() => {
-    childProcess.execSync(`rm -rf .adr-dir doc tmp ${randomDir}`, { cwd: workDir });
+  let adrDirectory: string;
+  let workDir: string;
+
+  beforeEach(async () => {
+    workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'));
+    adrDirectory = path.join(workDir, 'doc/adr');
+    childProcess.execSync(`${command} init ${adrDirectory}`, { cwd: workDir });
   });
 
-  beforeEach(() => {
-    randomDir = uuidv4();
-    childProcess.execSync(`${command} init ${randomDir}`, { cwd: workDir });
+  afterEach(() => {
+    childProcess.execSync(`rm -rf ${workDir}`);
   });
 
   it('should list an empty directory', async () => {

@@ -1,28 +1,28 @@
 /* eslint-disable no-sync */
 import { describe, it, expect, afterEach, beforeEach } from 'vitest';
-import childProcess from 'child_process';
-import path from 'path';
-import fs from 'fs/promises';
-import { v4 as uuidv4 } from 'uuid';
+import * as childProcess from 'child_process';
+import * as path from 'path';
+import * as fs from 'fs/promises';
+import * as os from 'os';
 
 describe('Overriding templates', () => {
-  const workDir = path.dirname(__filename);
-  const adr: string = path.resolve(workDir, '../src/index.ts');
+  const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
   const command = `npx ts-node ${adr}`;
-  let randomDir = uuidv4();
 
-  afterEach(() => {
-    childProcess.execSync(`rm -rf .adr-dir doc tmp ${randomDir}`, { cwd: workDir });
+  let adrDirectory: string;
+  let workDir: string;
+
+  beforeEach(async () => {
+    workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'));
+    adrDirectory = path.join(workDir, 'doc/adr');
+    childProcess.execSync(`${command} init ${adrDirectory}`, { cwd: workDir });
   });
 
-  beforeEach(() => {
-    randomDir = uuidv4();
-    childProcess.execSync(`${command} init ${randomDir}`, { cwd: workDir });
+  afterEach(() => {
+    childProcess.execSync(`rm -rf ${workDir}`);
   });
 
   it('should use an override template if one exists', async () => {
-    const adrDirectory: string = path.resolve(path.join(workDir, randomDir));
-
     await fs.mkdir(path.join(adrDirectory, 'templates'), { recursive: true });
     await fs.writeFile(path.join(adrDirectory, 'templates', 'template.md'), '# This is an override template\nTITLE\nDATE\nNUMBER\nSTATUS');
 

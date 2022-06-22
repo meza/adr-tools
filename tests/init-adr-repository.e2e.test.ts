@@ -1,23 +1,30 @@
 /* eslint-disable no-sync */
-import { describe, it, expect, afterEach } from 'vitest';
-import childProcess from 'child_process';
-import path from 'path';
-import fs from 'fs';
+import { describe, it, expect, afterEach, beforeEach } from 'vitest';
+import * as childProcess from 'child_process';
+import * as path from 'path';
+import * as fs from 'fs';
+import * as os from 'os';
 
 describe('Init an ADR Repository', () => {
-  const workDir = path.dirname(__filename);
-
-  afterEach(() => {
-    childProcess.execSync('rm -rf .adr-dir doc tmp', { cwd: workDir });
-  });
-
-  const adr: string = path.resolve(workDir, '../src/index.ts');
+  const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
   const command = `npx ts-node ${adr}`;
 
+  let adrDirectory: string;
+  let workDir: string;
+
+  beforeEach(() => {
+    workDir = fs.mkdtempSync(path.join(os.tmpdir(), 'adr-'));
+    adrDirectory = path.join(workDir, 'doc/adr');
+    childProcess.execSync(`${command} init ${adrDirectory}`, { cwd: workDir });
+  });
+
+  afterEach(() => {
+    childProcess.execSync(`rm -rf ${workDir}`);
+  });
+
   it('should use the default directory', () => {
-    const directory: string = path.resolve(path.join(workDir, 'doc/adr'));
     childProcess.execSync(`${command} init`, { cwd: workDir });
-    const expectedFile: string = path.join(directory, '0001-record-architecture-decisions.md');
+    const expectedFile: string = path.join(adrDirectory, '0001-record-architecture-decisions.md');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
 
     const fileContents = fs.readFileSync(expectedFile, 'utf8');
