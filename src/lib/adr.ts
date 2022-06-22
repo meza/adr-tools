@@ -10,7 +10,8 @@ export const newAdr = async (title: string, templateFile?: string) => {
   const tpl = await template(templateFile);
   const finalDoc = tpl.replace('DATE', formattedDate).replace('TITLE', title).replace('NUMBER', newNum.toString()).replace('STATUS', 'Accepted');
   const paddedNumber = newNum.toString().padStart(4, '0');
-  const fileName = `${paddedNumber}-${title.toLowerCase().replace(/\s/g, '-')}.md`;
+  const cleansedTitle = title.toLowerCase().replace(/\W/g, '-').replace(/^(.*)\W$/, '$1').replace(/^\W(.*)$/, '$1');
+  const fileName = `${paddedNumber}-${cleansedTitle}.md`;
   await fs.writeFile(path.resolve(path.join(await getDir(), fileName)), finalDoc);
   // await generateToc();
 };
