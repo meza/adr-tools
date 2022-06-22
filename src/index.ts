@@ -22,7 +22,12 @@ const template = async (templateFile?: string): Promise<string> => {
   if (process.env.ADR_TEMPLATE) {
     return fs.readFile(path.resolve(process.env.ADR_TEMPLATE), 'utf8');
   }
-  return fs.readFile(path.resolve(path.join(__dirname, 'template.md')), 'utf8');
+
+  try {
+    return fs.readFile(path.join(await getDir(), 'templates/template.md'), 'utf8');
+  } catch {
+    return fs.readFile(path.resolve(path.join(__dirname, 'template.md')), 'utf8');
+  }
 };
 
 const newNumber = async () => {
@@ -40,6 +45,25 @@ const newNumber = async () => {
   return largestNumber + 1;
 };
 
+// //Generate a table of contents for the adr directory
+// const generateToc = async () => {
+//   const adrDir = await getDir();
+//   const files = await fs.readdir(adrDir);
+//   const toc = files.map(f => {
+//     const adrFile = f.match(/^0*(\d+)-.*$/);
+//     if (adrFile) {
+//       const filename = adrFile[0];
+//       const fileNumber = adrFile[1];
+//       const title = filename.replace(/\d+-/, '').replace(/-|_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()).split('.')[0];
+//
+//       return `- [${fileNumber} ${title}](./${filename})`;
+//     }
+//     return '';
+//   }).filter(f => f !== '');
+//   const tocFile = path.resolve(path.join(adrDir, 'toc.md'));
+//   await fs.writeFile(tocFile, `# Table of Contents\n\n${toc.join('\n')}`);
+// };
+
 const newAdr = async (title: string, templateFile?: string) => {
   const newNum = await newNumber();
   const formattedDate = new Date().toISOString().split('T')[0] || 'ERROR';
@@ -48,17 +72,21 @@ const newAdr = async (title: string, templateFile?: string) => {
   const paddedNumber = newNum.toString().padStart(4, '0');
   const fileName = `${paddedNumber}-${title.toLowerCase().replace(/\s/g, '-')}.md`;
   await fs.writeFile(path.resolve(path.join(await getDir(), fileName)), finalDoc);
+  // await generateToc();
 };
 
-program.command('new').argument('<title...>', 'The title of the decision').action(async (title: string[]) => {
-  await newAdr(title.join(' '));
-});
+program.command('new')
+  .argument('<title...>', 'The title of the decision').action(async (title: string[]) => {
+    await newAdr(title.join(' '));
+  });
 
-program.command('init').argument('[directory]', 'The directory to store decision records in').action(async (directory?: string) => {
-  const dir = directory || await getDir();
-  await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(path.join(cwd, '.adr-dir'), path.relative(cwd, dir));
-  await newAdr('Record Architecture Decisions', path.resolve(path.dirname(__filename), 'init.md'));
-});
+program.command('init')
+  .argument('[directory]', 'The directory to store decision records in')
+  .action(async (directory?: string) => {
+    const dir = directory || await getDir();
+    await fs.mkdir(dir, { recursive: true });
+    await fs.writeFile(path.join(cwd, '.adr-dir'), path.relative(cwd, dir));
+    await newAdr('Record Architecture Decisions', path.resolve(path.dirname(__filename), 'init.md'));
+  });
 
 program.parse();
