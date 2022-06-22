@@ -1,0 +1,49 @@
+// Vitest Snapshot v1
+
+exports[`Init an ADR Repository > should use an alternate directory 1`] = `
+"# 1. Record architecture decisions
+
+Date: 2022-06-22
+
+## Status
+
+Accepted
+
+## Context
+
+We need to record the architectural decisions made on this project.
+
+## Decision
+
+We will use Architecture Decision Records, as [described by Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions).
+
+## Consequences
+
+See Michael Nygard's article, linked above.
+For a lightweight ADR toolset, see Nat Pryce's [adr-tools](https://github.com/npryce/adr-tools).
+> For a node version of the same tooling, see Meza's [adr-tools](https://github.com/meza/adr-tools).
+"
+`;
+
+exports[`Init an ADR Repository > should use an alternate directory 2`] = `
+"# 2. Example ADR
+
+Date: 2022-06-22
+
+## Status
+
+Accepted
+
+## Context
+
+The issue motivating this decision, and any context that influences or constrains the decision.
+
+## Decision
+
+The change that we're proposing or have agreed to implement.
+
+## Consequences
+
+What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+"
+`;
