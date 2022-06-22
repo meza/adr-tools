@@ -17,7 +17,7 @@ const findTopLevelDir = async (dir: string): Promise<string> => {
   }
 };
 
-export const getDir = async (): Promise<string> => {
+export const getDirPath = async (): Promise<string> => {
   try {
     const configDir = await findTopLevelDir(workingDir());
     const configFile = await fs.readFile(path.join(configDir, '.adr-dir'), 'utf8');
@@ -25,4 +25,10 @@ export const getDir = async (): Promise<string> => {
   } catch (e) {
     return path.resolve(path.join(workingDir(), 'doc/adr'));
   }
+};
+
+export const getDir = async (): Promise<string> => {
+  const dir = await getDirPath();
+  await fs.mkdir(dir, { recursive: true });
+  return dir;
 };

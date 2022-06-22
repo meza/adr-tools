@@ -31,5 +31,15 @@ describe('deep directories', () => {
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });
 
+  it('can work when there has been no config initiated', () => {
+    childProcess.execSync(`rm -rf ${adrDirectory} ${workDir}/.adr-dir`);
+
+    const innerPath = path.join(fs.mkdtempSync(path.resolve(workDir) + '/'), 'inner');
+    fs.mkdirSync(innerPath, { recursive: true });
+    childProcess.execSync(`${command} new this should exist`, { cwd: innerPath });
+    const expectedFile: string = path.join(innerPath, 'doc', 'adr', '0001-this-should-exist.md');
+    console.log(expectedFile);
+    expect(fs.existsSync(expectedFile)).toBeTruthy();
+  });
 });
 
