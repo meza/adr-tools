@@ -1,4 +1,4 @@
-name: Linting
+name: Verify that the PR is ready to be merged
 
 on:
   pull_request:
