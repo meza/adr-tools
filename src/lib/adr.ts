@@ -22,3 +22,16 @@ export const init = async (directory?: string) => {
   await fs.writeFile(path.join(workingDir(), '.adr-dir'), path.relative(workingDir(), dir));
   await newAdr('Record Architecture Decisions', path.resolve(path.dirname(__filename), '../templates/init.md'));
 };
+
+export const listAdrs = async () => {
+  const dir = await getDir();
+  const files = await fs.readdir(dir);
+  const toc = files.map(f => {
+    const adrFile = f.match(/^0*(\d+)-.*$/);
+    if (adrFile) {
+      return adrFile[0];
+    }
+    return '';
+  }).filter(f => f !== '');
+  return toc;
+};
