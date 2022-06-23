@@ -4,10 +4,15 @@ import fs from 'fs/promises';
 import path from 'path';
 import { getDir, workingDir } from './config';
 
-export const newAdr = async (title: string, templateFile?: string) => {
+interface NewOptions {
+  template?: string;
+  links?: string[];
+}
+
+export const newAdr = async (title: string, config?: NewOptions) => {
   const newNum = await newNumber();
   const formattedDate = new Date().toISOString().split('T')[0] || 'ERROR';
-  const tpl = await template(templateFile);
+  const tpl = await template(config?.template);
   const finalDoc = tpl.replace('DATE', formattedDate).replace('TITLE', title).replace('NUMBER', newNum.toString()).replace('STATUS', 'Accepted');
   const paddedNumber = newNum.toString().padStart(4, '0');
   const cleansedTitle = title.toLowerCase().replace(/\W/g, '-').replace(/^(.*)\W$/, '$1').replace(/^\W(.*)$/, '$1');
@@ -21,7 +26,7 @@ export const init = async (directory?: string) => {
   const dir = directory || await getDir();
   await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(path.join(workingDir(), '.adr-dir'), path.relative(workingDir(), dir));
-  await newAdr('Record Architecture Decisions', path.resolve(path.dirname(__filename), '../templates/init.md'));
+  await newAdr('Record Architecture Decisions', { template: path.resolve(path.dirname(__filename), '../templates/init.md') });
 };
 
 export const listAdrs = async () => {
