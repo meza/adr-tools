@@ -13,6 +13,8 @@ describe('Overriding templates', () => {
   let workDir: string;
 
   beforeEach(async () => {
+    // @ts-ignore
+    process.env.ADR_DATE = '1992-01-12';
     workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'));
     adrDirectory = path.join(workDir, 'doc/adr');
     childProcess.execSync(`${command} init ${adrDirectory}`, { cwd: workDir });
@@ -35,7 +37,7 @@ describe('Overriding templates', () => {
     const fileContents = await fs.readFile(expectedFile, 'utf8');
     const fileContents2 = await fs.readFile(expectedFile2, 'utf8');
 
-    expect(fileContents.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
-    expect(fileContents2.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
+    expect(fileContents).toMatchSnapshot();
+    expect(fileContents2).toMatchSnapshot();
   });
 });

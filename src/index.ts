@@ -22,6 +22,7 @@ program.command('new')
     + '                                     REVERSE-LINK is the description of the link created in the existing ADR that will refer to the new ADR', collect, [])
   .action(async (title: string[], options) => {
     await newAdr(title.join(' '), {
+      date: process.env.ADR_DATE,
       suppressPrompts: options.quiet || false,
       links: options.link
     });

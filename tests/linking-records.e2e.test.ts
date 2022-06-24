@@ -13,6 +13,8 @@ describe('Linking Adrs', () => {
   let workDir: string;
 
   beforeEach(async () => {
+    // @ts-ignore
+    process.env.ADR_DATE = '1992-01-12';
     workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'));
     adrDirectory = path.join(workDir, 'doc/adr');
   });
@@ -35,8 +37,8 @@ describe('Linking Adrs', () => {
     const secondContent = await fs.readFile(second, 'utf8');
     const thirdContent = await fs.readFile(third, 'utf8');
 
-    expect(firstContent.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
-    expect(secondContent.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
-    expect(thirdContent.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
+    expect(firstContent).toMatchSnapshot();
+    expect(secondContent).toMatchSnapshot();
+    expect(thirdContent).toMatchSnapshot();
   });
 });

@@ -8,6 +8,7 @@ import chalk from 'chalk';
 import { getDetailsFrom, injectLink } from './manipulator';
 
 interface NewOptions {
+  date?: string | undefined;
   suppressPrompts?: boolean;
   template?: string;
   links?: string[];
@@ -84,7 +85,7 @@ const injectLinksTo = async (newAdr: AdrDetails, links: string[] = [], suppressP
 
 export const newAdr = async (title: string, config?: NewOptions) => {
   const newNum = await newNumber();
-  const formattedDate = new Date().toISOString().split('T')[0] || 'ERROR';
+  const formattedDate = config?.date || new Date().toISOString().split('T')[0] || 'ERROR';
   const tpl = await template(config?.template);
   const adr = tpl.replace('DATE', formattedDate).replace('TITLE', title).replace('NUMBER', newNum.toString()).replace('STATUS', 'Accepted');
   const paddedNumber = newNum.toString().padStart(4, '0');

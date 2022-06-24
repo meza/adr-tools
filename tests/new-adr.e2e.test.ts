@@ -13,6 +13,8 @@ describe('New Adrs', () => {
   let workDir: string;
 
   beforeEach(() => {
+    // @ts-ignore
+    process.env.ADR_DATE = '1992-01-12';
     workDir = fs.mkdtempSync(path.join(os.tmpdir(), 'adr-'));
     adrDirectory = path.join(workDir, 'doc/adr');
   });
@@ -29,7 +31,7 @@ describe('New Adrs', () => {
     expect(fs.existsSync(expectedNewFile)).toBeTruthy();
 
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
-    expect(fileContents.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
+    expect(fileContents).toMatchSnapshot();
   });
 
   it('should create a new one even if no config exists', () => {
@@ -39,6 +41,6 @@ describe('New Adrs', () => {
     expect(fs.existsSync(expectedNewFile)).toBeTruthy();
 
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
-    expect(fileContents.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
+    expect(fileContents).toMatchSnapshot();
   });
 });
