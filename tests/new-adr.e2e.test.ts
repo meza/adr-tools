@@ -29,7 +29,7 @@ describe('New Adrs', () => {
     expect(fs.existsSync(expectedNewFile)).toBeTruthy();
 
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
-    expect(fileContents).toMatchSnapshot();
+    expect(fileContents.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
   });
 
   it('should create a new one even if no config exists', () => {
@@ -39,6 +39,6 @@ describe('New Adrs', () => {
     expect(fs.existsSync(expectedNewFile)).toBeTruthy();
 
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
-    expect(fileContents).toMatchSnapshot();
+    expect(fileContents.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
   });
 });

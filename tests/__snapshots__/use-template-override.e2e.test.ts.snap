@@ -3,7 +3,7 @@
 exports[`Overriding templates > should use an override template if one exists 1`] = `
 "# This is an override template
 Example ADR
-2022-06-22
+DATE-STRING-HERE
 2
 Accepted"
 `;
@@ -11,7 +11,7 @@ Accepted"
 exports[`Overriding templates > should use an override template if one exists 2`] = `
 "# This is an override template
 Another Example ADR
-2022-06-22
+DATE-STRING-HERE
 3
 Accepted"
 `;

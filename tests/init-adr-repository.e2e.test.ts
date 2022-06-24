@@ -27,7 +27,7 @@ describe('Init an ADR Repository', () => {
     expect(fs.existsSync(expectedFile)).toBeTruthy();
 
     const fileContents = fs.readFileSync(expectedFile, 'utf8');
-    expect(fileContents).toMatchSnapshot();
+    expect(fileContents.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
   });
 
   it('should use an alternate directory', () => {
@@ -38,6 +38,6 @@ describe('Init an ADR Repository', () => {
     expect(fs.existsSync(expectedInitFile)).toBeTruthy();
 
     const fileContents = fs.readFileSync(expectedInitFile, 'utf8');
-    expect(fileContents).toMatchSnapshot();
+    expect(fileContents.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
   });
 });

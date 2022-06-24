@@ -35,7 +35,7 @@ describe('Overriding templates', () => {
     const fileContents = await fs.readFile(expectedFile, 'utf8');
     const fileContents2 = await fs.readFile(expectedFile2, 'utf8');
 
-    expect(fileContents).toMatchSnapshot();
-    expect(fileContents2).toMatchSnapshot();
+    expect(fileContents.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
+    expect(fileContents2.replace(/\d{4}-\d{2}-\d{2}/, 'DATE-STRING-HERE')).toMatchSnapshot();
   });
 });
