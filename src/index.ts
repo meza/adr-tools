@@ -15,12 +15,16 @@ program.name('adr').version(version).description('Manage Architecture Decision L
 
 program.command('new')
   .argument('<title...>', 'The title of the decision')
+  .option('-q, --quiet', 'Do not ask for clarification')
   .option('-l, --link <TARGET:LINK:REVERSE-LINK>', 'Links the new ADR to a previous ADR.\n'
     + '                                     TARGET is a reference (number or partial filename) of a previous decision.\n'
     + '                                     LINK is the description of the link created in the new ADR.\n'
-    + '                                     REVERSE-LINK is the description of the link created in the', collect, [])
+    + '                                     REVERSE-LINK is the description of the link created in the existing ADR that will refer to the new ADR', collect, [])
   .action(async (title: string[], options) => {
-    await newAdr(title.join(' '), { links: options.link });
+    await newAdr(title.join(' '), {
+      suppressPrompts: options.quiet || false,
+      links: options.link
+    });
   });
 
 program.command('init').argument('[directory]', 'Initialize a new ADR directory').action(async (directory?: string) => {
