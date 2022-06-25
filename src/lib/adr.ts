@@ -136,7 +136,7 @@ const injectLinksTo = async (
 
 };
 //Generate a table of contents for the adr directory
-const generateToc = async () => {
+export const generateToc = async () => {
   const adrDir = await getDir();
   const files = await fs.readdir(adrDir);
   const toc = files.filter((file) => file.match(/^\d{4}-.*\.md$/));
