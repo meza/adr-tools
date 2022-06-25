@@ -9,7 +9,7 @@ export interface LinkDetails {
   matches: string[];
 }
 
-const findMatchingFilesFor = async (pattern: string) => {
+export const findMatchingFilesFor = async (pattern: string) => {
   const files = await fs.readdir(await getDir());
   return files.filter(file => file.includes(pattern));
 };
