@@ -1,6 +1,6 @@
 {
   "name": "@meza/adr-tools",
-  "version": "0.0.2",
+  "version": "0.0.0",
   "main": "dist/index.js",
   "bin": {
     "adr": "dist/index.js"
