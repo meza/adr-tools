@@ -5,6 +5,8 @@ declare global {
     interface ProcessEnv {
       ADR_TEMPLATE: string;
       ADR_DATE: string;
+      VISUAL: string;
+      EDITOR: string;
     }
   }
 }
