@@ -7,6 +7,7 @@ import { prompt } from 'inquirer';
 import chalk from 'chalk';
 import { getTitleFrom, injectLink, supersede } from './manipulator';
 import { getLinkDetails } from './links';
+import childProcess from 'node:child_process';
 
 interface NewOptions {
   supersedes?: string[];
@@ -168,9 +169,25 @@ export const newAdr = async (title: string, config?: NewOptions) => {
     config?.links,
     config?.suppressPrompts
   );
-
-  console.log(path.relative(workingDir(), adrPath));
   // await generateToc();
+  const newAdrPath = path.relative(workingDir(), adrPath);
+
+  if (process.env.VISUAL) {
+    await childProcess.spawn(process.env.VISUAL, [adrPath], {
+      stdio: 'inherit',
+      shell: true
+    });
+    return;
+  }
+  if (process.env.EDITOR) {
+    await childProcess.spawn(process.env.EDITOR, [adrPath], {
+      stdio: 'inherit',
+      shell: true
+    });
+    return;
+  }
+  console.log(newAdrPath);
+
 };
 
 export const init = async (directory?: string) => {
