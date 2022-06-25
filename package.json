@@ -2,9 +2,12 @@
   "name": "@meza/adr-tools",
   "version": "0.0.0",
   "main": "dist/index.js",
+  "bin": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": true,
   "scripts": {
+    "prebuild": "node -p \"'export const LIB_VERSION = ' + JSON.stringify(require('./package.json').version) + ';'\" > src/version.ts",
+    "build": "tsc",
     "start": "ts-node src/index.ts",
     "commit": "commit",
     "ci": "npm set editor '' && yarn lint && yarn test",
