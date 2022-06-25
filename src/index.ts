@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { version } from '../package.json';
+import { LIB_VERSION } from './version';
 import { generateToc, init, link, listAdrs, newAdr } from './lib/adr';
 import chalk from 'chalk';
 import { workingDir } from './lib/config';
@@ -56,7 +56,7 @@ const generateGraph = async (options?: {prefix: string, extension :string}) => {
   console.log(text);
 };
 
-program.name('adr').version(version).description('Manage Architecture Decision Logs');
+program.name('adr').version(LIB_VERSION).description('Manage Architecture Decision Logs');
 
 program.command('new')
   .argument('<title...>', 'The title of the decision')
