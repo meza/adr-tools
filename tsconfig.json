@@ -12,7 +12,7 @@
     "sourceRoot": "src"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "tests/**/*"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs",
