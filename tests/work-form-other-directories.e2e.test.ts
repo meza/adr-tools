@@ -38,7 +38,6 @@ describe('deep directories', () => {
     fs.mkdirSync(innerPath, { recursive: true });
     childProcess.execSync(`${command} new this should exist`, { cwd: innerPath });
     const expectedFile: string = path.join(innerPath, 'doc', 'adr', '0001-this-should-exist.md');
-    console.log(expectedFile);
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });
 });
