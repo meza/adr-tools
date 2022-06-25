@@ -5,9 +5,11 @@ import path from 'path';
 import { getDir, workingDir } from './config';
 import { prompt } from 'inquirer';
 import chalk from 'chalk';
-import { getTitleFrom, injectLink } from './manipulator';
+import { getTitleFrom, injectLink, supersede } from './manipulator';
+import { getLinkDetails } from './links';
 
 interface NewOptions {
+  supersedes?: string[];
   date?: string | undefined;
   suppressPrompts?: boolean;
   template?: string;
@@ -19,72 +21,118 @@ interface AdrDetails {
   path: string;
 }
 
-const askForClarification = async (link: { original: string, matches: any; link: any; reverseLink: any; }) => {
+const askForClarification = async (searchString: string, matches: string[]) => {
   const selection = await prompt([
     {
       type: 'list',
       name: 'target',
-      message: `Which file do you want to link to for ${chalk.blue(link.original)}?`,
-      choices: link.matches
+      message: `Which file do you want to link to for ${chalk.blue(searchString)}?`,
+      choices: matches
     }
   ]);
-  return {
-    link: link.link,
-    reverseLink: link.reverseLink,
-    file: selection.target
-  };
+  return selection.target;
 };
 
-const injectLinksTo = async (newAdr: AdrDetails, links: string[] = [], suppressPrompts: boolean = false) => {
+enum LinkType {
+  LINK = 0,
+  SUPERSEDE = 1
+}
+
+interface LinkTask {
+  type: LinkType;
+  sourcePath: string;
+  targetPath: string;
+  link: string;
+  reverseLink: string;
+}
+
+const actuallyLink = async (task: LinkTask) => {
+  const linkedFile = path.join(await getDir(), task.targetPath);
+  const newAdrContent = await fs.readFile(task.sourcePath, 'utf8');
+  const oldAdrContent = await fs.readFile(linkedFile, 'utf8');
+  const oldTitle = getTitleFrom(oldAdrContent);
+  const newTitle = getTitleFrom(newAdrContent);
+  let dirtyOld = '', dirtyNew = '';
+  switch (task.type) {
+    case LinkType.LINK:
+      dirtyOld = injectLink(oldAdrContent, `${task.reverseLink} [${newTitle}](${path.relative(await getDir(), task.sourcePath)})`);
+      dirtyNew = injectLink(newAdrContent, `${task.link} [${oldTitle}](${task.targetPath})`);
+      break;
+    case LinkType.SUPERSEDE:
+      dirtyOld = supersede(oldAdrContent, `${task.reverseLink} [${newTitle}](${path.relative(await getDir(), task.sourcePath)})`);
+      dirtyNew = injectLink(newAdrContent, `${task.link} [${oldTitle}](${task.targetPath})`);
+      break;
+    default:
+      break;
+  }
+
+  await fs.writeFile(linkedFile, dirtyOld);
+  await fs.writeFile(task.sourcePath, dirtyNew);
+};
+
+const processSupersedes = async (
+  source: AdrDetails,
+  supersedes: string[] = [],
+  suppressPrompts: boolean = false
+) => {
+  if (supersedes.length === 0) {
+    return;
+  }
+
+  const supersedeStrings = await Promise.all(supersedes.map((link) => getLinkDetails(link, true)));
+
+  for (const targetDetails of supersedeStrings) {
+    const task: LinkTask = {
+      type: LinkType.SUPERSEDE,
+      sourcePath: source.path,
+      link: targetDetails.link,
+      reverseLink: targetDetails.reverseLink,
+      targetPath: targetDetails.matches[0]
+    };
+
+    if (targetDetails.matches.length > 1) {
+      if (suppressPrompts) {
+        throw new Error(`Multiple files match the search pattern for "${targetDetails.original}".\n`
+          + 'Please specify which file you want to targetDetails to more or remove the -q or --quiet options from the command line.');
+      } else {
+        task.targetPath = await askForClarification(targetDetails.original, targetDetails.matches);
+      }
+    }
+
+    await actuallyLink(task);
+  }
+};
+
+const injectLinksTo = async (
+  source: AdrDetails,
+  links: string[] = [],
+  suppressPrompts: boolean = false
+) => {
   if (links.length === 0) {
     return;
   }
 
-  const processLink = async (linkString: string) => {
-    const [target, link, reverseLink] = linkString.split(':');
-    const files = (await fs.readdir(await getDir())).filter(file => file.includes(target));
-    return {
-      original: linkString,
-      newAdr: newAdr,
-      link: link,
-      reverseLink: reverseLink,
-      matches: files
-    };
-  };
+  const linkStrings = await Promise.all(links.map((link) => getLinkDetails(link)));
 
-  const linkItems = await Promise.all(links.map(processLink));
-
-  const actuallyLink = async (newAdr: AdrDetails, toLink: { file: string, reverseLink: string, link: string }) => {
-    const linkedFile = path.join(await getDir(), toLink.file);
-    const newAdrContent = await fs.readFile(newAdr.path, 'utf8');
-    const oldAdrContent = await fs.readFile(linkedFile, 'utf8');
-    const oldTitle = getTitleFrom(oldAdrContent);
-    const newTitle = getTitleFrom(newAdrContent);
-
-    const dirtyOld = injectLink(oldAdrContent, `${toLink.reverseLink} [${newTitle}](${path.relative(await getDir(), newAdr.path)})`);
-    await fs.writeFile(linkedFile, dirtyOld);
-
-    const dirtyNew = injectLink(newAdrContent, `${toLink.link} [${oldTitle}](${toLink.file})`);
-    await fs.writeFile(newAdr.path, dirtyNew);
-  };
-
-  for (const link of linkItems) {
-    let toLink = {
-      link: link.link,
-      reverseLink: link.reverseLink,
-      file: link.matches[0]
+  for (const targetDetails of linkStrings) {
+    const task: LinkTask = {
+      type: LinkType.LINK,
+      sourcePath: source.path,
+      link: targetDetails.link,
+      reverseLink: targetDetails.reverseLink,
+      targetPath: targetDetails.matches[0]
     };
 
-    if (link.matches.length > 1) {
+    if (targetDetails.matches.length > 1) {
       if (suppressPrompts) {
-        throw new Error(`Multiple files match the search pattern for "${link.original.split(':')[0]}".\n`
-        + 'Please specify which file you want to link to more or remove the -q or --quiet options from the command line.');
+        throw new Error(`Multiple files match the search pattern for "${targetDetails.original}".\n`
+          + 'Please specify which file you want to targetDetails to more or remove the -q or --quiet options from the command line.');
       } else {
-        toLink = await askForClarification(link);
+        task.targetPath = await askForClarification(targetDetails.original, targetDetails.matches);
       }
     }
 
-    await actuallyLink(newAdr, toLink);
+    await actuallyLink(task);
   }
 
 };
@@ -101,10 +149,22 @@ export const newAdr = async (title: string, config?: NewOptions) => {
   const adrPath = path.resolve(path.join(adrDirectory, fileName));
   await fs.writeFile(adrPath, adr);
 
-  await injectLinksTo({
-    adr: adr,
-    path: adrPath
-  }, config?.links, config?.suppressPrompts);
+  await processSupersedes(
+    {
+      adr: adr,
+      path: adrPath
+    },
+    config?.supersedes,
+    config?.suppressPrompts
+  );
+  await injectLinksTo(
+    {
+      adr: adr,
+      path: adrPath
+    },
+    config?.links,
+    config?.suppressPrompts
+  );
 
   console.log(path.relative(workingDir(), adrPath));
   // await generateToc();
@@ -114,7 +174,10 @@ export const init = async (directory?: string) => {
   const dir = directory || await getDir();
   await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(path.join(workingDir(), '.adr-dir'), path.relative(workingDir(), dir));
-  await newAdr('Record Architecture Decisions', { date: process.env.ADR_DATE, template: path.resolve(path.dirname(__filename), '../templates/init.md') });
+  await newAdr('Record Architecture Decisions', {
+    date: process.env.ADR_DATE,
+    template: path.resolve(path.dirname(__filename), '../templates/init.md')
+  });
 };
 
 export const listAdrs = async () => {

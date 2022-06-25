@@ -25,14 +25,14 @@ describe('Listing', () => {
   it('should list an empty directory', async () => {
     const child = childProcess.execSync(`${command} list`, { cwd: workDir });
     const output = child.toString().trim();
-    expect(output).toEqual('0001-record-architecture-decisions.md');
+    expect(output).toEqual('doc/adr/0001-record-architecture-decisions.md');
   });
 
   it('should list when there is an additional one', async () => {
     childProcess.execSync(`${command} new first`, { cwd: workDir });
     const child = childProcess.execSync(`${command} list`, { cwd: workDir });
     const output = child.toString().trim();
-    expect(output).toEqual('0001-record-architecture-decisions.md\n0002-first.md');
+    expect(output).toEqual('doc/adr/0001-record-architecture-decisions.md\ndoc/adr/0002-first.md');
   });
 
   it('should list when there are more', async () => {
@@ -41,7 +41,7 @@ describe('Listing', () => {
     childProcess.execSync(`${command} new third`, { cwd: workDir });
     const child = childProcess.execSync(`${command} list`, { cwd: workDir });
     const output = child.toString().trim();
-    expect(output).toEqual('0001-record-architecture-decisions.md\n0002-first.md\n0003-second.md\n0004-third.md');
+    expect(output).toEqual('doc/adr/0001-record-architecture-decisions.md\ndoc/adr/0002-first.md\ndoc/adr/0003-second.md\ndoc/adr/0004-third.md');
   });
 
 });

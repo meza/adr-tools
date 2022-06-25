@@ -37,4 +37,22 @@ describe('Superseding Adrs', () => {
     expect(firstContent).toMatchSnapshot();
     expect(secondContent).toMatchSnapshot();
   });
+
+  it('should be able to supersede multiple records', async () => {
+    childProcess.execSync(`${command} new First Record`, { cwd: workDir });
+    childProcess.execSync(`${command} new Second Record`, { cwd: workDir });
+    childProcess.execSync(`${command} new -s 1 -s 2 Third Record`, { cwd: workDir });
+
+    const first: string = path.join(adrDirectory, '0001-first-record.md');
+    const second: string = path.join(adrDirectory, '0002-second-record.md');
+    const third: string = path.join(adrDirectory, '0003-third-record.md');
+
+    const firstContent = await fs.readFile(first, 'utf8');
+    const secondContent = await fs.readFile(second, 'utf8');
+    const thirdContent = await fs.readFile(third, 'utf8');
+
+    expect(firstContent).toMatchSnapshot();
+    expect(secondContent).toMatchSnapshot();
+    expect(thirdContent).toMatchSnapshot();
+  });
 });
