@@ -24,10 +24,30 @@ describe('Linking Adrs', () => {
     childProcess.execSync(`rm -rf ${workDir}`);
   });
 
-  it('should link adrs as expected', async () => {
+  it('should link adrs as expected with adr new', async () => {
     childProcess.execSync(`${command} new First Record`, { cwd: workDir });
     childProcess.execSync(`${command} new Second Record`, { cwd: workDir });
     childProcess.execSync(`${command} new -q -l "1:Amends:Amended by" -l "2:Clarifies:Clarified by" Third Record`, { cwd: workDir });
+
+    const first: string = path.join(adrDirectory, '0001-first-record.md');
+    const second: string = path.join(adrDirectory, '0002-second-record.md');
+    const third: string = path.join(adrDirectory, '0003-third-record.md');
+
+    const firstContent = await fs.readFile(first, 'utf8');
+    const secondContent = await fs.readFile(second, 'utf8');
+    const thirdContent = await fs.readFile(third, 'utf8');
+
+    expect(firstContent).toMatchSnapshot();
+    expect(secondContent).toMatchSnapshot();
+    expect(thirdContent).toMatchSnapshot();
+  });
+
+  it('should link adrs as expected with adr link', async () => {
+    childProcess.execSync(`${command} new First Record`, { cwd: workDir });
+    childProcess.execSync(`${command} new Second Record`, { cwd: workDir });
+    childProcess.execSync(`${command} new Third Record`, { cwd: workDir });
+    childProcess.execSync(`${command} link 3 Amends 1 "Amended by"`, { cwd: workDir });
+    childProcess.execSync(`${command} link 3 Clarifies 2 "Clarified by"`, { cwd: workDir });
 
     const first: string = path.join(adrDirectory, '0001-first-record.md');
     const second: string = path.join(adrDirectory, '0002-second-record.md');

@@ -7,7 +7,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "commit": "commit",
-    "ci": "yarn lint && yarn test",
+    "ci": "npm set editor '' && yarn lint && yarn test",
     "ci:dev": "exit 0",
     "clean": "rm -rf dist .cache/tsbuildinfo",
     "clean:all": "yarn clean && rm -rf node_modules .cache",

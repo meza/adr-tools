@@ -2,7 +2,7 @@
 
 import { Command } from 'commander';
 import { version } from '../package.json';
-import { init, listAdrs, newAdr } from './lib/adr';
+import { init, link, listAdrs, newAdr } from './lib/adr';
 import chalk from 'chalk';
 import { workingDir } from './lib/config';
 import * as path from 'path';
@@ -43,6 +43,14 @@ program.command('new')
       program.error(chalk.red((e as Error).message), { exitCode: 1 });
     }
   });
+
+program.command('link')
+  .argument('<SOURCE>', 'Full or Partial reference number to an ADR')
+  .argument('<LINK>', 'The description of the link created in the SOURCE')
+  .argument('<TARGET>', 'Full or Partial reference number to an ADR')
+  .argument('<REVERSE-LINK>', 'The description of the link created in the TARGET')
+  .option('-q, --quiet', 'Do not ask for clarification. If multiple files match the search pattern, an error will be thrown.')
+  .action(link);
 
 program.command('init').argument('[directory]', 'Initialize a new ADR directory').action(async (directory?: string) => {
   await init(directory);

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`Linking Adrs > should link adrs as expected 1`] = `
+exports[`Linking Adrs > should link adrs as expected with adr link 1`] = `
 "# 1. First Record
 
 Date: 1992-01-12
@@ -25,7 +25,7 @@ What becomes easier or more difficult to do and any risks introduced by the chan
 "
 `;
 
-exports[`Linking Adrs > should link adrs as expected 2`] = `
+exports[`Linking Adrs > should link adrs as expected with adr link 2`] = `
 "# 2. Second Record
 
 Date: 1992-01-12
@@ -50,7 +50,84 @@ What becomes easier or more difficult to do and any risks introduced by the chan
 "
 `;
 
-exports[`Linking Adrs > should link adrs as expected 3`] = `
+exports[`Linking Adrs > should link adrs as expected with adr link 3`] = `
+"# 3. Third Record
+
+Date: 1992-01-12
+
+## Status
+
+Accepted
+
+Amends [1. First Record](0001-first-record.md)
+
+Clarifies [2. Second Record](0002-second-record.md)
+
+## Context
+
+The issue motivating this decision, and any context that influences or constrains the decision.
+
+## Decision
+
+The change that we're proposing or have agreed to implement.
+
+## Consequences
+
+What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+"
+`;
+
+exports[`Linking Adrs > should link adrs as expected with adr new 1`] = `
+"# 1. First Record
+
+Date: 1992-01-12
+
+## Status
+
+Accepted
+
+Amended by [3. Third Record](0003-third-record.md)
+
+## Context
+
+The issue motivating this decision, and any context that influences or constrains the decision.
+
+## Decision
+
+The change that we're proposing or have agreed to implement.
+
+## Consequences
+
+What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+"
+`;
+
+exports[`Linking Adrs > should link adrs as expected with adr new 2`] = `
+"# 2. Second Record
+
+Date: 1992-01-12
+
+## Status
+
+Accepted
+
+Clarified by [3. Third Record](0003-third-record.md)
+
+## Context
+
+The issue motivating this decision, and any context that influences or constrains the decision.
+
+## Decision
+
+The change that we're proposing or have agreed to implement.
+
+## Consequences
+
+What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+"
+`;
+
+exports[`Linking Adrs > should link adrs as expected with adr new 3`] = `
 "# 3. Third Record
 
 Date: 1992-01-12

@@ -6,7 +6,7 @@ import { getDir, workingDir } from './config';
 import { prompt } from 'inquirer';
 import chalk from 'chalk';
 import { getTitleFrom, injectLink, supersede } from './manipulator';
-import { getLinkDetails } from './links';
+import { findMatchingFilesFor, getLinkDetails } from './links';
 import childProcess from 'node:child_process';
 
 interface NewOptions {
@@ -15,11 +15,6 @@ interface NewOptions {
   suppressPrompts?: boolean;
   template?: string;
   links?: string[];
-}
-
-interface AdrDetails {
-  adr: string;
-  path: string;
 }
 
 const askForClarification = async (searchString: string, matches: string[]) => {
@@ -75,7 +70,7 @@ const actuallyLink = async (task: LinkTask) => {
 };
 
 const processSupersedes = async (
-  source: AdrDetails,
+  sourcePath: string,
   supersedes: string[] = [],
   suppressPrompts: boolean = false
 ) => {
@@ -88,7 +83,7 @@ const processSupersedes = async (
   for (const targetDetails of supersedeStrings) {
     const task: LinkTask = {
       type: LinkType.SUPERSEDE,
-      sourcePath: source.path,
+      sourcePath: sourcePath,
       link: targetDetails.link,
       reverseLink: targetDetails.reverseLink,
       targetPath: targetDetails.matches[0]
@@ -108,7 +103,7 @@ const processSupersedes = async (
 };
 
 const injectLinksTo = async (
-  source: AdrDetails,
+  sourcePath: string,
   links: string[] = [],
   suppressPrompts: boolean = false
 ) => {
@@ -121,7 +116,7 @@ const injectLinksTo = async (
   for (const targetDetails of linkStrings) {
     const task: LinkTask = {
       type: LinkType.LINK,
-      sourcePath: source.path,
+      sourcePath: sourcePath,
       link: targetDetails.link,
       reverseLink: targetDetails.reverseLink,
       targetPath: targetDetails.matches[0]
@@ -154,18 +149,12 @@ export const newAdr = async (title: string, config?: NewOptions) => {
   await fs.writeFile(adrPath, adr);
 
   await processSupersedes(
-    {
-      adr: adr,
-      path: adrPath
-    },
+    adrPath,
     config?.supersedes,
     config?.suppressPrompts
   );
   await injectLinksTo(
-    {
-      adr: adr,
-      path: adrPath
-    },
+    adrPath,
     config?.links,
     config?.suppressPrompts
   );
@@ -198,6 +187,27 @@ export const init = async (directory?: string) => {
     date: process.env.ADR_DATE,
     template: path.resolve(path.dirname(__filename), '../templates/init.md')
   });
+};
+
+export const link = async (source: string, link: string, target: string, reverseLink: string, options?: {quiet?: boolean}) => {
+  const getFor = async (pattern: string) => {
+    const found = await findMatchingFilesFor(pattern);
+    if (found.length === 1) {
+      return found[0];
+    }
+
+    if (options?.quiet) {
+      throw new Error(`Multiple files match the search pattern for "${pattern}".\n`
+        + 'Please specify which file you want to targetDetails to more or remove the -q or --quiet options from the command line.');
+    }
+
+    return askForClarification(pattern, found);
+  };
+
+  const sourceFile = await getFor(source);
+
+  await injectLinksTo(path.resolve(await getDir(), sourceFile), [`${target}:${link}:${reverseLink}`]);
+
 };
 
 export const listAdrs = async () => {
