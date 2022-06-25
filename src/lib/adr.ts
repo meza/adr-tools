@@ -107,7 +107,7 @@ export const init = async (directory?: string) => {
   const dir = directory || await getDir();
   await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(path.join(workingDir(), '.adr-dir'), path.relative(workingDir(), dir));
-  await newAdr('Record Architecture Decisions', { template: path.resolve(path.dirname(__filename), '../templates/init.md') });
+  await newAdr('Record Architecture Decisions', { date: process.env.ADR_DATE, template: path.resolve(path.dirname(__filename), '../templates/init.md') });
 };
 
 export const listAdrs = async () => {
