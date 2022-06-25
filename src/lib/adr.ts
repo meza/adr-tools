@@ -164,6 +164,7 @@ export const newAdr = async (title: string, config?: NewOptions) => {
   const adrDirectory = await getDir();
   const adrPath = path.resolve(path.join(adrDirectory, fileName));
   await fs.writeFile(adrPath, adr);
+  await fs.writeFile(path.resolve(adrDirectory, '.adr-sequence.lock'), newNum.toString());
 
   await processSupersedes(
     adrPath,

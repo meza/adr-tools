@@ -26,10 +26,14 @@ describe('Init an ADR Repository', () => {
   it('should use the default directory', () => {
     childProcess.execSync(`${command} init`, { cwd: workDir });
     const expectedFile: string = path.join(adrDirectory, '0001-record-architecture-decisions.md');
+    const expectedLockFile: string = path.join(adrDirectory, '.adr-sequence.lock');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
+    expect(fs.existsSync(expectedLockFile)).toBeTruthy();
 
     const fileContents = fs.readFileSync(expectedFile, 'utf8');
+    const lockFileContents = fs.readFileSync(expectedLockFile, 'utf8');
     expect(fileContents).toMatchSnapshot();
+    expect(lockFileContents).toEqual('1');
   });
 
   it('should use an alternate directory', () => {
@@ -37,9 +41,13 @@ describe('Init an ADR Repository', () => {
     childProcess.execSync(`${command} init ${directory}`, { cwd: workDir });
 
     const expectedInitFile: string = path.join(directory, '0001-record-architecture-decisions.md');
+    const expectedLockFile: string = path.join(directory, '.adr-sequence.lock');
     expect(fs.existsSync(expectedInitFile)).toBeTruthy();
+    expect(fs.existsSync(expectedLockFile)).toBeTruthy();
 
     const fileContents = fs.readFileSync(expectedInitFile, 'utf8');
+    const lockFileContents = fs.readFileSync(expectedLockFile, 'utf8');
     expect(fileContents).toMatchSnapshot();
+    expect(lockFileContents).toEqual('1');
   });
 });
