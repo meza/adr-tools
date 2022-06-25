@@ -4,6 +4,27 @@ const convertToMd = (tokens: marked.Token[]) => {
   return tokens.map(token => token.raw).join('');
 };
 
+export const getLinksFrom = (markdown: string) => {
+  const tokens = marked.lexer(markdown);
+  const linkRegex = new RegExp(/^(.*)\s\[(.*)\]\((.*)\)$/);
+  const links = tokens.filter(token => token.type === 'paragraph' && linkRegex.test(token.text));
+
+  return links.map((link) => {
+    const linkToken = link as marked.Tokens.Paragraph;
+    const linkMatches = linkToken.text.match(linkRegex);
+    if (!linkMatches || linkMatches.length < 3) {
+      throw new Error(`Could not parse link from "${linkToken.text}"`);
+    }
+    return {
+      targetNumber: linkMatches[2].substring(0, linkMatches[2].indexOf('.')),
+      label: linkMatches[1],
+      href: linkMatches[3],
+      text: linkMatches[2],
+      raw: linkMatches[0]
+    };
+  });
+};
+
 export const getTitleFrom = (adr: string) => {
   const tokens = marked.lexer(adr);
   const mainHead = tokens.find(token => token.type === 'heading' && token.depth === 1);

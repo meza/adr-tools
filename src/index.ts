@@ -6,6 +6,8 @@ import { generateToc, init, link, listAdrs, newAdr } from './lib/adr';
 import chalk from 'chalk';
 import { workingDir } from './lib/config';
 import * as path from 'path';
+import { getLinksFrom, getTitleFrom } from './lib/manipulator';
+import fs from 'fs/promises';
 
 const program = new Command();
 
@@ -17,6 +19,41 @@ const collectLinks = (val: string, memo: string[]) => {
 const collectSupersedes = (val: string, memo: string[]) => {
   memo.push(val);
   return memo;
+};
+
+const generateGraph = async (options?: {prefix: string, extension :string}) => {
+  let text = 'digraph {\n';
+  text += '  node [shape=plaintext];\n';
+  text += '  subgraph {\n';
+
+  const adrs = await listAdrs();
+  for (let i = 0; i < adrs.length; i++) {
+    const n = i + 1;
+    const adrPath = adrs[i];
+    const contents = await fs.readFile(adrPath, 'utf8');
+    const title = getTitleFrom(contents);
+    text += `    _${n} [label="${title}"; URL="${options?.prefix || ''}${path.basename(adrPath, '.md')}${options?.extension}"];\n`;
+    if (n > 1) {
+      text += `    _${n - 1} -> _${n} [style="dotted", weight=1];\n`;
+    }
+  }
+  text += '  }\n';
+  for (let i = 0; i < adrs.length; i++) {
+    const n = i + 1;
+    const adrPath = adrs[i];
+    const contents = await fs.readFile(adrPath, 'utf8');
+    const linksInADR = getLinksFrom(contents);
+
+    for (let j = 0; j < linksInADR.length; j++) {
+      if (!linksInADR[j].label.endsWith('by')) {
+        text += `  _${n} -> _${linksInADR[j].targetNumber} [label="${linksInADR[j].label}", weight=0]\n`;
+      }
+    }
+
+  }
+
+  text += '}\n';
+  console.log(text);
 };
 
 program.name('adr').version(version).description('Manage Architecture Decision Logs');
@@ -44,10 +81,18 @@ program.command('new')
     }
   });
 
-program.command('generate')
-  .argument('toc')
+const generate = program.command('generate');
+
+generate.command('toc')
   .option('-p, --prefix <PREFIX>', 'The prefix to use for each file link in the generated TOC.')
-  .action((_command, options) => generateToc(options));
+  .action((options) => generateToc(options));
+
+generate.command('graph')
+  .option('-p, --prefix <PREFIX>', 'Prefix each decision file link with PREFIX.')
+  .option('-e, --extension <EXTENSION>', 'the file extension of the documents to which generated links refer. Defaults to .html', '.html')
+  .action(async (options) => {
+    await generateGraph(options);
+  });
 
 program.command('link')
   .argument('<SOURCE>', 'Full or Partial reference number to an ADR')
