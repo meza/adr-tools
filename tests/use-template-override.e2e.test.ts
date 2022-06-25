@@ -13,6 +13,8 @@ describe('Overriding templates', () => {
   let workDir: string;
 
   beforeEach(async () => {
+    // @ts-ignore
+    process.env.ADR_DATE = '1992-01-12';
     workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'));
     adrDirectory = path.join(workDir, 'doc/adr');
     childProcess.execSync(`${command} init ${adrDirectory}`, { cwd: workDir });

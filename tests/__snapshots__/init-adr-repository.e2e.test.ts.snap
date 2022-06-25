@@ -3,7 +3,7 @@
 exports[`Init an ADR Repository > should use an alternate directory 1`] = `
 "# 1. Record architecture decisions
 
-Date: 2022-06-22
+Date: 1992-01-12
 
 ## Status
 
@@ -28,7 +28,7 @@ For a lightweight ADR toolset, see Nat Pryce's [adr-tools](https://github.com/np
 exports[`Init an ADR Repository > should use the default directory 1`] = `
 "# 1. Record architecture decisions
 
-Date: 2022-06-22
+Date: 1992-01-12
 
 ## Status
 

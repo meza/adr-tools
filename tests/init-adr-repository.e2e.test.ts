@@ -13,6 +13,8 @@ describe('Init an ADR Repository', () => {
   let workDir: string;
 
   beforeEach(() => {
+    // @ts-ignore
+    process.env.ADR_DATE = '1992-01-12';
     workDir = fs.mkdtempSync(path.join(os.tmpdir(), 'adr-'));
     adrDirectory = path.join(workDir, 'doc/adr');
   });
