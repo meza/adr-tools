@@ -2,7 +2,7 @@
   "name": "@meza/adr-tools",
   "version": "0.0.0",
   "main": "dist/index.js",
-  "bin": "dist/index.js",
+  "bin": {"adr": "dist/index.js"},
   "types": "dist/index.d.ts",
   "private": true,
   "scripts": {
