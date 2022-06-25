@@ -135,6 +135,22 @@ const injectLinksTo = async (
   }
 
 };
+//Generate a table of contents for the adr directory
+const generateToc = async () => {
+  const adrDir = await getDir();
+  const files = await fs.readdir(adrDir);
+  const toc = files.filter((file) => file.match(/^\d{4}-.*\.md$/));
+
+  const titles = toc.map(async (file) => {
+    const title = getTitleFrom(await fs.readFile(path.join(adrDir, file), 'utf8'));
+    return `[${title}](${file})`;
+  });
+
+  const resolvedTitles = await Promise.all(titles);
+
+  const tocFile = path.resolve(path.join(adrDir, 'decisions.md'));
+  await fs.writeFile(tocFile, `# Table of Contents\n\n${resolvedTitles.join('\n')}`);
+};
 
 export const newAdr = async (title: string, config?: NewOptions) => {
   const newNum = await newNumber();
@@ -158,7 +174,7 @@ export const newAdr = async (title: string, config?: NewOptions) => {
     config?.links,
     config?.suppressPrompts
   );
-  // await generateToc();
+  await generateToc();
   const newAdrPath = path.relative(workingDir(), adrPath);
 
   if (process.env.VISUAL) {
