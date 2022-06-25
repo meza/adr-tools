@@ -2,7 +2,7 @@
 
 import { Command } from 'commander';
 import { version } from '../package.json';
-import { init, link, listAdrs, newAdr } from './lib/adr';
+import { generateToc, init, link, listAdrs, newAdr } from './lib/adr';
 import chalk from 'chalk';
 import { workingDir } from './lib/config';
 import * as path from 'path';
@@ -43,6 +43,10 @@ program.command('new')
       program.error(chalk.red((e as Error).message), { exitCode: 1 });
     }
   });
+
+program.command('generate')
+  .argument('toc')
+  .action(generateToc);
 
 program.command('link')
   .argument('<SOURCE>', 'Full or Partial reference number to an ADR')

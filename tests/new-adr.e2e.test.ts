@@ -43,4 +43,16 @@ describe('New Adrs', () => {
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
     expect(fileContents).toMatchSnapshot();
   });
+
+  it('should create a table of contents upon creation', () => {
+    childProcess.execSync(`${command} init ${adrDirectory}`, { cwd: workDir });
+    childProcess.execSync(`${command} new Example ADR`, { cwd: workDir });
+
+    const expectedNewFile: string = path.join(adrDirectory, 'decisions.md');
+    expect(fs.existsSync(expectedNewFile)).toBeTruthy();
+
+    const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
+    expect(fileContents).toMatchSnapshot();
+  });
+
 });
