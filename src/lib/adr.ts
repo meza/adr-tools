@@ -5,13 +5,18 @@ import path from 'path';
 import { getDir, workingDir } from './config';
 import { prompt } from 'inquirer';
 import chalk from 'chalk';
-import { getDetailsFrom, injectLink } from './manipulator';
+import { getTitleFrom, injectLink } from './manipulator';
 
 interface NewOptions {
   date?: string | undefined;
   suppressPrompts?: boolean;
   template?: string;
   links?: string[];
+}
+
+interface AdrDetails {
+  adr: string;
+  path: string;
 }
 
 const askForClarification = async (link: { original: string, matches: any; link: any; reverseLink: any; }) => {
@@ -29,11 +34,6 @@ const askForClarification = async (link: { original: string, matches: any; link:
     file: selection.target
   };
 };
-
-interface AdrDetails {
-  adr: string;
-  path: string;
-}
 
 const injectLinksTo = async (newAdr: AdrDetails, links: string[] = [], suppressPrompts: boolean = false) => {
   if (links.length === 0) {
@@ -58,8 +58,8 @@ const injectLinksTo = async (newAdr: AdrDetails, links: string[] = [], suppressP
     const linkedFile = path.join(await getDir(), toLink.file);
     const newAdrContent = await fs.readFile(newAdr.path, 'utf8');
     const oldAdrContent = await fs.readFile(linkedFile, 'utf8');
-    const oldTitle = getDetailsFrom(oldAdrContent);
-    const newTitle = getDetailsFrom(newAdrContent);
+    const oldTitle = getTitleFrom(oldAdrContent);
+    const newTitle = getTitleFrom(newAdrContent);
 
     const dirtyOld = injectLink(oldAdrContent, `${toLink.reverseLink} [${newTitle}](${path.relative(await getDir(), newAdr.path)})`);
     await fs.writeFile(linkedFile, dirtyOld);
@@ -75,9 +75,15 @@ const injectLinksTo = async (newAdr: AdrDetails, links: string[] = [], suppressP
       file: link.matches[0]
     };
 
-    if (!suppressPrompts && link.matches.length > 1) {
-      toLink = await askForClarification(link);
+    if (link.matches.length > 1) {
+      if (suppressPrompts) {
+        throw new Error(`Multiple files match the search pattern for "${link.original.split(':')[0]}".\n`
+        + 'Please specify which file you want to link to more or remove the -q or --quiet options from the command line.');
+      } else {
+        toLink = await askForClarification(link);
+      }
     }
+
     await actuallyLink(newAdr, toLink);
   }
 
@@ -100,6 +106,7 @@ export const newAdr = async (title: string, config?: NewOptions) => {
     path: adrPath
   }, config?.links, config?.suppressPrompts);
 
+  console.log(path.relative(workingDir(), adrPath));
   // await generateToc();
 };
 
@@ -116,7 +123,7 @@ export const listAdrs = async () => {
   const toc = files.map(f => {
     const adrFile = f.match(/^0*(\d+)-.*$/);
     if (adrFile) {
-      return adrFile[0];
+      return path.resolve(dir, adrFile[0]);
     }
     return '';
   }).filter(f => f !== '');

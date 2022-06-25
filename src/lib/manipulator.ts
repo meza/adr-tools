@@ -1,15 +1,11 @@
 import { marked } from 'marked';
 
-const parseAdr = (markdown: string): marked.Token[] => {
-  return marked.lexer(markdown);
-};
-
 const convertToMd = (tokens: marked.Token[]) => {
   return tokens.map(token => token.raw).join('');
 };
 
-export const getDetailsFrom = (adr: string) => {
-  const tokens = parseAdr(adr);
+export const getTitleFrom = (adr: string) => {
+  const tokens = marked.lexer(adr);
   const mainHead = tokens.find(token => token.type === 'heading' && token.depth === 1);
   if (!mainHead) {
     throw new Error('No main heading found');
@@ -18,7 +14,7 @@ export const getDetailsFrom = (adr: string) => {
 };
 
 export const injectLink = (markdown: string, link: string) => {
-  const tokens = parseAdr(markdown);
+  const tokens = marked.lexer(markdown);
   const statusIndex = tokens.findIndex(token => token.type === 'heading' && token.text.toLowerCase() === 'status');
   if (statusIndex < 0) {
     throw new Error('Could not find status section');
@@ -41,5 +37,3 @@ export const injectLink = (markdown: string, link: string) => {
   tokens.splice(followingHeadingIndex + 1, 0, { type: 'space', raw: '\n\n' });
   return convertToMd(tokens);
 };
-
-export default parseAdr;

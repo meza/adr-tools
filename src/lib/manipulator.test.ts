@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { injectLink, getDetailsFrom } from './manipulator';
+import { injectLink, getTitleFrom } from './manipulator';
 
 describe('The ADR manipulator', () => {
 
@@ -65,7 +65,7 @@ describe('The ADR manipulator', () => {
 
   it('can return the title and number', () => {
     const original = '# 2. This is the title\n';
-    const test = getDetailsFrom(original);
+    const test = getTitleFrom(original);
     expect(test).toEqual('2. This is the title');
   });
 
