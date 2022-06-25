@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { injectLink, getTitleFrom } from './manipulator';
+import { injectLink, getTitleFrom, getLinksFrom } from './manipulator';
 
 describe('The ADR manipulator', () => {
 
@@ -67,6 +67,22 @@ describe('The ADR manipulator', () => {
     const original = '# 2. This is the title\n';
     const test = getTitleFrom(original);
     expect(test).toEqual('2. This is the title');
+  });
+
+  it('can extract links from the status section', () => {
+    const original = '## Status\n'
+      + '\n'
+      + 'Superseded by [3. title here](and-a-link-here.md)\n';
+    const extractedLink = getLinksFrom(original);
+
+    expect(extractedLink[0]).toEqual({
+      label: 'Superseded by',
+      targetNumber: '3',
+      text: '3. title here',
+      href: 'and-a-link-here.md',
+      raw: 'Superseded by [3. title here](and-a-link-here.md)'
+    });
+
   });
 
 });
