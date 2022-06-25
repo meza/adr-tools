@@ -33,9 +33,12 @@ const askForClarification = async (searchString: string, matches: string[]) => {
   return selection.target;
 };
 
+// eslint-disable-next-line no-unused-vars
 enum LinkType {
-  LINK = 0,
-  SUPERSEDE = 1
+  // eslint-disable-next-line no-unused-vars
+  LINK = 'link',
+  // eslint-disable-next-line no-unused-vars
+  SUPERSEDE = 'supersede'
 }
 
 interface LinkTask {
