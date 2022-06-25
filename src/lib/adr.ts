@@ -136,14 +136,15 @@ const injectLinksTo = async (
 
 };
 //Generate a table of contents for the adr directory
-export const generateToc = async () => {
+export const generateToc = async (options?: {prefix?: string}) => {
+
   const adrDir = await getDir();
   const files = await fs.readdir(adrDir);
   const toc = files.filter((file) => file.match(/^\d{4}-.*\.md$/));
 
   const titles = toc.map(async (file) => {
     const title = getTitleFrom(await fs.readFile(path.join(adrDir, file), 'utf8'));
-    return `[${title}](${file})`;
+    return `[${title}](${options?.prefix || ''}${file})`;
   });
 
   const resolvedTitles = await Promise.all(titles);
