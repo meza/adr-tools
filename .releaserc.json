@@ -1,41 +1,40 @@
 {
+  "branches": [
+    "+([0-9])?(.{+([0-9]),x}).x",
+    "main",
+    "next",
+    {
+      "name": "beta",
+      "prerelease": true
+    },
+    {
+      "name": "alpha",
+      "prerelease": true
+    }
+  ],
   "plugins": [
-    "@semantic-release/npm",
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     [
       "@semantic-release/changelog",
       {
-        "changelogFile": "docs/CHANGELOG.md"
+        "changelogFile": "CHANGELOG.md"
       }
     ],
-    [
-      "@semantic-release/git",
-      {
-        "assets": [
-          "CHANGELOG.md"
-        ]
-      }
-    ],
-    [
-      "@semantic-release/git",
-      {
-        "assets": ["CHANGELOG.md"]
-      }
-    ],
+    "@semantic-release/npm",
     [
       "@semantic-release/github",
       {
         "assets": [
           {
             "path": [
-              "dist/**",
               "CHANGELOG.md"
             ],
             "name": "adr-tools-${nextRelease.gitTag}.zip",
             "label": "ADR-Tools ${nextRelease.gitTag}"
           }
         ]
-    }]
+      }
+    ]
   ]
 }
