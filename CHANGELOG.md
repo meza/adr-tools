@@ -1,5 +1,12 @@
 # ADR Tools Changelog
 
+## [1.0.8](https://github.com/meza/adr-tools/compare/v1.0.7...v1.0.8) (2022-06-27)
+
+
+### Bug Fixes
+
+* toc now generates as a list ([ecfe2aa](https://github.com/meza/adr-tools/commit/ecfe2aaf9b4431672860411b0d6fbd7ec0141beb))
+
 ## [1.0.7](https://github.com/meza/adr-tools/compare/v1.0.6...v1.0.7) (2022-06-27)
 
 
