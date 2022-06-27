@@ -1,5 +1,13 @@
 # ADR Tools Changelog
 
+## [1.0.10](https://github.com/meza/adr-tools/compare/v1.0.9...v1.0.10) (2022-06-27)
+
+
+### Bug Fixes
+
+* added missing dependencies ([b07d0a6](https://github.com/meza/adr-tools/commit/b07d0a60bb563e81e74530d90aa421cbf985edf8))
+* **ci:** fixed the cach key ([6149a19](https://github.com/meza/adr-tools/commit/6149a19aa0708170bb249466686e219b0dc0fe91))
+
 ## [1.0.9](https://github.com/meza/adr-tools/compare/v1.0.8...v1.0.9) (2022-06-27)
 
 
