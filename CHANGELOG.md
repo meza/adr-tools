@@ -1,5 +1,12 @@
 # ADR Tools Changelog
 
+## [1.0.7](https://github.com/meza/adr-tools/compare/v1.0.6...v1.0.7) (2022-06-27)
+
+
+### Bug Fixes
+
+* fixed the regression of the restricted releases ([303c19f](https://github.com/meza/adr-tools/commit/303c19fd40a31dd586feb01fd0c8209c92423898))
+
 ## [1.0.6](https://github.com/meza/adr-tools/compare/v1.0.5...v1.0.6) (2022-06-27)
 
 
