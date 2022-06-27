@@ -48,7 +48,7 @@ jobs:
     needs: [build]
     name: Release
     runs-on: ubuntu-latest
-    if: ${{github.ref == 'ref/head/main' || github.ref == 'ref/head/next'}}
+    if: ${{github.ref == 'ref/head/main'}} || ${{github.ref == 'ref/head/next'}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
