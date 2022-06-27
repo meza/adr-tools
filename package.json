@@ -1,6 +1,6 @@
 {
   "name": "@meza/adr-tools",
-  "version": "1.0.6",
+  "version": "1.0.5",
   "main": "dist/index.js",
   "bin": {
     "adr": "dist/index.js"
@@ -85,6 +85,6 @@
     "url": "https://github.com/meza/adr-tools.git"
   },
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   }
 }
