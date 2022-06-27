@@ -6,7 +6,7 @@
     "adr": "dist/index.js"
   },
   "types": "dist/index.d.ts",
-  "private": true,
+  "private": false,
   "scripts": {
     "prebuild": "node -p \"'export const LIB_VERSION = ' + require('./package.json').version + ';'\" > src/version.ts",
     "build": "tsc",

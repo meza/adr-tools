@@ -1,5 +1,7 @@
 # ADR-TOOLS
 
+> THIS REPO IS UNDER HEAVY DEVELOPMENT. CODE YOU SEE HERE IS... NOT QUITE READY OR PRETTY (yet).
+
 This is a Typescript fork of Nat Pryce's [ADR-TOOLS](https://github.com/npryce/adr-tools).
 
 There are a few other forks out there which do some parts of the original tool but none actually do it fully.
