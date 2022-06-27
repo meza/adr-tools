@@ -28,13 +28,18 @@
         "assets": [
           {
             "path": [
-              "dist/**",
               "CHANGELOG.md"
             ],
             "name": "adr-tools-${nextRelease.gitTag}.zip",
             "label": "ADR-Tools ${nextRelease.gitTag}"
           }
         ]
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["CHANGELOG.md"]
       }
     ]
   ]
