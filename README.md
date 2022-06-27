@@ -8,6 +8,8 @@ There are a few other forks out there which do some parts of the original tool b
 
 This does.
 
+More documentation to follow very soon!
+
 ## Conventions
 
 An ADR file MUST have a `# title` at the top and a `## Status` header.
