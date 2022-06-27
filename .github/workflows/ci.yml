@@ -83,8 +83,6 @@ jobs:
 
       - name: Install deps
         run: yarn --pure-lockfile --offline
-      - name: Build
-        run: yarn build
 
       - name: Release
         env:
