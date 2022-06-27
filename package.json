@@ -1,6 +1,6 @@
 {
   "name": "@meza/adr-tools",
-  "version": "0.0.0",
+  "version": "0.0.0-development",
   "main": "dist/index.js",
   "bin": {
     "adr": "dist/index.js"
@@ -23,8 +23,8 @@
     "test": "vitest",
     "prepare": "husky install",
     "report": "exit 0",
-    "release": "release-it",
-    "release:ci": "release-it --ci"
+    "semantic-release": "semantic-release",
+    "release": "semantic-release"
   },
   "dependencies": {
     "@types/inquirer": "^8.2.1",
@@ -35,20 +35,6 @@
     "core-js": "^3.19.1",
     "inquirer": "^8.2.4",
     "marked": "^4.0.17"
-  },
-  "standard-version": {
-    "bumpFiles": [
-      {
-        "filename": "package.json",
-        "type": "json"
-      }
-    ],
-    "packageFiles": [
-      {
-        "filename": "package.json",
-        "type": "json"
-      }
-    ]
   },
   "commitlint": {
     "extends": [
@@ -69,6 +55,12 @@
     "@commitlint/prompt-cli": "^17.0.0",
     "@meza/tsconfig-base": "^1.1.0",
     "@release-it/conventional-changelog": "^5.0.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.4",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.3.0",
@@ -77,15 +69,23 @@
     "eslint": "^8.1.0",
     "eslint-config-tailored-tunes": "^5.0.2",
     "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-security": "^1.5.0",
     "husky": "^8.0.1",
     "install-deps-postmerge": "^2.0.1",
     "mock-cwd": "^1.0.0",
-    "release-it": "^15.1.0",
+    "semantic-release": "^19.0.3",
     "standard-version": "^9.3.2",
     "ts-node": "^10.8.1",
     "typescript": "^4.4.4",
     "uuid": "^8.3.2",
     "vitest": "^0.15.2",
     "yarn": "^1.22.17"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meza/adr-tools.git"
+  },
+  "publishConfig": {
+    "access": "restricted"
   }
 }

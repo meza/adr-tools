@@ -1,0 +1,41 @@
+{
+  "plugins": [
+    "@semantic-release/npm",
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "docs/CHANGELOG.md"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md"
+        ]
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["CHANGELOG.md"]
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": [
+              "dist/**",
+              "CHANGELOG.md"
+            ],
+            "name": "adr-tools-${nextRelease.gitTag}.zip",
+            "label": "ADR-Tools ${nextRelease.gitTag}"
+          }
+        ]
+    }]
+  ]
+}
