@@ -5,6 +5,9 @@
   "bin": {
     "adr": "dist/index.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "types": "dist/index.d.ts",
   "private": false,
   "scripts": {
@@ -84,8 +87,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/meza/adr-tools.git"
-  },
-  "publishConfig": {
-    "access": "restricted"
   }
 }
