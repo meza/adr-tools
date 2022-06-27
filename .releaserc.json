@@ -18,6 +18,7 @@
     [
       "@semantic-release/changelog",
       {
+        "changelogTitle": "# ADR Tools Changelog",
         "changelogFile": "CHANGELOG.md"
       }
     ],
