@@ -1,5 +1,12 @@
 # ADR Tools Changelog
 
+## [1.0.9](https://github.com/meza/adr-tools/compare/v1.0.8...v1.0.9) (2022-06-27)
+
+
+### Bug Fixes
+
+* missing template ([4025740](https://github.com/meza/adr-tools/commit/40257404926e17a6c43f10d51c9809ce68e1400a))
+
 ## [1.0.8](https://github.com/meza/adr-tools/compare/v1.0.7...v1.0.8) (2022-06-27)
 
 
