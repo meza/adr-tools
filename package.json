@@ -5,16 +5,11 @@
   "bin": {
     "adr": "dist/index.js"
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "license": "MIT",
   "types": "dist/index.d.ts",
   "private": false,
   "scripts": {
-    "prepack": "./scripts/inject-version.sh ./src/version.ts && tsc",
+    "prebuild": "node -p \"'export const LIB_VERSION = ' + require('./package.json').version + ';'\" > src/version.ts",
     "build": "tsc",
-    "postbuild": "",
     "start": "ts-node src/index.ts",
     "commit": "commit",
     "ci": "npm set editor '' && yarn lint && yarn test",
@@ -26,7 +21,7 @@
     "lint:fix": "yarn lint:eslint --fix && yarn lint:tsc",
     "lint": "yarn lint:eslint && yarn lint:tsc",
     "test": "vitest",
-    "prepare": "husky install",
+    "prepare": "is-ci || husky install",
     "report": "exit 0",
     "semantic-release": "semantic-release",
     "release": "semantic-release"
@@ -77,8 +72,8 @@
     "eslint-plugin-security": "^1.5.0",
     "husky": "^8.0.1",
     "install-deps-postmerge": "^2.0.1",
+    "is-ci": "^3.0.1",
     "mock-cwd": "^1.0.0",
-    "node-jq": "^2.3.3",
     "semantic-release": "^19.0.3",
     "standard-version": "^9.3.2",
     "ts-node": "^10.8.1",
@@ -90,5 +85,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/meza/adr-tools.git"
+  },
+  "publishConfig": {
+    "access": "restricted"
   }
 }
