@@ -32,7 +32,7 @@
     "@types/inquirer": "^8.2.1",
     "@types/marked": "^4.0.3",
     "@types/node": "^18.0.0",
-    "chalk": "^4.1.2",
+    "chalk": "^5.0.1",
     "commander": "^9.3.0",
     "core-js": "^3.19.1",
     "inquirer": "^8.2.4",
