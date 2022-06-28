@@ -21,7 +21,7 @@ jobs:
           path: |
             ~/.cache
             ~/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -61,7 +61,7 @@ jobs:
           path: |
             ~/.cache
             ~/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path

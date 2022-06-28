@@ -3,7 +3,7 @@
 exports[`Generating TOC > should add a path prefix to the toc when there is one supplied 1`] = `
 "# Table of Contents
 
-[1. First Record](foo/doc/adr/0001-first-record.md)
-[2. Second Record](foo/doc/adr/0002-second-record.md)
-[3. Third Record](foo/doc/adr/0003-third-record.md)"
+- [1. First Record](foo/doc/adr/0001-first-record.md)
+- [2. Second Record](foo/doc/adr/0002-second-record.md)
+- [3. Third Record](foo/doc/adr/0003-third-record.md)"
 `;
