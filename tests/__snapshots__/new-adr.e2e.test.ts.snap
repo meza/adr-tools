@@ -49,6 +49,6 @@ What becomes easier or more difficult to do and any risks introduced by the chan
 exports[`New Adrs > should create a table of contents upon creation 1`] = `
 "# Table of Contents
 
-[1. Record architecture decisions](0001-record-architecture-decisions.md)
-[2. Example ADR](0002-example-adr.md)"
+- [1. Record architecture decisions](0001-record-architecture-decisions.md)
+- [2. Example ADR](0002-example-adr.md)"
 `;
