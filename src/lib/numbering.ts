@@ -1,5 +1,5 @@
 import fs from 'fs/promises';
-import { getDir } from './config';
+import { getDir } from './config.js';
 import * as path from 'path';
 
 export const newNumber = async () => {

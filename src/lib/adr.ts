@@ -1,13 +1,16 @@
-import { newNumber } from './numbering';
-import { template } from './template';
+import { newNumber } from './numbering.js';
+import { template } from './template.js';
 import fs from 'fs/promises';
-import path from 'path';
-import { getDir, workingDir } from './config';
-import { prompt } from 'inquirer';
+import path from 'node:path';
+import { getDir, workingDir } from './config.js';
+import inquirer from 'inquirer';
 import chalk from 'chalk';
-import { getTitleFrom, injectLink, supersede } from './manipulator';
-import { findMatchingFilesFor, getLinkDetails } from './links';
+import { getTitleFrom, injectLink, supersede } from './manipulator.js';
+import { findMatchingFilesFor, getLinkDetails } from './links.js';
 import childProcess from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
 
 interface NewOptions {
   supersedes?: string[];
@@ -18,7 +21,7 @@ interface NewOptions {
 }
 
 const askForClarification = async (searchString: string, matches: string[]) => {
-  const selection = await prompt([
+  const selection = await inquirer.prompt([
     {
       type: 'list',
       name: 'target',

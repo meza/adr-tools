@@ -1,14 +1,17 @@
 /* eslint-disable no-sync */
 import { describe, it, expect, afterEach, beforeEach } from 'vitest';
-import childProcess from 'child_process';
-import path from 'path';
-import fs from 'fs';
+import * as childProcess from 'child_process';
+import * as path from 'path';
+import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
 
 describe('Funny Characters', () => {
   const workDir = path.dirname(__filename);
   const adr: string = path.resolve(workDir, '../src/index.ts');
-  const command = `npx ts-node ${adr}`;
+  const command = `npx ts-node --esm ${adr}`;
   let randomDir = uuidv4();
   let adrDirectory: string;
 

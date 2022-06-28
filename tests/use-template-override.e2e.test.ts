@@ -7,7 +7,7 @@ import * as os from 'os';
 
 describe('Overriding templates', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx ts-node ${adr}`;
+  const command = `npx ts-node --esm ${adr}`;
 
   let adrDirectory: string;
   let workDir: string;

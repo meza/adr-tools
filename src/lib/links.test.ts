@@ -1,9 +1,9 @@
 import { vi, describe, it, expect, afterEach } from 'vitest';
 import fs from 'fs/promises';
-import { getDir } from './config';
-import { getLinkDetails } from './links';
+import { getDir } from './config.js';
+import { getLinkDetails } from './links.js';
 
-vi.mock('./config');
+vi.mock('./config.js');
 vi.mock('fs/promises');
 
 describe('The link lib', () => {
