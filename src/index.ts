@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { LIB_VERSION } from './version';
-import { generateToc, init, link, listAdrs, newAdr } from './lib/adr';
+import { LIB_VERSION } from './version.js';
+import { generateToc, init, link, listAdrs, newAdr } from './lib/adr.js';
 import chalk from 'chalk';
-import { workingDir } from './lib/config';
+import { workingDir } from './lib/config.js';
 import * as path from 'path';
-import { getLinksFrom, getTitleFrom } from './lib/manipulator';
+import { getLinksFrom, getTitleFrom } from './lib/manipulator.js';
 import fs from 'fs/promises';
 
 const program = new Command();

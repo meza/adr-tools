@@ -7,7 +7,7 @@ import * as os from 'os';
 
 describe('Generating Graphs', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx ts-node ${adr}`;
+  const command = `npx ts-node --esm ${adr}`;
   let workDir: string;
 
   beforeAll(async () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { injectLink, getTitleFrom, getLinksFrom } from './manipulator';
+import { injectLink, getTitleFrom, getLinksFrom } from './manipulator.js';
 
 describe('The ADR manipulator', () => {
 
