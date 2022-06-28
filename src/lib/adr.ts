@@ -144,7 +144,7 @@ export const generateToc = async (options?: {prefix?: string}) => {
 
   const titles = toc.map(async (file) => {
     const title = getTitleFrom(await fs.readFile(path.join(adrDir, file), 'utf8'));
-    return `[${title}](${options?.prefix || ''}${file})`;
+    return `- [${title}](${options?.prefix || ''}${file})`;
   });
 
   const resolvedTitles = await Promise.all(titles);
