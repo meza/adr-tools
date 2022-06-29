@@ -1,11 +1,11 @@
 import { afterAll, describe, it, vi, expect } from 'vitest';
 import fs from 'fs/promises';
-import { newNumber } from './numbering';
+import { newNumber } from './numbering.js';
 
 type ReaddirMock = () => Promise<String[]>
 
 vi.mock('fs/promises');
-vi.mock('./config', () => ({
+vi.mock('./config.js', () => ({
   getDir: vi.fn().mockResolvedValue('/')
 }));
 

@@ -7,7 +7,7 @@ import * as os from 'os';
 
 describe('Edit new Adrs on creation', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx ts-node ${adr}`;
+  const command = `npx ts-node --esm ${adr}`;
   const visualHelper = path.resolve(path.dirname(__filename), './fake-visual');
   const editorHelper = path.resolve(path.dirname(__filename), './fake-editor');
 

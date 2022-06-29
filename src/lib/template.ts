@@ -1,6 +1,10 @@
 import fs from 'fs/promises';
-import path from 'path';
-import { getDir } from './config';
+import * as path from 'node:path';
+import { getDir } from './config.js';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const template = async (templateFile?: string): Promise<string> => {
   if (templateFile) {

@@ -1,13 +1,15 @@
-import { newNumber } from './numbering';
-import { template } from './template';
+import { newNumber } from './numbering.js';
+import { template } from './template.js';
 import fs from 'fs/promises';
-import path from 'path';
-import { getDir, workingDir } from './config';
-import { prompt } from 'inquirer';
-import chalk from 'chalk';
-import { getTitleFrom, injectLink, supersede } from './manipulator';
-import { findMatchingFilesFor, getLinkDetails } from './links';
+import path from 'node:path';
+import { getDir, workingDir } from './config.js';
+import { getTitleFrom, injectLink, supersede } from './manipulator.js';
+import { findMatchingFilesFor, getLinkDetails } from './links.js';
 import childProcess from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { askForClarification } from './prompt.js';
+
+const __filename = fileURLToPath(import.meta.url);
 
 interface NewOptions {
   supersedes?: string[];
@@ -16,18 +18,6 @@ interface NewOptions {
   template?: string;
   links?: string[];
 }
-
-const askForClarification = async (searchString: string, matches: string[]) => {
-  const selection = await prompt([
-    {
-      type: 'list',
-      name: 'target',
-      message: `Which file do you want to link to for ${chalk.blue(searchString)}?`,
-      choices: matches
-    }
-  ]);
-  return selection.target;
-};
 
 // eslint-disable-next-line no-unused-vars
 enum LinkType {

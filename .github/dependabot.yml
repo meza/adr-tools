@@ -8,6 +8,7 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     versioning-strategy: increase-if-necessary
+    target-branch: "next"
     commit-message:
       prefix: "chore: "
     schedule:
