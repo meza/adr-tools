@@ -2,11 +2,11 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    dir: 'src',
+    dir: 'tests',
     testTimeout: 10000,
     watch: false,
     coverage: {
-      reportsDirectory: './reports/coverage/unit',
+      reportsDirectory: './reports/coverage/e2e',
       reporter: ['text', 'json', 'html']
     }
   }
