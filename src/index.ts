@@ -2,7 +2,7 @@
 
 import { Command } from 'commander';
 import { LIB_VERSION } from './version.js';
-import { generateToc, init, link, listAdrs, newAdr } from './lib/adr.js';
+import { generateToc, init, link, listADRs, newAdr } from './lib/adr.js';
 import chalk from 'chalk';
 import { workingDir } from './lib/config.js';
 import * as path from 'path';
@@ -26,7 +26,7 @@ const generateGraph = async (options?: {prefix: string, extension :string}) => {
   text += '  node [shape=plaintext];\n';
   text += '  subgraph {\n';
 
-  const adrs = await listAdrs();
+  const adrs = await listADRs();
   for (let i = 0; i < adrs.length; i++) {
     const n = i + 1;
     const adrPath = adrs[i];
@@ -107,7 +107,7 @@ program.command('init').argument('[directory]', 'Initialize a new ADR directory'
 });
 
 program.command('list').action(async () => {
-  const adrs = await listAdrs();
+  const adrs = await listADRs();
   console.log(adrs.map(adr => path.relative(workingDir(), adr)).join('\n'));
 });
 

@@ -17,7 +17,7 @@ export const getAllADRs = async (): Promise<AdrListItem[]> => {
   const toc = files.filter((file) => file.match(/^\d{4}-.*\.md$/));
 
   const titles = toc.map(async (file) => {
-    const filePath = path.join(adrDir, file);
+    const filePath = path.resolve(adrDir, file);
     const title = getTitleFrom(await fs.readFile(filePath, 'utf8'));
     const filenameDeets = filenameDetails(file);
 
