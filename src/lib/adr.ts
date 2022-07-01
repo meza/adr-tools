@@ -1,3 +1,4 @@
+import { AdrListItem, getAllADRs } from './list.js';
 import { newNumber } from './numbering.js';
 import { template } from './template.js';
 import fs from 'fs/promises';
@@ -128,19 +129,17 @@ const injectLinksTo = async (
 //Generate a table of contents for the adr directory
 export const generateToc = async (options?: {prefix?: string}) => {
 
-  const adrDir = await getDir();
-  const files = await fs.readdir(adrDir);
-  const toc = files.filter((file) => file.match(/^\d{4}-.*\.md$/));
+  const adrs: AdrListItem[] = await getAllADRs();
+  const resolvedTitles = adrs.map((adr) => `- [${adr.title}](${options?.prefix || ''}${adr.file})`);
 
-  const titles = toc.map(async (file) => {
-    const title = getTitleFrom(await fs.readFile(path.join(adrDir, file), 'utf8'));
-    return `- [${title}](${options?.prefix || ''}${file})`;
-  });
-
-  const resolvedTitles = await Promise.all(titles);
-
-  const tocFile = path.resolve(path.join(adrDir, 'decisions.md'));
+  const tocFile = path.resolve(path.join(await getDir(), 'decisions.md'));
   await fs.writeFile(tocFile, `# Table of Contents\n\n${resolvedTitles.join('\n')}`);
+};
+
+export const listAdrs = async () => {
+  const adrs: AdrListItem[] = await getAllADRs();
+  const resolvedTitles = adrs.map((adr) => adr.file);
+  console.log(resolvedTitles.join('\n'));
 };
 
 export const newAdr = async (title: string, config?: NewOptions) => {
@@ -218,15 +217,3 @@ export const link = async (source: string, link: string, target: string, reverse
 
 };
 
-export const listAdrs = async () => {
-  const dir = await getDir();
-  const files = await fs.readdir(dir);
-  const toc = files.map(f => {
-    const adrFile = f.match(/^0*(\d+)-.*$/);
-    if (adrFile) {
-      return path.resolve(dir, adrFile[0]);
-    }
-    return '';
-  }).filter(f => f !== '');
-  return toc;
-};
