@@ -910,10 +910,10 @@
     "@typescript-eslint/types" "5.30.0"
     eslint-visitor-keys "^3.3.0"
 
-"@vitest/ui@^0.16.0":
-  version "0.16.0"
-  resolved "https://registry.npmjs.org/@vitest/ui/-/ui-0.16.0.tgz#0bf730a26460c1703aaf27ab64b0917f86ac1fe3"
-  integrity sha512-RwXYTFA2tVwUhuuTcdAaK5kIq+I3pnvNQUojPThZPZhS7ttKXkCgWwud0KXwnR04ofKc3HXEuzWPf6s7JD1vgw==
+"@vitest/ui@^0.21.1":
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-0.21.1.tgz#b941f5053663a8363910a54f680c263444cc5f09"
+  integrity sha512-e+AZdMG6NvrYhxB99LGxW1GkoTpqSDPKpL+wghsApWhocNwALBOBzvgsDr/WN6D6YWRXf18rsJ1kY/KaIspRdg==
   dependencies:
     sirv "^2.0.2"
 
