@@ -910,11 +910,13 @@
     "@typescript-eslint/types" "5.30.0"
     eslint-visitor-keys "^3.3.0"
 
-"@vitest/ui@^0.16.0":
-  version "0.16.0"
-  resolved "https://registry.npmjs.org/@vitest/ui/-/ui-0.16.0.tgz#0bf730a26460c1703aaf27ab64b0917f86ac1fe3"
-  integrity sha512-RwXYTFA2tVwUhuuTcdAaK5kIq+I3pnvNQUojPThZPZhS7ttKXkCgWwud0KXwnR04ofKc3HXEuzWPf6s7JD1vgw==
+"@vitest/ui@^0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-0.27.0.tgz#3b4d3cbec5c0cf619127f5d4811efe39359722b5"
+  integrity sha512-eQmDfnNBB1c42eVqFSxvkNa+6OWA6O8QRQAp9oK0fdEicqToB+bts95+TrCsO2eXC0N9Q8GplFqRMqPLoJuVlA==
   dependencies:
+    fast-glob "^3.2.12"
+    flatted "^3.2.7"
     sirv "^2.0.2"
 
 JSONStream@^1.0.4:
@@ -2233,10 +2235,10 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   resolved "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
 
-fast-glob@^3.2.9:
-  version "3.2.11"
-  resolved "https://registry.npmjs.org/fast-glob/-/fast-glob-3.2.11.tgz#a1172ad95ceb8a16e20caa5c5e56480e5129c1d9"
-  integrity sha512-xrO3+1bxSo3ZVHAnqzyuewYT6aMFHRAd4Kcs92MAonjwQZLsK9d0SF1IyQ3k5PoirxTW0Oe/RqFgMQ6TcNE5Ew==
+fast-glob@^3.2.12, fast-glob@^3.2.9:
+  version "3.2.12"
+  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.12.tgz#7f39ec99c2e6ab030337142da9e0c18f37afae80"
+  integrity sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==
   dependencies:
     "@nodelib/fs.stat" "^2.0.2"
     "@nodelib/fs.walk" "^1.2.3"
@@ -2363,10 +2365,10 @@ flat-cache@^3.0.4:
     flatted "^3.1.0"
     rimraf "^3.0.2"
 
-flatted@^3.1.0:
-  version "3.2.6"
-  resolved "https://registry.npmjs.org/flatted/-/flatted-3.2.6.tgz#022e9218c637f9f3fc9c35ab9c9193f05add60b2"
-  integrity sha512-0sQoMh9s0BYsm+12Huy/rkKxVu4R1+r96YX5cG44rHV0pQ6iC3Q+mkoMFaGWObMFYQxCVT+ssG1ksneA2MI9KQ==
+flatted@^3.1.0, flatted@^3.2.7:
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.7.tgz#609f39207cb614b89d0765b477cb2d437fbf9787"
+  integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
 
 foreground-child@^2.0.0:
   version "2.0.0"
