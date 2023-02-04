@@ -1,14 +1,75 @@
 # ADR-TOOLS
 
-> THIS REPO IS UNDER HEAVY DEVELOPMENT. CODE YOU SEE HERE IS... NOT QUITE READY OR PRETTY (yet).
+> This is a Typescript fork of Nat Pryce's [ADR-TOOLS](https://github.com/npryce/adr-tools).
+>There are a few other forks out there which do some parts of the original tool but none actually do it fully.
+>This does.
+>More documentation to follow very soon!
 
-This is a Typescript fork of Nat Pryce's [ADR-TOOLS](https://github.com/npryce/adr-tools).
+# Using ADRs
 
-There are a few other forks out there which do some parts of the original tool but none actually do it fully.
+We use Architectural Decision Logs in our porjects as per our [Documentation Strategy](https://utopia-music.atlassian.net/wiki/spaces/CP/pages/2430107660/Documentation+Strategy#ADR---Architecture-Decision-Records).
 
-This does.
+If you’re interested in reading more about what ADRs are and why they’re important, [check this article out](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions).
 
-More documentation to follow very soon!
+## **ADR Location Convention**
+
+By convention we store the decisions in **<project_root>/docs/decisions**
+
+You can also check where the directory is by inspecting the **.adr-dir** file’s contents.
+
+## **ADR CLI in node land**
+
+Managing the files and templates by hand is laborious and is not expected from anyone. We have a tool capable of handling that.
+
+You can install it by running
+
+```
+npm install --save-dev @meza/adr-tools
+```
+
+This will give you the following shorthands:
+
+### **Creating new records**
+
+```
+adr new A new decision the team has made
+```
+
+This will automatically figure out the numbering sequence, get the correct filename format and use the title inside of an ADR template.
+
+If you have an EDITOR or VISUAL environment variable set, that editor will open the newly created file.
+
+### **Superseding previous decisions**
+
+We work in an agile environment where we aim to fail fast. Some of our decisions will turn out to be invalid within a new context. In those situations we would want to record a new decision to supersede our previous one.
+
+Let’s say we had a decision “[0003-use-jest-for-testing.md](http://0003-use-jest-for-testing.md/)” but we recently learned that vitest is faster. Then we would want to record that but also update 0003 to reflect the fact that it’s no longer valid.
+
+```
+adr new -s 3 Use vitest for testing
+```
+
+The -s flag tells the tool to update record #3 with a link to the newly created decision.
+
+### **Linking decisions**
+
+Sometimes there are situations when a new decision has another type of link to a previous record and not a supersede.
+
+That can be expressed as follows:
+
+```
+adr new -l "3:Amends:Amended by" use jest only for pact testing
+```
+
+This will link the new and old issues together. The old one will get a link looking like “Amended by: Use jest only for pact testing” while the newly created ADR will have a section saying: “Amends: Use Jest For Testing”. Both with the appropriate numbering and navigational links set up.
+
+### **Other things**
+
+There’s more to the tool. You can get help with
+
+```
+adr help
+```
 
 ## Conventions
 
