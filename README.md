@@ -7,8 +7,6 @@
 
 # Using ADRs
 
-We use Architectural Decision Logs in our porjects as per our [Documentation Strategy](https://utopia-music.atlassian.net/wiki/spaces/CP/pages/2430107660/Documentation+Strategy#ADR---Architecture-Decision-Records).
-
 If you’re interested in reading more about what ADRs are and why they’re important, [check this article out](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions).
 
 ## **ADR Location Convention**
