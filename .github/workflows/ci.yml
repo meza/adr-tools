@@ -43,6 +43,7 @@ jobs:
 
       - run: yarn --pure-lockfile
       - run: yarn lint
+      - run: yarn test
 
   release:
     needs: [build]
