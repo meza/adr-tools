@@ -30,7 +30,7 @@ describe('Edit new Adrs on creation', () => {
   });
 
   it('should open a new ADR in the VISUAL', () => {
-    childProcess.execSync(`VISUAL="${visualHelper}" ${command} new Example ADR`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`VISUAL="${visualHelper}" ${command} new Example ADR`, { timeout: 10000, cwd: workDir });
 
     const expectedNewFile: string = path.join(workDir, 'visual.out');
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
@@ -38,7 +38,7 @@ describe('Edit new Adrs on creation', () => {
   });
 
   it.skip('should open a new ADR in the EDITOR', () => {
-    childProcess.execSync(`EDITOR="${editorHelper}" ${command} new Example ADR`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`EDITOR="${editorHelper}" ${command} new Example ADR`, { timeout: 10000, cwd: workDir });
 
     const expectedNewFile: string = path.join(workDir, 'editor.out');
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');

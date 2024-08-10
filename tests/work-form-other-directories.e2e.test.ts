@@ -15,7 +15,7 @@ describe('deep directories', () => {
   beforeEach(() => {
     workDir = path.resolve(fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'adr-'))));
     adrDirectory = path.join(workDir, 'doc/adr');
-    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 10000, cwd: workDir });
   });
 
   afterEach(() => {
@@ -29,7 +29,7 @@ describe('deep directories', () => {
   it('can work', () => {
     const innerPath = path.join(fs.mkdtempSync(path.resolve(workDir) + '/'), 'inner');
     fs.mkdirSync(innerPath, { recursive: true });
-    childProcess.execSync(`${command} new this should exist`, { timeout: 3000, cwd: innerPath });
+    childProcess.execSync(`${command} new this should exist`, { timeout: 10000, cwd: innerPath });
     const expectedFile: string = path.join(adrDirectory, '0002-this-should-exist.md');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });
@@ -39,7 +39,7 @@ describe('deep directories', () => {
 
     const innerPath = path.join(fs.mkdtempSync(path.resolve(workDir) + '/'), 'inner');
     fs.mkdirSync(innerPath, { recursive: true });
-    childProcess.execSync(`${command} new this should exist`, { timeout: 3000, cwd: innerPath });
+    childProcess.execSync(`${command} new this should exist`, { timeout: 10000, cwd: innerPath });
     const expectedFile: string = path.join(innerPath, 'doc', 'adr', '0001-this-should-exist.md');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });

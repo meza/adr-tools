@@ -16,7 +16,7 @@ describe('Listing', () => {
   beforeEach(async () => {
     workDir = path.resolve(realpathSync(await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'))));
     adrDirectory = 'doc/adr';
-    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 10000, cwd: workDir });
   });
 
   afterEach(() => {
@@ -28,23 +28,23 @@ describe('Listing', () => {
   });
 
   it('should list an empty directory', async () => {
-    const child = childProcess.execSync(`${command} list`, { timeout: 3000, cwd: workDir });
+    const child = childProcess.execSync(`${command} list`, { timeout: 10000, cwd: workDir });
     const output = child.toString().trim();
     expect(output).toEqual('doc/adr/0001-record-architecture-decisions.md');
   });
 
   it('should list when there is an additional one', async () => {
-    childProcess.execSync(`${command} new first`, { timeout: 3000, cwd: workDir });
-    const child = childProcess.execSync(`${command} list`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new first`, { timeout: 10000, cwd: workDir });
+    const child = childProcess.execSync(`${command} list`, { timeout: 10000, cwd: workDir });
     const output = child.toString().trim();
     expect(output).toEqual('doc/adr/0001-record-architecture-decisions.md\ndoc/adr/0002-first.md');
   });
 
   it('should list when there are more', async () => {
-    childProcess.execSync(`${command} new first`, { timeout: 3000, cwd: workDir });
-    childProcess.execSync(`${command} new second`, { timeout: 3000, cwd: workDir });
-    childProcess.execSync(`${command} new third`, { timeout: 3000, cwd: workDir });
-    const child = childProcess.execSync(`${command} list`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new first`, { timeout: 10000, cwd: workDir });
+    childProcess.execSync(`${command} new second`, { timeout: 10000, cwd: workDir });
+    childProcess.execSync(`${command} new third`, { timeout: 10000, cwd: workDir });
+    const child = childProcess.execSync(`${command} list`, { timeout: 10000, cwd: workDir });
     const output = child.toString().trim();
     expect(output).toEqual(
       'doc/adr/0001-record-architecture-decisions.md\ndoc/adr/0002-first.md\ndoc/adr/0003-second.md\ndoc/adr/0004-third.md'

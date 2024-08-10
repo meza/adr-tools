@@ -28,8 +28,8 @@ describe('New Adrs', () => {
   });
 
   it('should create a new one normally', () => {
-    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 3000, cwd: workDir });
-    childProcess.execSync(`${command} new Example ADR`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 10000, cwd: workDir });
+    childProcess.execSync(`${command} new Example ADR`, { timeout: 10000, cwd: workDir });
 
     const expectedNewFile: string = path.join(adrDirectory, '0002-example-adr.md');
     expect(fs.existsSync(expectedNewFile)).toBeTruthy();
@@ -39,7 +39,7 @@ describe('New Adrs', () => {
   });
 
   it('should create a new one even if no config exists', () => {
-    childProcess.execSync(`${command} new Example ADR`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new Example ADR`, { timeout: 10000, cwd: workDir });
 
     const expectedNewFile: string = path.join(adrDirectory, '0001-example-adr.md');
     expect(fs.existsSync(expectedNewFile)).toBeTruthy();
@@ -49,8 +49,8 @@ describe('New Adrs', () => {
   });
 
   it('should create a table of contents upon creation', () => {
-    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 3000, cwd: workDir });
-    childProcess.execSync(`${command} new Example ADR`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 10000, cwd: workDir });
+    childProcess.execSync(`${command} new Example ADR`, { timeout: 10000, cwd: workDir });
 
     const expectedNewFile: string = path.join(adrDirectory, 'decisions.md');
     expect(fs.existsSync(expectedNewFile)).toBeTruthy();

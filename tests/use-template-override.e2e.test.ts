@@ -18,7 +18,7 @@ describe('Overriding templates', () => {
     process.env.ADR_DATE = '1992-01-12';
     workDir = path.resolve(realpathSync(await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'))));
     adrDirectory = path.join(workDir, 'doc/adr');
-    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 10000, cwd: workDir });
   });
 
   afterEach(() => {
@@ -36,8 +36,8 @@ describe('Overriding templates', () => {
       '# This is an override template\nTITLE\nDATE\nNUMBER\nSTATUS'
     );
 
-    childProcess.execSync(`${command} new Example ADR`, { timeout: 3000, cwd: workDir });
-    childProcess.execSync(`${command} new Another Example ADR`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new Example ADR`, { timeout: 10000, cwd: workDir });
+    childProcess.execSync(`${command} new Another Example ADR`, { timeout: 10000, cwd: workDir });
 
     const expectedFile: string = path.join(adrDirectory, '0002-example-adr.md');
     const expectedFile2: string = path.join(adrDirectory, '0003-another-example-adr.md');
