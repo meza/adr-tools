@@ -82,7 +82,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install deps
-        run: yarn --pure-lockfile --offline
+        run: yarn --pure-lockfile
 
       - name: Release
         env:
