@@ -42,8 +42,7 @@ jobs:
           cache: 'yarn'
 
       - run: yarn --pure-lockfile
-      - run: yarn lint
-      - run: yarn test
+      - run: yarn ci
 
   release:
     needs: [build]
