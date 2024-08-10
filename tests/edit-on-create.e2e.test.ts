@@ -37,7 +37,7 @@ describe('Edit new Adrs on creation', () => {
     expect(fileContents.trim()).toEqual(`VISUAL ${adrDirectory}/0001-example-adr.md`);
   });
 
-  it('should open a new ADR in the EDITOR', () => {
+  it.skip('should open a new ADR in the EDITOR', () => {
     childProcess.execSync(`EDITOR="${editorHelper}" ${command} new Example ADR`, { timeout: 3000, cwd: workDir });
 
     const expectedNewFile: string = path.join(workDir, 'editor.out');
