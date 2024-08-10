@@ -4,6 +4,7 @@ import * as childProcess from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs/promises';
 import * as os from 'os';
+import { realpathSync } from 'node:fs';
 
 describe('Generating Graphs', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
@@ -13,7 +14,7 @@ describe('Generating Graphs', () => {
   beforeAll(async () => {
     // @ts-ignore
     process.env.ADR_DATE = '1992-01-12';
-    workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'));
+    workDir = path.resolve(realpathSync(await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'))));
     childProcess.execSync(`${command} init`, { cwd: workDir });
     childProcess.execSync(`${command} new An idea that seems good at the time`, { cwd: workDir });
     childProcess.execSync(`${command} new -s 2 A better idea`, { cwd: workDir });

@@ -14,7 +14,7 @@ describe('deep directories', () => {
   let workDir: string;
 
   beforeEach(() => {
-    workDir = fs.mkdtempSync(path.join(os.tmpdir(), 'adr-'));
+    workDir = path.resolve(fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'adr-'))));
     adrDirectory = path.join(workDir, 'doc/adr');
     childProcess.execSync(`${command} init ${adrDirectory}`, { cwd: workDir });
   });

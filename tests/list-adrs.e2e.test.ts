@@ -4,6 +4,7 @@ import * as childProcess from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs/promises';
 import * as os from 'os';
+import { realpathSync } from 'node:fs';
 
 describe('Listing', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
@@ -13,7 +14,7 @@ describe('Listing', () => {
   let workDir: string;
 
   beforeEach(async () => {
-    workDir = path.normalize(await fs.mkdtemp(path.join(os.tmpdir(), 'adr-')));
+    workDir = path.resolve(realpathSync(await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'))));
     adrDirectory = 'doc/adr';
     childProcess.execSync(`${command} init ${adrDirectory}`, { cwd: workDir });
   });

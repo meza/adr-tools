@@ -4,6 +4,7 @@ import * as childProcess from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs/promises';
 import * as os from 'os';
+import { realpathSync } from 'node:fs';
 
 describe('Superseding Adrs', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
@@ -15,7 +16,7 @@ describe('Superseding Adrs', () => {
   beforeEach(async () => {
     // @ts-ignore
     process.env.ADR_DATE = '1992-01-12';
-    workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'));
+    workDir = path.resolve(realpathSync(await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'))));
     adrDirectory = path.join(workDir, 'doc/adr');
   });
 
