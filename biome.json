@@ -17,7 +17,7 @@
     "ignore": [".cache/**"],
     "attributePosition": "auto"
   },
-  "files": { "include": ["**/*.ts", "**/*.json"] },
+  "files": { "include": ["**/*.ts", "**/*.json"], "ignore": ["package*.json"] },
   "linter": {
     "enabled": true,
     "rules": {
