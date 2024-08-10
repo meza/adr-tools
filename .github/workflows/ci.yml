@@ -2,15 +2,13 @@ name: Verify and Release
 
 on: [push]
 
+env:
+  NODE_VERSION: 22.x
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [ 22.x ]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v4
@@ -35,10 +33,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
 
       - run: yarn --pure-lockfile
@@ -75,10 +73,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
 
       - name: Install deps
