@@ -23,7 +23,7 @@
     "build": "tsc && yarn copy",
     "start": "ts-node src/index.ts",
     "commit": "cz",
-    "ci": "npm set editor '' && npm-run-all --parallel lint test",
+    "ci": "npm config set editor='' && npm-run-all --parallel lint test",
     "ci:dev": "exit 0",
     "clean": "rimraf dist .cache/tsbuildinfo",
     "clean:all": "yarn clean && rm -rf node_modules .cache",

@@ -30,8 +30,8 @@ describe('Linking Adrs', () => {
   });
 
   it('should link adrs as expected with adr new', async () => {
-    childProcess.execSync(`${command} new First Record`, { cwd: workDir, stdio: 'inherit' });
-    childProcess.execSync(`${command} new Second Record`, { cwd: workDir });
+    childProcess.execSync(`${command} new First Record`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new Second Record`, { timeout: 3000, cwd: workDir });
     childProcess.execSync(`${command} new -q -l "1:Amends:Amended by" -l "2:Clarifies:Clarified by" Third Record`, {
       cwd: workDir
     });
@@ -50,11 +50,11 @@ describe('Linking Adrs', () => {
   });
 
   it('should link adrs as expected with adr link', async () => {
-    childProcess.execSync(`${command} new First Record`, { cwd: workDir });
-    childProcess.execSync(`${command} new Second Record`, { cwd: workDir });
-    childProcess.execSync(`${command} new Third Record`, { cwd: workDir });
-    childProcess.execSync(`${command} link 3 Amends 1 "Amended by"`, { cwd: workDir });
-    childProcess.execSync(`${command} link 3 Clarifies 2 "Clarified by"`, { cwd: workDir });
+    childProcess.execSync(`${command} new First Record`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new Second Record`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new Third Record`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} link 3 Amends 1 "Amended by"`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} link 3 Clarifies 2 "Clarified by"`, { timeout: 3000, cwd: workDir });
 
     const first: string = path.join(adrDirectory, '0001-first-record.md');
     const second: string = path.join(adrDirectory, '0002-second-record.md');

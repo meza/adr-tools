@@ -30,10 +30,10 @@ describe('Generating TOC', () => {
   });
 
   it('should add a path prefix to the toc when there is one supplied', async () => {
-    childProcess.execSync(`${command} new First Record`, { cwd: workDir });
-    childProcess.execSync(`${command} new Second Record`, { cwd: workDir });
-    childProcess.execSync(`${command} new Third Record`, { cwd: workDir });
-    childProcess.execSync(`${command} generate toc -p foo/doc/adr/`, { cwd: workDir });
+    childProcess.execSync(`${command} new First Record`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new Second Record`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new Third Record`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} generate toc -p foo/doc/adr/`, { timeout: 3000, cwd: workDir });
 
     const tocFilePath: string = path.join(adrDirectory, 'decisions.md');
     const tocContent = await fs.readFile(tocFilePath, 'utf8');

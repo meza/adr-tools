@@ -27,23 +27,23 @@ describe.skip('Funny Characters', () => {
   beforeEach(() => {
     workDir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'adr-')));
     adrDirectory = path.resolve(path.join(workDir, 'doc/adr'));
-    childProcess.execSync(`${command} init ${adrDirectory}`, { cwd: workDir });
+    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 3000, cwd: workDir });
   });
 
   it('should handle titles with periods in them', async () => {
-    childProcess.execSync(`${command} new Something About Node.JS`, { cwd: workDir, timeout: 10000 });
+    childProcess.execSync(`${command} new Something About Node.JS`, { timeout: 3000, cwd: workDir });
     const expectedFile: string = path.join(adrDirectory, '0002-something-about-node-js.md');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });
 
   it.skip('should handle titles with slashes in them', async () => {
-    childProcess.execSync(`${command} new Slash/Slash/Slash/`, { cwd: workDir });
+    childProcess.execSync(`${command} new Slash/Slash/Slash/`, { timeout: 3000, cwd: workDir });
     const expectedFile: string = path.join(adrDirectory, '0002-slash-slash-slash.md');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });
 
   it.skip('should handle titles with other weirdness in them', async () => {
-    childProcess.execSync(`${command} new -- "-Bar-"`, { cwd: workDir });
+    childProcess.execSync(`${command} new -- "-Bar-"`, { timeout: 3000, cwd: workDir });
     const expectedFile: string = path.join(adrDirectory, '0002-bar.md');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });

@@ -30,8 +30,8 @@ describe('Superseding Adrs', () => {
   });
 
   it('should be able to supersede previous adrs', async () => {
-    childProcess.execSync(`${command} new First Record`, { cwd: workDir });
-    childProcess.execSync(`${command} new -s 1 Second Record`, { cwd: workDir });
+    childProcess.execSync(`${command} new First Record`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new -s 1 Second Record`, { timeout: 3000, cwd: workDir });
 
     const first: string = path.join(adrDirectory, '0001-first-record.md');
     const second: string = path.join(adrDirectory, '0002-second-record.md');
@@ -44,9 +44,9 @@ describe('Superseding Adrs', () => {
   });
 
   it('should be able to supersede multiple records', async () => {
-    childProcess.execSync(`${command} new First Record`, { cwd: workDir });
-    childProcess.execSync(`${command} new Second Record`, { cwd: workDir });
-    childProcess.execSync(`${command} new -s 1 -s 2 Third Record`, { cwd: workDir });
+    childProcess.execSync(`${command} new First Record`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new Second Record`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new -s 1 -s 2 Third Record`, { timeout: 3000, cwd: workDir });
 
     const first: string = path.join(adrDirectory, '0001-first-record.md');
     const second: string = path.join(adrDirectory, '0002-second-record.md');

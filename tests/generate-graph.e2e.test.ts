@@ -15,11 +15,11 @@ describe('Generating Graphs', () => {
     // @ts-ignore
     process.env.ADR_DATE = '1992-01-12';
     workDir = path.resolve(realpathSync(await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'))));
-    childProcess.execSync(`${command} init`, { cwd: workDir });
-    childProcess.execSync(`${command} new An idea that seems good at the time`, { cwd: workDir });
-    childProcess.execSync(`${command} new -s 2 A better idea`, { cwd: workDir });
-    childProcess.execSync(`${command} new This will work`, { cwd: workDir });
-    childProcess.execSync(`${command} new -s 3 The end`, { cwd: workDir });
+    childProcess.execSync(`${command} init`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new An idea that seems good at the time`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new -s 2 A better idea`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new This will work`, { timeout: 3000, cwd: workDir });
+    childProcess.execSync(`${command} new -s 3 The end`, { timeout: 3000, cwd: workDir });
   });
 
   afterEach(() => {
@@ -35,14 +35,17 @@ describe('Generating Graphs', () => {
   });
 
   it('should generate a graph', async () => {
-    const child = childProcess.execSync(`${command} generate graph`, { cwd: workDir });
+    const child = childProcess.execSync(`${command} generate graph`, { timeout: 3000, cwd: workDir });
     const childContent = child.toString().trim();
 
     expect(childContent).toMatchSnapshot();
   });
 
   it('should generate a graph with specified route and extension ', async () => {
-    const child = childProcess.execSync(`${command} generate graph -p http://example.com/ -e .xxx`, { cwd: workDir });
+    const child = childProcess.execSync(`${command} generate graph -p http://example.com/ -e .xxx`, {
+      timeout: 3000,
+      cwd: workDir
+    });
     const childContent = child.toString().trim();
 
     expect(childContent).toMatchSnapshot();

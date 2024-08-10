@@ -28,7 +28,7 @@ describe('Init an ADR Repository', () => {
   });
 
   it('should use the default directory', () => {
-    childProcess.execSync(`${command} init`, { cwd: workDir });
+    childProcess.execSync(`${command} init`, { timeout: 3000, cwd: workDir });
     const expectedFile: string = path.join(adrDirectory, '0001-record-architecture-decisions.md');
     const expectedLockFile: string = path.join(adrDirectory, '.adr-sequence.lock');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
@@ -42,7 +42,7 @@ describe('Init an ADR Repository', () => {
 
   it('should use an alternate directory', () => {
     const directory: string = path.resolve(path.join(workDir, 'tmp', 'alternative-dir'));
-    childProcess.execSync(`${command} init ${directory}`, { cwd: workDir });
+    childProcess.execSync(`${command} init ${directory}`, { timeout: 3000, cwd: workDir });
 
     const expectedInitFile: string = path.join(directory, '0001-record-architecture-decisions.md');
     const expectedLockFile: string = path.join(directory, '.adr-sequence.lock');
