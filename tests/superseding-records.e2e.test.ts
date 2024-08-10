@@ -1,10 +1,10 @@
-/* eslint-disable no-sync */
-import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
 import * as childProcess from 'child_process';
+import { realpathSync } from 'node:fs';
+import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs/promises';
-import * as os from 'os';
-import { realpathSync } from 'node:fs';
+/* eslint-disable no-sync */
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('Superseding Adrs', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');

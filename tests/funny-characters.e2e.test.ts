@@ -1,10 +1,10 @@
-/* eslint-disable no-sync */
-import { describe, it, expect, afterEach, beforeEach } from 'vitest';
 import * as childProcess from 'child_process';
-import * as path from 'path';
 import * as fs from 'fs';
-import { v4 as uuidv4 } from 'uuid';
 import { fileURLToPath } from 'node:url';
+import * as path from 'path';
+import { v4 as uuidv4 } from 'uuid';
+/* eslint-disable no-sync */
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -43,4 +43,3 @@ describe('Funny Characters', () => {
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });
 });
-

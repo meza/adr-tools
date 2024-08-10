@@ -1,10 +1,10 @@
-/* eslint-disable no-sync */
-import { describe, it, expect, afterEach, beforeEach } from 'vitest';
 import * as childProcess from 'child_process';
+import { realpathSync } from 'node:fs';
+import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs/promises';
-import * as os from 'os';
-import { realpathSync } from 'node:fs';
+/* eslint-disable no-sync */
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('Overriding templates', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
@@ -27,7 +27,10 @@ describe('Overriding templates', () => {
 
   it('should use an override template if one exists', async () => {
     await fs.mkdir(path.join(adrDirectory, 'templates'), { recursive: true });
-    await fs.writeFile(path.join(adrDirectory, 'templates', 'template.md'), '# This is an override template\nTITLE\nDATE\nNUMBER\nSTATUS');
+    await fs.writeFile(
+      path.join(adrDirectory, 'templates', 'template.md'),
+      '# This is an override template\nTITLE\nDATE\nNUMBER\nSTATUS'
+    );
 
     childProcess.execSync(`${command} new Example ADR`, { cwd: workDir });
     childProcess.execSync(`${command} new Another Example ADR`, { cwd: workDir });

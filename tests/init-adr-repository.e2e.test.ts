@@ -1,9 +1,9 @@
-/* eslint-disable no-sync */
-import { describe, it, expect, afterEach, beforeEach } from 'vitest';
 import * as childProcess from 'child_process';
-import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
+import * as path from 'path';
+/* eslint-disable no-sync */
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('Init an ADR Repository', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');

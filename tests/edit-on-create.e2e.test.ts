@@ -1,9 +1,9 @@
-/* eslint-disable no-sync */
-import { describe, it, expect, afterEach, beforeEach } from 'vitest';
 import * as childProcess from 'child_process';
-import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
+import * as path from 'path';
+/* eslint-disable no-sync */
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('Edit new Adrs on creation', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
@@ -42,7 +42,9 @@ describe('Edit new Adrs on creation', () => {
   });
 
   it('should open a new ADR in the VISUAL if both VISUAL and EDITOR is supplied', () => {
-    childProcess.execSync(`EDITOR="${editorHelper}" VISUAL="${visualHelper}" ${command} new Example ADR`, { cwd: workDir });
+    childProcess.execSync(`EDITOR="${editorHelper}" VISUAL="${visualHelper}" ${command} new Example ADR`, {
+      cwd: workDir
+    });
 
     expect(fs.existsSync(path.join(workDir, 'editor.out'))).toBeFalsy();
 
@@ -50,5 +52,4 @@ describe('Edit new Adrs on creation', () => {
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
     expect(fileContents.trim()).toEqual(`VISUAL ${adrDirectory}/0001-example-adr.md`);
   });
-
 });

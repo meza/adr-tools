@@ -1,9 +1,9 @@
-/* eslint-disable no-sync */
-import { describe, it, expect, afterEach, beforeEach } from 'vitest';
 import * as childProcess from 'child_process';
-import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
+import * as path from 'path';
+/* eslint-disable no-sync */
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('New Adrs', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
@@ -54,5 +54,4 @@ describe('New Adrs', () => {
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
     expect(fileContents).toMatchSnapshot();
   });
-
 });

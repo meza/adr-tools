@@ -1,10 +1,10 @@
-/* eslint-disable no-sync */
-import { describe, it, expect, afterEach, beforeEach } from 'vitest';
 import * as childProcess from 'child_process';
+import { realpathSync } from 'node:fs';
+import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs/promises';
-import * as os from 'os';
-import { realpathSync } from 'node:fs';
+/* eslint-disable no-sync */
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('Listing', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
@@ -42,8 +42,8 @@ describe('Listing', () => {
     childProcess.execSync(`${command} new third`, { cwd: workDir });
     const child = childProcess.execSync(`${command} list`, { cwd: workDir });
     const output = child.toString().trim();
-    expect(output).toEqual('doc/adr/0001-record-architecture-decisions.md\ndoc/adr/0002-first.md\ndoc/adr/0003-second.md\ndoc/adr/0004-third.md');
+    expect(output).toEqual(
+      'doc/adr/0001-record-architecture-decisions.md\ndoc/adr/0002-first.md\ndoc/adr/0003-second.md\ndoc/adr/0004-third.md'
+    );
   });
-
 });
-

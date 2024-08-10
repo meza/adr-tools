@@ -27,9 +27,8 @@
     "ci:dev": "exit 0",
     "clean": "rimraf dist .cache/tsbuildinfo",
     "clean:all": "yarn clean && rm -rf node_modules .cache",
-    "lint:eslint": "eslint . --ext .ts --ext .json --cache --cache-location .cache/",
+    "lint:ci": "biome ci --reporter=github",
     "lint:tsc": "tsc --noEmit",
-    "lint:fix": "yarn lint:eslint --fix && yarn lint:tsc",
     "lint": "npm-run-all --parallel lint:*",
     "test": "npm-run-all --parallel test:*",
     "test:unit": "vitest",
@@ -50,9 +49,7 @@
     "marked": "^4.0.17"
   },
   "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
+    "extends": ["@commitlint/config-conventional"]
   },
   "husky": {
     "hooks": {
@@ -63,6 +60,7 @@
     }
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
     "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^17.0.2",
     "@commitlint/prompt-cli": "^17.0.0",
@@ -78,18 +76,13 @@
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/uuid": "^8.3.4",
-    "@typescript-eslint/eslint-plugin": "^5.29.0",
-    "@typescript-eslint/parser": "^5.3.0",
     "@vitest/ui": "^0.16.0",
     "c8": "^7.11.3",
     "copyfiles": "^2.4.1",
-    "eslint": "^8.1.0",
-    "eslint-config-tailored-tunes": "^5.0.2",
-    "eslint-plugin-json": "^3.1.0",
-    "eslint-plugin-security": "^1.5.0",
     "husky": "^8.0.1",
     "install-deps-postmerge": "^2.0.1",
     "is-ci": "^3.0.1",
+    "lint-staged": "^15.2.8",
     "mock-cwd": "^1.0.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^6.0.1",
@@ -112,5 +105,15 @@
     "commitizen": {
       "path": "./node_modules/@ryansonshine/cz-conventional-changelog"
     }
+  },
+  "lint-staged": {
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+      "biome check --files-ignore-unknown=true",
+      "biome check --write --no-errors-on-unmatched",
+      "biome check --write --organize-imports-enabled=false --no-errors-on-unmatched",
+      "biome check --write --unsafe --no-errors-on-unmatched",
+      "biome format --write --no-errors-on-unmatched",
+      "biome lint --write --no-errors-on-unmatched"
+    ]
   }
 }
