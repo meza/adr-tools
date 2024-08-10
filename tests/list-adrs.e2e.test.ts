@@ -7,14 +7,14 @@ import * as os from 'os';
 
 describe('Listing', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx ts-node --esm ${adr}`;
+  const command = `npx tsx ${adr}`;
 
   let adrDirectory: string;
   let workDir: string;
 
   beforeEach(async () => {
-    workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'));
-    adrDirectory = path.join(workDir, 'doc/adr');
+    workDir = path.normalize(await fs.mkdtemp(path.join(os.tmpdir(), 'adr-')));
+    adrDirectory = 'doc/adr';
     childProcess.execSync(`${command} init ${adrDirectory}`, { cwd: workDir });
   });
 

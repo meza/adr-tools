@@ -7,7 +7,7 @@ import * as os from 'os';
 
 describe('Edit new Adrs on creation', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx ts-node --esm ${adr}`;
+  const command = `npx tsx ${adr}`;
   const visualHelper = path.resolve(path.dirname(__filename), './fake-visual');
   const editorHelper = path.resolve(path.dirname(__filename), './fake-editor');
 
@@ -17,8 +17,8 @@ describe('Edit new Adrs on creation', () => {
   beforeEach(() => {
     // @ts-ignore
     process.env.ADR_DATE = '1992-01-12';
-    workDir = fs.mkdtempSync(path.join(os.tmpdir(), 'adr-'));
-    adrDirectory = path.join(workDir, 'doc/adr');
+    workDir = path.resolve(fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'adr-'))));
+    adrDirectory = path.resolve(path.join(workDir, 'doc/adr'));
   });
 
   afterEach(() => {

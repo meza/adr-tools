@@ -4,6 +4,7 @@
     "target": "ES2020",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
     "emitDeclarationOnly": false,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,

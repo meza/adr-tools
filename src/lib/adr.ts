@@ -167,7 +167,6 @@ export const newAdr = async (title: string, config?: NewOptions) => {
     config?.suppressPrompts
   );
   await generateToc();
-  const newAdrPath = path.relative(workingDir(), adrPath);
 
   if (process.env.VISUAL) {
     await childProcess.spawn(process.env.VISUAL, [adrPath], {
@@ -183,8 +182,6 @@ export const newAdr = async (title: string, config?: NewOptions) => {
     });
     return;
   }
-  console.log(newAdrPath);
-
 };
 
 export const init = async (directory?: string) => {

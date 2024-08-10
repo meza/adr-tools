@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 describe('Funny Characters', () => {
   const workDir = path.dirname(__filename);
   const adr: string = path.resolve(workDir, '../src/index.ts');
-  const command = `npx ts-node --esm ${adr}`;
+  const command = `npx tsx ${adr}`;
   let randomDir = uuidv4();
   let adrDirectory: string;
 
