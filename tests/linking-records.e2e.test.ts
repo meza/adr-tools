@@ -21,7 +21,7 @@ describe('Linking Adrs', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    childProcess.execSync(`rm -rf ${workDir}`);
+    childProcess.execSync(`rimraf ${workDir}`);
   });
 
   it('should link adrs as expected with adr new', async () => {

@@ -20,7 +20,7 @@ describe('Init an ADR Repository', () => {
   });
 
   afterEach(() => {
-    childProcess.execSync(`rm -rf ${workDir}`);
+    childProcess.execSync(`rimraf ${workDir}`);
   });
 
   it('should use the default directory', () => {

@@ -19,7 +19,7 @@ describe('Listing', () => {
   });
 
   afterEach(() => {
-    childProcess.execSync(`rm -rf ${workDir}`);
+    childProcess.execSync(`rimraf ${workDir}`);
   });
 
   it('should list an empty directory', async () => {

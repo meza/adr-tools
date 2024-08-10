@@ -21,7 +21,7 @@ describe('Superseding Adrs', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    childProcess.execSync(`rm -rf ${workDir}`);
+    childProcess.execSync(`rimraf ${workDir}`);
   });
 
   it('should be able to supersede previous adrs', async () => {

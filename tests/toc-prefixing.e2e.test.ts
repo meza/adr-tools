@@ -21,7 +21,7 @@ describe('Generating TOC', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    childProcess.execSync(`rm -rf ${workDir}`);
+    childProcess.execSync(`rimraf ${workDir}`);
   });
 
   it('should add a path prefix to the toc when there is one supplied', async () => {

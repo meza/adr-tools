@@ -26,7 +26,7 @@ describe('Generating Graphs', () => {
   });
 
   afterAll(() => {
-    childProcess.execSync(`rm -rf ${workDir}`);
+    childProcess.execSync(`rimraf ${workDir}`);
   });
 
   it('should generate a graph', async () => {

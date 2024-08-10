@@ -20,7 +20,7 @@ describe('New Adrs', () => {
   });
 
   afterEach(() => {
-    childProcess.execSync(`rm -rf ${workDir}`);
+    childProcess.execSync(`rimraf ${workDir}`);
   });
 
   it('should create a new one normally', () => {

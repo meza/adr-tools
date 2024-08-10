@@ -20,7 +20,7 @@ describe('deep directories', () => {
   });
 
   afterEach(() => {
-    childProcess.execSync(`rm -rf ${workDir}`);
+    childProcess.execSync(`rimraf ${workDir}`);
   });
 
   it('can work', () => {
@@ -32,7 +32,7 @@ describe('deep directories', () => {
   });
 
   it('can work when there has been no config initiated', () => {
-    childProcess.execSync(`rm -rf ${adrDirectory} ${workDir}/.adr-dir`);
+    childProcess.execSync(`rimraf ${adrDirectory} ${workDir}/.adr-dir`);
 
     const innerPath = path.join(fs.mkdtempSync(path.resolve(workDir) + '/'), 'inner');
     fs.mkdirSync(innerPath, { recursive: true });

@@ -21,7 +21,7 @@ describe('Overriding templates', () => {
   });
 
   afterEach(() => {
-    childProcess.execSync(`rm -rf ${workDir}`);
+    childProcess.execSync(`rimraf ${workDir}`);
   });
 
   it('should use an override template if one exists', async () => {

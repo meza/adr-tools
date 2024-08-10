@@ -16,7 +16,7 @@ describe('Funny Characters', () => {
   let adrDirectory: string;
 
   afterEach(() => {
-    childProcess.execSync(`rm -rf .adr-dir doc tmp ${randomDir}`, { cwd: workDir });
+    childProcess.execSync(`rimraf .adr-dir doc tmp ${randomDir}`, { cwd: workDir });
   });
 
   beforeEach(() => {

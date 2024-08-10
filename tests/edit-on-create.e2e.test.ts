@@ -22,7 +22,7 @@ describe('Edit new Adrs on creation', () => {
   });
 
   afterEach(() => {
-    childProcess.execSync(`rm -rf ${workDir}`);
+    childProcess.execSync(`rimraf ${workDir}`);
   });
 
   it('should open a new ADR in the VISUAL', () => {
