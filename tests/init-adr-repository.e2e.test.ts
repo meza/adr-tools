@@ -20,7 +20,11 @@ describe('Init an ADR Repository', () => {
   });
 
   afterEach(() => {
-    childProcess.execSync(`rimraf ${workDir}`);
+    fs.rmdirSync(workDir, {
+      recursive: true,
+      maxRetries: 3,
+      retryDelay: 500
+    });
   });
 
   it('should use the default directory', () => {

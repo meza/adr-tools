@@ -1,5 +1,5 @@
 import * as childProcess from 'child_process';
-import { realpathSync } from 'node:fs';
+import { realpathSync, rmdirSync } from 'node:fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs/promises';
@@ -22,7 +22,11 @@ describe('Generating TOC', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    childProcess.execSync(`rimraf ${workDir}`);
+    rmdirSync(workDir, {
+      recursive: true,
+      maxRetries: 3,
+      retryDelay: 500
+    });
   });
 
   it('should add a path prefix to the toc when there is one supplied', async () => {

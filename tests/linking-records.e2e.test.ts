@@ -1,5 +1,5 @@
 import * as childProcess from 'child_process';
-import { realpathSync } from 'node:fs';
+import { realpathSync, rmdirSync } from 'node:fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs/promises';
@@ -22,11 +22,15 @@ describe('Linking Adrs', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    childProcess.execSync(`rimraf ${workDir}`);
+    rmdirSync(workDir, {
+      recursive: true,
+      maxRetries: 3,
+      retryDelay: 500
+    });
   });
 
   it('should link adrs as expected with adr new', async () => {
-    childProcess.execSync(`${command} new First Record`, { cwd: workDir });
+    childProcess.execSync(`${command} new First Record`, { cwd: workDir, stdio: 'inherit' });
     childProcess.execSync(`${command} new Second Record`, { cwd: workDir });
     childProcess.execSync(`${command} new -q -l "1:Amends:Amended by" -l "2:Clarifies:Clarified by" Third Record`, {
       cwd: workDir

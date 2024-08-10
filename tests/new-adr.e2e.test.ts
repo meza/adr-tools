@@ -20,7 +20,11 @@ describe('New Adrs', () => {
   });
 
   afterEach(() => {
-    childProcess.execSync(`rimraf ${workDir}`);
+    fs.rmdirSync(workDir, {
+      recursive: true,
+      maxRetries: 3,
+      retryDelay: 500
+    });
   });
 
   it('should create a new one normally', () => {
