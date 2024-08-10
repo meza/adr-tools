@@ -13,7 +13,7 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Cache multiple paths
         uses: actions/cache@v2
@@ -51,7 +51,7 @@ jobs:
     if: ${{github.ref == 'ref/head/main'}} || ${{github.ref == 'ref/head/next'}}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
