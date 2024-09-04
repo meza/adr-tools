@@ -92,23 +92,23 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
-"@commitlint/cli@19.4.0":
-  version "19.4.0"
-  resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-19.4.0.tgz#9f93d3ed07e531fcfa371015c8c87e0aa26d974f"
-  integrity sha512-sJX4J9UioVwZHq7JWM9tjT5bgWYaIN3rC4FP7YwfEwBYiIO+wMyRttRvQLNkow0vCdM0D67r9NEWU0Ui03I4Eg==
+"@commitlint/cli@19.4.1":
+  version "19.4.1"
+  resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-19.4.1.tgz#51dbd88750620c9e5fb6f5bc773872728a29674a"
+  integrity sha512-EerFVII3ZcnhXsDT9VePyIdCJoh3jEzygN1L37MjQXgPfGS6fJTWL/KHClVMod1d8w94lFC3l4Vh/y5ysVAz2A==
   dependencies:
     "@commitlint/format" "^19.3.0"
-    "@commitlint/lint" "^19.2.2"
+    "@commitlint/lint" "^19.4.1"
     "@commitlint/load" "^19.4.0"
     "@commitlint/read" "^19.4.0"
     "@commitlint/types" "^19.0.3"
     execa "^8.0.1"
     yargs "^17.0.0"
 
-"@commitlint/config-conventional@19.2.2":
-  version "19.2.2"
-  resolved "https://registry.yarnpkg.com/@commitlint/config-conventional/-/config-conventional-19.2.2.tgz#1f4e6975d428985deacf2b3ff6547e02c9302054"
-  integrity sha512-mLXjsxUVLYEGgzbxbxicGPggDuyWNkf25Ht23owXIH+zV2pv1eJuzLK3t1gDY5Gp6pxdE60jZnWUY5cvgL3ufw==
+"@commitlint/config-conventional@19.4.1":
+  version "19.4.1"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-conventional/-/config-conventional-19.4.1.tgz#c6f05d478c7576d5affff82d67d9ca37e96c94e6"
+  integrity sha512-D5S5T7ilI5roybWGc8X35OBlRXLAwuTseH1ro0XgqkOWrhZU8yOwBOslrNmSDlTXhXLq8cnfhQyC42qaUCzlXA==
   dependencies:
     "@commitlint/types" "^19.0.3"
     conventional-changelog-conventionalcommits "^7.0.2"
@@ -154,7 +154,7 @@
     "@commitlint/types" "^19.0.3"
     semver "^7.6.0"
 
-"@commitlint/lint@^19.2.2":
+"@commitlint/lint@^19.4.1":
   version "19.4.1"
   resolved "https://registry.yarnpkg.com/@commitlint/lint/-/lint-19.4.1.tgz#0760d34fcdaee0bf05befe666ca14c0fc1ecb57e"
   integrity sha512-Ws4YVAZ0jACTv6VThumITC1I5AG0UyXMGua3qcf55JmXIXm/ejfaVKykrqx7RyZOACKVAs8uDRIsEsi87JZ3+Q==
@@ -194,16 +194,16 @@
     conventional-changelog-angular "^7.0.0"
     conventional-commits-parser "^5.0.0"
 
-"@commitlint/prompt-cli@19.4.0":
-  version "19.4.0"
-  resolved "https://registry.yarnpkg.com/@commitlint/prompt-cli/-/prompt-cli-19.4.0.tgz#322ee15db5bbcbc0357c491467a59a5cd1c69560"
-  integrity sha512-IaPv9fpA/FsEufycMRiIyvaDO/4hTHX/4xM3KCbVHgfK6XhpRPPXrnTmwSS/eMW1jKcaOrgLqRdyMy74B7vqlA==
+"@commitlint/prompt-cli@19.4.1":
+  version "19.4.1"
+  resolved "https://registry.yarnpkg.com/@commitlint/prompt-cli/-/prompt-cli-19.4.1.tgz#d5fd816f072976d1d75d86722152fd8a2dda1a65"
+  integrity sha512-27eH1GfDZtknG8C2fknRoT+hDGufRCffHj3guI9uZ8RVAk+g6tYWwJkEAPN8nAAk+WeSa29tNTcKPtaBE6BixA==
   dependencies:
-    "@commitlint/prompt" "^19.4.0"
+    "@commitlint/prompt" "^19.4.1"
     execa "^8.0.1"
     inquirer "^9.2.15"
 
-"@commitlint/prompt@^19.4.0":
+"@commitlint/prompt@^19.4.1":
   version "19.4.1"
   resolved "https://registry.yarnpkg.com/@commitlint/prompt/-/prompt-19.4.1.tgz#e1b2c5531e8bb8ea6d68e051e3ec9d198a7f0215"
   integrity sha512-OSqGl+Qip08CWOL0VYaS3PZ5lDbM6JN8by+L9M9FoRseWzDmHKMrxPEXySlD/SMhJjLAVTBh6Mfuf0NzhvTXUw==
