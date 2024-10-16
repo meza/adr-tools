@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander';
-import { LIB_VERSION } from './version.js';
-import { generateToc, init, link, listAdrs, newAdr } from './lib/adr.js';
-import chalk from 'chalk';
-import { workingDir } from './lib/config.js';
 import * as path from 'path';
-import { getLinksFrom, getTitleFrom } from './lib/manipulator.js';
+import chalk from 'chalk';
+import { Command } from 'commander';
 import fs from 'fs/promises';
+import { generateToc, init, link, listAdrs, newAdr } from './lib/adr.js';
+import { workingDir } from './lib/config.js';
+import { getLinksFrom, getTitleFrom } from './lib/manipulator.js';
+import { LIB_VERSION } from './version.js';
 
 const program = new Command();
 
@@ -21,7 +21,7 @@ const collectSupersedes = (val: string, memo: string[]) => {
   return memo;
 };
 
-const generateGraph = async (options?: {prefix: string, extension :string}) => {
+const generateGraph = async (options?: { prefix: string; extension: string }) => {
   let text = 'digraph {\n';
   text += '  node [shape=plaintext];\n';
   text += '  subgraph {\n';
@@ -49,7 +49,6 @@ const generateGraph = async (options?: {prefix: string, extension :string}) => {
         text += `  _${n} -> _${linksInADR[j].targetNumber} [label="${linksInADR[j].label}", weight=0]\n`;
       }
     }
-
   }
 
   text += '}\n';
@@ -58,16 +57,30 @@ const generateGraph = async (options?: {prefix: string, extension :string}) => {
 
 program.name('adr').version(LIB_VERSION).description('Manage Architecture Decision Logs');
 
-program.command('new')
+program
+  .command('new')
   .argument('<title...>', 'The title of the decision')
-  .option('-q, --quiet', 'Do not ask for clarification. If multiple files match the search pattern, an error will be thrown.')
-  .option('-s, --supersede <SUPERSEDE>', 'A reference (number or partial filename) of a previous decision that the new decision supercedes.\n'
-    + 'A Markdown link to the superceded ADR is inserted into the Status section.\n'
-    + 'The status of the superceded ADR is changed to record that it has been superceded by the new ADR.', collectSupersedes, [])
-  .option('-l, --link "<TARGET:LINK:REVERSE-LINK>"', 'Links the new ADR to a previous ADR.\n'
-    + `${chalk.bold('TARGET')} is a reference (number or partial filename) of a previous decision.\n`
-    + `${chalk.bold('LINK')} is the description of the link created in the new ADR.\n`
-    + `${chalk.bold('REVERSE-LINK')} is the description of the link created in the existing ADR that will refer to the new ADR`, collectLinks, [])
+  .option(
+    '-q, --quiet',
+    'Do not ask for clarification. If multiple files match the search pattern, an error will be thrown.'
+  )
+  .option(
+    '-s, --supersede <SUPERSEDE>',
+    'A reference (number or partial filename) of a previous decision that the new decision supercedes.\n' +
+      'A Markdown link to the superceded ADR is inserted into the Status section.\n' +
+      'The status of the superceded ADR is changed to record that it has been superceded by the new ADR.',
+    collectSupersedes,
+    []
+  )
+  .option(
+    '-l, --link "<TARGET:LINK:REVERSE-LINK>"',
+    'Links the new ADR to a previous ADR.\n' +
+      `${chalk.bold('TARGET')} is a reference (number or partial filename) of a previous decision.\n` +
+      `${chalk.bold('LINK')} is the description of the link created in the new ADR.\n` +
+      `${chalk.bold('REVERSE-LINK')} is the description of the link created in the existing ADR that will refer to the new ADR`,
+    collectLinks,
+    []
+  )
   .action(async (title: string[], options) => {
     try {
       await newAdr(title.join(' '), {
@@ -83,33 +96,45 @@ program.command('new')
 
 const generate = program.command('generate');
 
-generate.command('toc')
+generate
+  .command('toc')
   .option('-p, --prefix <PREFIX>', 'The prefix to use for each file link in the generated TOC.')
   .action((options) => generateToc(options));
 
-generate.command('graph')
+generate
+  .command('graph')
   .option('-p, --prefix <PREFIX>', 'Prefix each decision file link with PREFIX.')
-  .option('-e, --extension <EXTENSION>', 'the file extension of the documents to which generated links refer. Defaults to .html', '.html')
+  .option(
+    '-e, --extension <EXTENSION>',
+    'the file extension of the documents to which generated links refer. Defaults to .html',
+    '.html'
+  )
   .action(async (options) => {
     await generateGraph(options);
   });
 
-program.command('link')
+program
+  .command('link')
   .argument('<SOURCE>', 'Full or Partial reference number to an ADR')
   .argument('<LINK>', 'The description of the link created in the SOURCE')
   .argument('<TARGET>', 'Full or Partial reference number to an ADR')
   .argument('<REVERSE-LINK>', 'The description of the link created in the TARGET')
-  .option('-q, --quiet', 'Do not ask for clarification. If multiple files match the search pattern, an error will be thrown.')
+  .option(
+    '-q, --quiet',
+    'Do not ask for clarification. If multiple files match the search pattern, an error will be thrown.'
+  )
   .action(link);
 
-program.command('init').argument('[directory]', 'Initialize a new ADR directory').action(async (directory?: string) => {
-  await init(directory);
-});
+program
+  .command('init')
+  .argument('[directory]', 'Initialize a new ADR directory')
+  .action(async (directory?: string) => {
+    await init(directory);
+  });
 
 program.command('list').action(async () => {
   const adrs = await listAdrs();
-  console.log(adrs.map(adr => path.relative(workingDir(), adr)).join('\n'));
+  console.log(adrs.map((adr) => path.relative(workingDir(), adr)).join('\n'));
 });
 
 program.parse();
-

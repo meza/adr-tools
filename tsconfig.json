@@ -4,6 +4,7 @@
     "target": "ES2020",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
     "emitDeclarationOnly": false,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
@@ -11,22 +12,12 @@
     "declarationDir": "./dist/types",
     "isolatedModules": true,
     "sourceRoot": "src",
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/types"
-    ]
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "tests/**/*"
-  ],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "tests/**/*"],
   "ts-node": {
     "files": true
   },
-  "files": [
-    "src/types/environment.d.ts"
-  ]
+  "files": ["src/types/environment.d.ts"]
 }
