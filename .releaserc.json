@@ -28,9 +28,7 @@
       {
         "assets": [
           {
-            "path": [
-              "CHANGELOG.md"
-            ],
+            "path": ["CHANGELOG.md"],
             "name": "adr-tools-${nextRelease.gitTag}.zip",
             "label": "ADR-Tools ${nextRelease.gitTag}"
           }
@@ -41,10 +39,7 @@
       "@semantic-release/git",
       {
         "message": "chore(release): ${nextRelease.version} as ${branch.channel} [skip ci]\n\n${nextRelease.notes}",
-        "assets": [
-          "package.json",
-          "CHANGELOG.md"
-        ]
+        "assets": ["package.json", "CHANGELOG.md"]
       }
     ]
   ]

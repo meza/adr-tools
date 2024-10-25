@@ -1,13 +1,13 @@
-/* eslint-disable no-sync */
-import { describe, it, expect, afterEach, beforeEach } from 'vitest';
 import * as childProcess from 'child_process';
-import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
+import * as path from 'path';
+/* eslint-disable no-sync */
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('Init an ADR Repository', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx ts-node --esm ${adr}`;
+  const command = `npx tsx ${adr}`;
 
   let adrDirectory: string;
   let workDir: string;
@@ -15,16 +15,20 @@ describe('Init an ADR Repository', () => {
   beforeEach(() => {
     // @ts-ignore
     process.env.ADR_DATE = '1992-01-12';
-    workDir = fs.mkdtempSync(path.join(os.tmpdir(), 'adr-'));
+    workDir = path.resolve(fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'adr-'))));
     adrDirectory = path.join(workDir, 'doc/adr');
   });
 
   afterEach(() => {
-    childProcess.execSync(`rm -rf ${workDir}`);
+    fs.rmdirSync(workDir, {
+      recursive: true,
+      maxRetries: 3,
+      retryDelay: 500
+    });
   });
 
   it('should use the default directory', () => {
-    childProcess.execSync(`${command} init`, { cwd: workDir });
+    childProcess.execSync(`${command} init`, { timeout: 10000, cwd: workDir });
     const expectedFile: string = path.join(adrDirectory, '0001-record-architecture-decisions.md');
     const expectedLockFile: string = path.join(adrDirectory, '.adr-sequence.lock');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
@@ -38,7 +42,7 @@ describe('Init an ADR Repository', () => {
 
   it('should use an alternate directory', () => {
     const directory: string = path.resolve(path.join(workDir, 'tmp', 'alternative-dir'));
-    childProcess.execSync(`${command} init ${directory}`, { cwd: workDir });
+    childProcess.execSync(`${command} init ${directory}`, { timeout: 10000, cwd: workDir });
 
     const expectedInitFile: string = path.join(directory, '0001-record-architecture-decisions.md');
     const expectedLockFile: string = path.join(directory, '.adr-sequence.lock');
