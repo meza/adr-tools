@@ -147,10 +147,10 @@
     "@commitlint/rules" "^19.6.0"
     "@commitlint/types" "^19.5.0"
 
-"@commitlint/load@>6.1.1", "@commitlint/load@^19.5.0":
-  version "19.5.0"
-  resolved "https://registry.yarnpkg.com/@commitlint/load/-/load-19.5.0.tgz#67f90a294894d1f99b930b6152bed2df44a81794"
-  integrity sha512-INOUhkL/qaKqwcTUvCE8iIUf5XHsEPCLY9looJ/ipzi7jtGhgmtH7OOFiNvwYgH7mA8osUWOUDV8t4E2HAi4xA==
+"@commitlint/load@>6.1.1", "@commitlint/load@^19.5.0", "@commitlint/load@^19.6.1":
+  version "19.6.1"
+  resolved "https://registry.yarnpkg.com/@commitlint/load/-/load-19.6.1.tgz#5fae8843a6048a2d3d1cc16da0af8ee532fa9db4"
+  integrity sha512-kE4mRKWWNju2QpsCWt428XBvUH55OET2N4QKQ0bF85qS/XbsRGG1MiTByDNlEVpEPceMkDr46LNH95DtRwcsfA==
   dependencies:
     "@commitlint/config-validator" "^19.5.0"
     "@commitlint/execute-rule" "^19.5.0"
@@ -158,7 +158,7 @@
     "@commitlint/types" "^19.5.0"
     chalk "^5.3.0"
     cosmiconfig "^9.0.0"
-    cosmiconfig-typescript-loader "^5.0.0"
+    cosmiconfig-typescript-loader "^6.1.0"
     lodash.isplainobject "^4.0.6"
     lodash.merge "^4.6.2"
     lodash.uniq "^4.5.0"
@@ -187,12 +187,12 @@
     tinyexec "^0.3.0"
 
 "@commitlint/prompt@^19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@commitlint/prompt/-/prompt-19.6.0.tgz#0034176ac2ea7754502c6fb9276248e7f10cbd3d"
-  integrity sha512-hkFRhbsfEJ4LxQhXu8hJjNc8tgLufP8pH+cxI6WSywJrOJ39ySHsRUx3qJToNax1B1KgJWSpSKQI1KlbE17KXw==
+  version "19.6.1"
+  resolved "https://registry.yarnpkg.com/@commitlint/prompt/-/prompt-19.6.1.tgz#f45912d1a7a67e336fa45eb95a35363bad3f412c"
+  integrity sha512-Sj6ZTC6lNAHTASak3xvpHwiP2hwqhmKUEI36vGmaN90NUOpFRU2J0NBFLjdFQzkIkPq/dOIXmAfTAFzCzmsJGA==
   dependencies:
     "@commitlint/ensure" "^19.5.0"
-    "@commitlint/load" "^19.5.0"
+    "@commitlint/load" "^19.6.1"
     "@commitlint/types" "^19.5.0"
     chalk "^5.3.0"
     inquirer "^9.2.15"
@@ -1248,9 +1248,9 @@
     undici-types "~6.20.0"
 
 "@types/node@^18.0.0":
-  version "18.19.67"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.67.tgz#77c4b01641a1e3e1509aff7e10d39e4afd5ae06d"
-  integrity sha512-wI8uHusga+0ZugNp0Ol/3BqQfEcCCNfojtO6Oou9iVNGPTL6QNSdnUdqq85fRgIorLhLMuPIKpsN98QE9Nh+KQ==
+  version "18.19.68"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.68.tgz#f4f10d9927a7eaf3568c46a6d739cc0967ccb701"
+  integrity sha512-QGtpFH1vB99ZmTa63K4/FU8twThj4fuVSBkGddTp7uIL/cuoLWIUSL2RcOaigBhfR+hg5pgGkBnkoOxrTVBMKw==
   dependencies:
     undici-types "~5.26.4"
 
@@ -1933,12 +1933,12 @@ core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
   integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
 
-cosmiconfig-typescript-loader@^5.0.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/cosmiconfig-typescript-loader/-/cosmiconfig-typescript-loader-5.1.0.tgz#d8d02bff04e63faa2dc794d618168bd764c704be"
-  integrity sha512-7PtBB+6FdsOvZyJtlF3hEPpACq7RQX6BVGsgC7/lfVXnKMvNCu/XY3ykreqG5w/rBNdu2z8LCIKoF3kpHHdHlA==
+cosmiconfig-typescript-loader@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/cosmiconfig-typescript-loader/-/cosmiconfig-typescript-loader-6.1.0.tgz#7f644503e1c2bff90aed2d29a637008f279646bb"
+  integrity sha512-tJ1w35ZRUiM5FeTzT7DtYWAFFv37ZLqSRkGi2oeCK1gPhvaWjkAtfXvLmvE1pRfxxp9aQo6ba/Pvg1dKj05D4g==
   dependencies:
-    jiti "^1.21.6"
+    jiti "^2.4.1"
 
 cosmiconfig@^9.0.0:
   version "9.0.0"
@@ -3120,10 +3120,10 @@ java-properties@^1.0.2:
   resolved "https://registry.yarnpkg.com/java-properties/-/java-properties-1.0.2.tgz#ccd1fa73907438a5b5c38982269d0e771fe78211"
   integrity sha512-qjdpeo2yKlYTH7nFdK0vbZWuTCesk4o63v5iVOlhMQPfuIZQfW/HI35SjfhA+4qpg36rnFSvUK5b1m+ckIblQQ==
 
-jiti@^1.21.6:
-  version "1.21.6"
-  resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.21.6.tgz#6c7f7398dd4b3142767f9a168af2f317a428d268"
-  integrity sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==
+jiti@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/jiti/-/jiti-2.4.1.tgz#4de9766ccbfa941d9b6390d2b159a4b295a52e6b"
+  integrity sha512-yPBThwecp1wS9DmoA4x4KR2h3QoslacnDR8ypuFM962kI4/456Iy1oHx2RAgh4jfZNdn0bctsdadceiBUgpU1g==
 
 js-tokens@^4.0.0:
   version "4.0.0"
@@ -3492,9 +3492,9 @@ lru-cache@^11.0.0:
   integrity sha512-123qHRfJBmo2jXDbo/a5YOQrJoHF/GNQTLzQ5+IdK5pWpceK17yRc6ozlWd25FxvGKQbIUs91fDFkXmDHTKcyA==
 
 magic-string@^0.30.12:
-  version "0.30.14"
-  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.14.tgz#e9bb29870b81cfc1ec3cc656552f5a7fcbf19077"
-  integrity sha512-5c99P1WKTed11ZC0HMJOj6CDIue6F8ySu+bJL+85q1zBEIY8IklrJ1eiKC2NDRh3Ct3FcvmJPyQHb9erXMTJNw==
+  version "0.30.15"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.15.tgz#d5474a2c4c5f35f041349edaba8a5cb02733ed3c"
+  integrity sha512-zXeaYRgZ6ldS1RJJUrMrYgNJ4fdwnyI6tVqoiIhyCyv5IVTK9BU8Ic2l253GGETQHxI4HNUwhJ3fjDhKqEoaAw==
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.5.0"
 
@@ -3865,9 +3865,9 @@ npm-normalize-package-bin@^4.0.0:
   integrity sha512-TZKxPvItzai9kN9H/TkmCtx/ZN/hvr3vUycjlfmH0ootY9yFBzNOpiXAdIn1Iteqsvk4lQn6B5PTrt+n6h8k/w==
 
 npm-package-arg@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/npm-package-arg/-/npm-package-arg-12.0.0.tgz#c2a6631c09d244c6bc35a46c38cbd94d53e9829a"
-  integrity sha512-ZTE0hbwSdTNL+Stx2zxSqdu2KZfNDcrtrLdIk7XGnQFYBWYDho/ORvXtn5XEePcL3tFpGjHCV3X3xrtDh7eZ+A==
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/npm-package-arg/-/npm-package-arg-12.0.1.tgz#eb05e797b2fbdf8acf7f1d15344e1e05904202d5"
+  integrity sha512-aDxjFfPV3Liw0WOBWlyZLMBqtbgbg03rmGvHDJa2Ttv7tIz+1oB5qWec4psCDFZcZi9b5XdGkPdQiJxOPzvQRQ==
   dependencies:
     hosted-git-info "^8.0.0"
     proc-log "^5.0.0"
@@ -5368,9 +5368,9 @@ type-fest@^2.12.2:
   integrity sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==
 
 type-fest@^4.6.0, type-fest@^4.7.1:
-  version "4.30.0"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.30.0.tgz#cf411e7630578ad9e9884951dfaeef6588f970fe"
-  integrity sha512-G6zXWS1dLj6eagy6sVhOMQiLtJdxQBHIA9Z6HFUNLOlr6MFOgzV8wvmidtPONfPtEUv0uZsy77XJNzTAfwPDaA==
+  version "4.30.1"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.30.1.tgz#120b9e15177310ec4e9d5d6f187d86c0f4b55e0e"
+  integrity sha512-ojFL7eDMX2NF0xMbDwPZJ8sb7ckqtlAi1GsmgsFXvErT9kFTk1r0DuQKvrCh73M6D4nngeHJmvogF9OluXs7Hw==
 
 typescript@5.7.2:
   version "5.7.2"
