@@ -75,14 +75,14 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
-"@commitlint/cli@19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-19.6.0.tgz#98e7fc8501cc38b6eef4b7f61e19b15f3c53700e"
-  integrity sha512-v17BgGD9w5KnthaKxXnEg6KLq6DYiAxyiN44TpiRtqyW8NSq+Kx99mkEG8Qo6uu6cI5eMzMojW2muJxjmPnF8w==
+"@commitlint/cli@19.6.1":
+  version "19.6.1"
+  resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-19.6.1.tgz#24edd26595d911cc6b680cdfbb1fb083bfd5f73d"
+  integrity sha512-8hcyA6ZoHwWXC76BoC8qVOSr8xHy00LZhZpauiD0iO0VYbVhMnED0da85lTfIULxl7Lj4c6vZgF0Wu/ed1+jlQ==
   dependencies:
     "@commitlint/format" "^19.5.0"
     "@commitlint/lint" "^19.6.0"
-    "@commitlint/load" "^19.5.0"
+    "@commitlint/load" "^19.6.1"
     "@commitlint/read" "^19.5.0"
     "@commitlint/types" "^19.5.0"
     tinyexec "^0.3.0"
@@ -147,7 +147,7 @@
     "@commitlint/rules" "^19.6.0"
     "@commitlint/types" "^19.5.0"
 
-"@commitlint/load@>6.1.1", "@commitlint/load@^19.5.0", "@commitlint/load@^19.6.1":
+"@commitlint/load@>6.1.1", "@commitlint/load@^19.6.1":
   version "19.6.1"
   resolved "https://registry.yarnpkg.com/@commitlint/load/-/load-19.6.1.tgz#5fae8843a6048a2d3d1cc16da0af8ee532fa9db4"
   integrity sha512-kE4mRKWWNju2QpsCWt428XBvUH55OET2N4QKQ0bF85qS/XbsRGG1MiTByDNlEVpEPceMkDr46LNH95DtRwcsfA==
@@ -177,16 +177,16 @@
     conventional-changelog-angular "^7.0.0"
     conventional-commits-parser "^5.0.0"
 
-"@commitlint/prompt-cli@19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@commitlint/prompt-cli/-/prompt-cli-19.6.0.tgz#669815f309676ad5a6d703caa6d8b4a68667676b"
-  integrity sha512-SPgI1CE7P2utglCUzo1DTr26xEP5dG3xJcxjygcDvQzzjlUp+mIPq+SJ65KyHCxDKf4GCAosh+lEZOTBWKKEoA==
+"@commitlint/prompt-cli@19.6.1":
+  version "19.6.1"
+  resolved "https://registry.yarnpkg.com/@commitlint/prompt-cli/-/prompt-cli-19.6.1.tgz#050b032651a7314721ebf4ae4fa31724fab9287e"
+  integrity sha512-CctENTw2sHGBbpLVKk9LpJ3WFwSzVBHxNN6hw7Mw8yDtfibS2mbx0HT0gDw1Ip3WGVq+msw+A9bdvsS5F4fk+w==
   dependencies:
-    "@commitlint/prompt" "^19.6.0"
+    "@commitlint/prompt" "^19.6.1"
     inquirer "^9.2.15"
     tinyexec "^0.3.0"
 
-"@commitlint/prompt@^19.6.0":
+"@commitlint/prompt@^19.6.1":
   version "19.6.1"
   resolved "https://registry.yarnpkg.com/@commitlint/prompt/-/prompt-19.6.1.tgz#f45912d1a7a67e336fa45eb95a35363bad3f412c"
   integrity sha512-Sj6ZTC6lNAHTASak3xvpHwiP2hwqhmKUEI36vGmaN90NUOpFRU2J0NBFLjdFQzkIkPq/dOIXmAfTAFzCzmsJGA==
