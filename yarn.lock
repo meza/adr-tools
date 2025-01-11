@@ -177,19 +177,19 @@
     conventional-changelog-angular "^7.0.0"
     conventional-commits-parser "^5.0.0"
 
-"@commitlint/prompt-cli@19.6.1":
-  version "19.6.1"
-  resolved "https://registry.yarnpkg.com/@commitlint/prompt-cli/-/prompt-cli-19.6.1.tgz#050b032651a7314721ebf4ae4fa31724fab9287e"
-  integrity sha512-CctENTw2sHGBbpLVKk9LpJ3WFwSzVBHxNN6hw7Mw8yDtfibS2mbx0HT0gDw1Ip3WGVq+msw+A9bdvsS5F4fk+w==
+"@commitlint/prompt-cli@19.7.0":
+  version "19.7.0"
+  resolved "https://registry.yarnpkg.com/@commitlint/prompt-cli/-/prompt-cli-19.7.0.tgz#ef48d9b74d2d672116c086c830256b1392ebb6ce"
+  integrity sha512-90HgFdMrjFXKa2QXgRjJ8SClD/oTvtEx9FXsIQDG/tjr6NbFagsj4nKjRGCGz7zl7wI1MskGKRj1kyxQvyry/A==
   dependencies:
-    "@commitlint/prompt" "^19.6.1"
+    "@commitlint/prompt" "^19.7.0"
     inquirer "^9.2.15"
     tinyexec "^0.3.0"
 
-"@commitlint/prompt@^19.6.1":
-  version "19.6.1"
-  resolved "https://registry.yarnpkg.com/@commitlint/prompt/-/prompt-19.6.1.tgz#f45912d1a7a67e336fa45eb95a35363bad3f412c"
-  integrity sha512-Sj6ZTC6lNAHTASak3xvpHwiP2hwqhmKUEI36vGmaN90NUOpFRU2J0NBFLjdFQzkIkPq/dOIXmAfTAFzCzmsJGA==
+"@commitlint/prompt@^19.7.0":
+  version "19.7.0"
+  resolved "https://registry.yarnpkg.com/@commitlint/prompt/-/prompt-19.7.0.tgz#278cd5b1fbf96810451476a6531b87fc51829357"
+  integrity sha512-C2t/lTcfQRH6RKyBx9cyCwMK7X8Ke/vP2+IHe2xLM8rFZfR+UhsBNcFtlfYWIPo6gnA3MMQcxpOsmOU4k+FSkg==
   dependencies:
     "@commitlint/ensure" "^19.5.0"
     "@commitlint/load" "^19.6.1"
