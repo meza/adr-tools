@@ -83,7 +83,7 @@
     "husky": "9.1.7",
     "install-deps-postmerge": "2.0.1",
     "is-ci": "4.1.0",
-    "lint-staged": "15.4.1",
+    "lint-staged": "15.4.2",
     "mock-cwd": "1.0.0",
     "npm-run-all2": "7.0.2",
     "rimraf": "6.0.1",
