@@ -1306,13 +1306,6 @@
     estree-walker "^3.0.3"
     magic-string "^0.30.17"
 
-"@vitest/pretty-format@3.0.4":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@vitest/pretty-format/-/pretty-format-3.0.4.tgz#18d5da3bad9a0eebf49f5c5daa84d0d5f7d2bbfa"
-  integrity sha512-ts0fba+dEhK2aC9PFuZ9LTpULHpY/nd6jhAQ5IMU7Gaj7crPCTdCFfgvXxruRBLFS+MLraicCuFXxISEq8C93g==
-  dependencies:
-    tinyrainbow "^2.0.0"
-
 "@vitest/pretty-format@3.0.5", "@vitest/pretty-format@^3.0.5":
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@vitest/pretty-format/-/pretty-format-3.0.5.tgz#10ae6a83ccc1a866e31b2d0c1a7a977ade02eff9"
@@ -1344,26 +1337,17 @@
   dependencies:
     tinyspy "^3.0.2"
 
-"@vitest/ui@3.0.4":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-3.0.4.tgz#751e5ec7e00201adeb0a75a07e57f34c9c9b6eb4"
-  integrity sha512-e+s2F9e9FUURkZ5aFIe1Fi3Y8M7UF6gEuShcaV/ur7y/Ldri+1tzWQ1TJq9Vas42NXnXvCAIrU39Z4U2RyET6g==
+"@vitest/ui@3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-3.0.5.tgz#4c57cb91d84a53afff07f6282ebb355d0de25acd"
+  integrity sha512-gw2noso6WI+2PeMVCZFntdATS6xl9qhQcbhkPQ9sOmx/Xn0f4Bx4KDSbD90jpJPF0l5wOzSoGCmKyVR3W612mg==
   dependencies:
-    "@vitest/utils" "3.0.4"
+    "@vitest/utils" "3.0.5"
     fflate "^0.8.2"
     flatted "^3.3.2"
     pathe "^2.0.2"
     sirv "^3.0.0"
     tinyglobby "^0.2.10"
-    tinyrainbow "^2.0.0"
-
-"@vitest/utils@3.0.4":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@vitest/utils/-/utils-3.0.4.tgz#9dd2336170097b20a6e5b778bb5ea7786cc56008"
-  integrity sha512-8BqC1ksYsHtbWH+DfpOAKrFw3jl3Uf9J7yeFh85Pz52IWuh1hBBtyfEbRNNZNjl8H8A5yMLH9/t+k7HIKzQcZQ==
-  dependencies:
-    "@vitest/pretty-format" "3.0.4"
-    loupe "^3.1.2"
     tinyrainbow "^2.0.0"
 
 "@vitest/utils@3.0.5":
