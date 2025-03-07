@@ -507,10 +507,10 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.0.tgz#c8e119a30a7c8d60b9d2e22d2073722dde3b710b"
   integrity sha512-ZENoHJBxA20C2zFzh6AI4fT6RraMzjYw4xKWemRTRmRVtN9c5DcH9r/f2ihEkMjOW5eGgrwCslG/+Y/3bL+DHQ==
 
-"@faker-js/faker@9.5.0":
-  version "9.5.0"
-  resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-9.5.0.tgz#ce254c83706250ca8a5a0e05683608160610dd84"
-  integrity sha512-3qbjLv+fzuuCg3umxc9/7YjrEXNaKwHgmig949nfyaTx8eL4FAsvFbu+1JcFUj1YAXofhaDn6JdEUBTYuk0Ssw==
+"@faker-js/faker@9.5.1":
+  version "9.5.1"
+  resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-9.5.1.tgz#1f32fb726db5f539415455cadbc93c9fb457e42d"
+  integrity sha512-0fzMEDxkExR2cn731kpDaCCnBGBUOIXEi2S1N5l8Hltp6aPf4soTMJ+g4k8r2sI5oB+rpwIW8Uy/6jkwGpnWPg==
 
 "@inquirer/figures@^1.0.3":
   version "1.0.9"
