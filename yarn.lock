@@ -1311,10 +1311,17 @@
     estree-walker "^3.0.3"
     magic-string "^0.30.17"
 
-"@vitest/pretty-format@3.0.8", "@vitest/pretty-format@^3.0.8":
+"@vitest/pretty-format@3.0.8":
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/@vitest/pretty-format/-/pretty-format-3.0.8.tgz#89f6111d141142689871f5a4e62ad679bb6b6357"
   integrity sha512-BNqwbEyitFhzYMYHUVbIvepOyeQOSFA/NeJMIP9enMntkkxLgOcgABH6fjyXG85ipTgvero6noreavGIqfJcIg==
+  dependencies:
+    tinyrainbow "^2.0.0"
+
+"@vitest/pretty-format@3.0.9", "@vitest/pretty-format@^3.0.8":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@vitest/pretty-format/-/pretty-format-3.0.9.tgz#d9c88fe64b4edcdbc88e5bd92c39f9cc8d40930d"
+  integrity sha512-OW9F8t2J3AwFEwENg3yMyKWweF7oRJlMyHOMIhO5F3n0+cgQAJZBjNgrF8dLwFTEXl5jUqBLXd9QyyKv8zEcmA==
   dependencies:
     tinyrainbow "^2.0.0"
 
@@ -1342,12 +1349,12 @@
   dependencies:
     tinyspy "^3.0.2"
 
-"@vitest/ui@3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-3.0.8.tgz#7eb38960a8cf9cc10c1de407575e316562b99680"
-  integrity sha512-MfTjaLU+Gw/lYorgwFZ06Cym+Mj9hPfZh/Q91d4JxyAHiicAakPTvS7zYCSHF+5cErwu2PVBe1alSjuh6L/UiA==
+"@vitest/ui@3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@vitest/ui/-/ui-3.0.9.tgz#f617c67ef80cecac5271fedd92ee8c7dc5a248d7"
+  integrity sha512-FpZD4aIv/qNpwkV3XbLV6xldWFHMgoNWAJEgg5GmpObmAOLAErpYjew9dDwXdYdKOS3iZRKdwI+P3JOJcYeUBg==
   dependencies:
-    "@vitest/utils" "3.0.8"
+    "@vitest/utils" "3.0.9"
     fflate "^0.8.2"
     flatted "^3.3.3"
     pathe "^2.0.3"
@@ -1361,6 +1368,15 @@
   integrity sha512-nkBC3aEhfX2PdtQI/QwAWp8qZWwzASsU4Npbcd5RdMPBSSLCpkZp52P3xku3s3uA0HIEhGvEcF8rNkBsz9dQ4Q==
   dependencies:
     "@vitest/pretty-format" "3.0.8"
+    loupe "^3.1.3"
+    tinyrainbow "^2.0.0"
+
+"@vitest/utils@3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@vitest/utils/-/utils-3.0.9.tgz#15da261d8cacd6035dc28a8d3ba38ee39545f82b"
+  integrity sha512-ilHM5fHhZ89MCp5aAaM9uhfl1c2JdxVxl3McqsdVyVNN6JffnEen8UMCdRTzOhGXNQGo5GNL9QugHrz727Wnng==
+  dependencies:
+    "@vitest/pretty-format" "3.0.9"
     loupe "^3.1.3"
     tinyrainbow "^2.0.0"
 
