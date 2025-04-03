@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@types/inquirer": "9.0.7",
-    "@types/node": "22.13.13",
+    "@types/node": "22.13.14",
     "chalk": "5.4.1",
     "commander": "12.1.0",
     "core-js": "3.41.0",
