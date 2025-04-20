@@ -65,7 +65,7 @@
     "@commitlint/cli": "19.8.0",
     "@commitlint/config-conventional": "19.8.0",
     "@commitlint/prompt-cli": "19.8.0",
-    "@faker-js/faker": "9.6.0",
+    "@faker-js/faker": "9.7.0",
     "@meza/adr-tools": "1.0.10",
     "@meza/tsconfig-base": "1.1.0",
     "@ryansonshine/commitizen": "4.2.8",
