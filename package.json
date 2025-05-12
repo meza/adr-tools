@@ -39,7 +39,7 @@
     "release": "semantic-release"
   },
   "dependencies": {
-    "@types/inquirer": "9.0.7",
+    "@types/inquirer": "9.0.8",
     "@types/node": "22.15.3",
     "chalk": "5.4.1",
     "commander": "12.1.0",
