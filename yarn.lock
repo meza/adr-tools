@@ -1838,12 +1838,7 @@ colorette@^2.0.20:
   resolved "https://registry.yarnpkg.com/colorette/-/colorette-2.0.20.tgz#9eb793e6833067f7235902fcd3b09917a000a95a"
   integrity sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==
 
-commander@12.1.0:
-  version "12.1.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-12.1.0.tgz#01423b36f501259fdaac4d0e4d60c96c991585d3"
-  integrity sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==
-
-commander@^13.1.0:
+commander@13.1.0, commander@^13.1.0:
   version "13.1.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-13.1.0.tgz#776167db68c78f38dcce1f9b8d7b8b9a488abf46"
   integrity sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw==
