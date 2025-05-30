@@ -3,6 +3,12 @@ name: Verify and Release
 on:
   - push
 
+permissions:
+  issues: write
+  checks: write
+  contents: write
+  pull-requests: write
+
 env:
   NODE_VERSION: 22.x
 
