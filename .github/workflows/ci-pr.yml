@@ -1,14 +1,20 @@
 name: Verify PR
 
 on:
-  - pull_request
+  pull_request:
+    types: [opened, reopened, edited, synchronize]
 
+permissions:
+  issues: write
+  checks: write
+  contents: write
+  pull-requests: write
 env:
   NODE_VERSION: 22.x
 
 jobs:
   verifypr:
-
+    name: Verify PR
     runs-on: ubuntu-latest
 
     steps:
