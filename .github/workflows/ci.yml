@@ -2,7 +2,6 @@ name: Verify and Release
 
 on:
   - push
-  - pull_request
 
 env:
   NODE_VERSION: 22.x
