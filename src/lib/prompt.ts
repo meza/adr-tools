@@ -1,5 +1,5 @@
-import inquirer from 'inquirer';
 import chalk from 'chalk';
+import inquirer from 'inquirer';
 
 export const askForClarification = async (searchString: string, matches: string[]) => {
   const selection = await inquirer.prompt([

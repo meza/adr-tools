@@ -1,5 +1,5 @@
-import { vi, describe, it, expect, afterEach } from 'vitest';
 import fs from 'fs/promises';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { getDir } from './config.js';
 import { getLinkDetails } from './links.js';
 
@@ -27,11 +27,7 @@ describe('The link lib', () => {
 
   it('does handles multiple matches', async () => {
     vi.mocked(getDir).mockResolvedValueOnce('/');
-    vi.mocked(fs.readdir).mockResolvedValueOnce([
-      '1-one',
-      '1-two',
-      '1-three'
-    ] as any);
+    vi.mocked(fs.readdir).mockResolvedValueOnce(['1-one', '1-two', '1-three'] as any);
     const linkString = '1:overrides:overriden by';
     const response = await getLinkDetails(linkString);
     expect(response).toEqual({
@@ -39,21 +35,13 @@ describe('The link lib', () => {
       original: '1:overrides:overriden by',
       link: 'overrides',
       reverseLink: 'overriden by',
-      matches: [
-        '1-one',
-        '1-two',
-        '1-three'
-      ]
+      matches: ['1-one', '1-two', '1-three']
     });
   });
 
   it('returns only files that match the pattern', async () => {
     vi.mocked(getDir).mockResolvedValueOnce('/');
-    vi.mocked(fs.readdir).mockResolvedValueOnce([
-      'on1e',
-      '1-two',
-      'three'
-    ] as any);
+    vi.mocked(fs.readdir).mockResolvedValueOnce(['on1e', '1-two', 'three'] as any);
     const linkString = '1:overrides:overriden by';
     const response = await getLinkDetails(linkString);
     expect(response).toEqual({
@@ -61,10 +49,7 @@ describe('The link lib', () => {
       original: '1:overrides:overriden by',
       link: 'overrides',
       reverseLink: 'overriden by',
-      matches: [
-        'on1e',
-        '1-two'
-      ]
+      matches: ['on1e', '1-two']
     });
   });
 
@@ -82,5 +67,4 @@ describe('The link lib', () => {
       matches: []
     });
   });
-
 });

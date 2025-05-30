@@ -1,8 +1,8 @@
-import { afterAll, describe, it, vi, expect } from 'vitest';
 import fs from 'fs/promises';
+import { afterAll, describe, expect, it, vi } from 'vitest';
 import { newNumber } from './numbering.js';
 
-type ReaddirMock = () => Promise<String[]>
+type ReaddirMock = () => Promise<string[]>;
 
 vi.mock('fs/promises');
 vi.mock('./config.js', () => ({
@@ -10,7 +10,6 @@ vi.mock('./config.js', () => ({
 }));
 
 describe('The numbering logic', () => {
-
   afterAll(() => {
     vi.resetAllMocks();
   });
@@ -29,10 +28,7 @@ describe('The numbering logic', () => {
   });
 
   it('processes existing files if there is no lockfile', async () => {
-    const fakeFiles: string[] = [
-      '0001-first-file.md',
-      '0002-first-file.md'
-    ];
+    const fakeFiles: string[] = ['0001-first-file.md', '0002-first-file.md'];
     vi.mocked(fs.readFile).mockRejectedValueOnce('no sequence file');
     vi.mocked(fs.readdir as unknown as ReaddirMock).mockResolvedValueOnce(fakeFiles);
     const num = await newNumber();
