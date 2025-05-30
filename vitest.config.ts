@@ -5,6 +5,12 @@ export default defineConfig({
     dir: 'src',
     testTimeout: 10000,
     watch: false,
+    poolOptions: {
+      forks: {
+        singleFork: true,
+        isolate: true
+      }
+    },
     coverage: {
       reportsDirectory: './reports/coverage/unit',
       reporter: ['text', 'json', 'html']

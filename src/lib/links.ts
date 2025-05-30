@@ -11,7 +11,7 @@ export interface LinkDetails {
 
 export const findMatchingFilesFor = async (pattern: string) => {
   const files = await fs.readdir(await getDir());
-  return files.filter(file => file.includes(pattern));
+  return files.filter((file) => file.includes(pattern));
 };
 
 export const getLinkDetails = async (linkString: string, isSupersede: boolean = false): Promise<LinkDetails> => {

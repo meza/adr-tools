@@ -1,7 +1,7 @@
-import fs from 'fs/promises';
 import * as path from 'node:path';
-import { getDir } from './config.js';
 import { fileURLToPath } from 'node:url';
+import fs from 'fs/promises';
+import { getDir } from './config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,7 +16,7 @@ export const template = async (templateFile?: string): Promise<string> => {
 
   try {
     return await fs.readFile(path.join(await getDir(), 'templates/template.md'), 'utf8');
-  } catch (e) {
+  } catch (_e) {
     return await fs.readFile(path.resolve(path.join(__dirname, '../templates/template.md')), 'utf8');
   }
 };
