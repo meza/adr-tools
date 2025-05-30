@@ -1,7 +1,10 @@
 name: Verify and Release
 
 on:
-  - push
+  push:
+    branches:
+      - main
+      - next
 
 permissions:
   issues: write
