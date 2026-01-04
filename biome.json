@@ -14,10 +14,10 @@
     "lineWidth": 120,
     "lineEnding": "lf",
     "include": ["**/*.ts", "**/*.json"],
-    "ignore": [".cache/**"],
+    "ignore": [".cache/**", "reports/**"],
     "attributePosition": "auto"
   },
-  "files": { "include": ["**/*.ts", "**/*.json"], "ignore": ["package*.json"] },
+  "files": { "include": ["**/*.ts", "**/*.json"], "ignore": ["package*.json", "reports/**"] },
   "linter": {
     "enabled": true,
     "rules": {
@@ -112,7 +112,7 @@
         "useValidTypeof": "error"
       }
     },
-    "ignore": ["**/node_modules", "**/dist", "lib/murmurhash3.ts"]
+    "ignore": ["**/node_modules", "**/dist", "reports/**", "lib/murmurhash3.ts"]
   },
   "json": {
     "formatter": {

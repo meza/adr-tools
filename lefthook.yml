@@ -1,0 +1,14 @@
+pre-commit:
+  jobs:
+    - name: lint
+      run: yarn lint
+
+pre-push:
+  jobs:
+    - name: ci
+      run: yarn ci
+
+commit-msg:
+  jobs:
+    - name: commitlint
+      run: yarn -s commitlint --edit {1}
