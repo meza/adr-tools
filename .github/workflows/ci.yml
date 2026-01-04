@@ -7,10 +7,7 @@ on:
       - next
 
 permissions:
-  issues: write
-  checks: write
-  contents: write
-  pull-requests: write
+  contents: read
 
 env:
   NODE_VERSION: 22.x
@@ -22,26 +19,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Cache multiple paths
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache
-            ~/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - uses: actions/cache@v4
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
@@ -56,32 +33,17 @@ jobs:
     needs: [build]
     name: Release
     runs-on: ubuntu-latest
-    if: ${{github.ref == 'ref/head/main'}} || ${{github.ref == 'ref/head/next'}}
+    if: ${{ github.ref_name == 'main' || github.ref_name == 'next' }}
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Cache multiple paths
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache
-            ~/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - uses: actions/cache@v4
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4

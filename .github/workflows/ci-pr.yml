@@ -5,10 +5,7 @@ on:
     types: [opened, reopened, edited, synchronize]
 
 permissions:
-  issues: write
-  checks: write
-  contents: write
-  pull-requests: write
+  contents: read
 env:
   NODE_VERSION: 22.x
 
@@ -19,26 +16,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Cache multiple paths
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache
-            ~/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - uses: actions/cache@v4
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
