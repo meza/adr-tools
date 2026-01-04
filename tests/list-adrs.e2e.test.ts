@@ -1,14 +1,14 @@
-import * as childProcess from 'child_process';
-import { realpathSync, rmdirSync } from 'node:fs';
+import { realpathSync, rmSync } from 'node:fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs/promises';
 /* eslint-disable no-sync */
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { createAdrCli } from './helpers/adr-cli';
 
 describe('Listing', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx -y tsx ${adr}`;
+  const cli = createAdrCli(adr);
 
   let adrDirectory: string;
   let workDir: string;
@@ -16,38 +16,45 @@ describe('Listing', () => {
   beforeEach(async () => {
     workDir = path.resolve(realpathSync(await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'))));
     adrDirectory = 'doc/adr';
-    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 10000, cwd: workDir });
+    cli.run(['init', adrDirectory], { cwd: workDir });
   });
 
   afterEach(() => {
-    rmdirSync(workDir, {
+    rmSync(workDir, {
       recursive: true,
+      force: true,
       maxRetries: 3,
       retryDelay: 500
     });
   });
 
   it('should list an empty directory', async () => {
-    const child = childProcess.execSync(`${command} list`, { timeout: 10000, cwd: workDir });
-    const output = child.toString().trim();
-    expect(output).toEqual('doc/adr/0001-record-architecture-decisions.md');
+    const output = cli.run(['list'], { cwd: workDir }).replace(/\r\n/g, '\n');
+    expect(output).toEqual(path.join('doc', 'adr', '0001-record-architecture-decisions.md'));
   });
 
   it('should list when there is an additional one', async () => {
-    childProcess.execSync(`${command} new first`, { timeout: 10000, cwd: workDir });
-    const child = childProcess.execSync(`${command} list`, { timeout: 10000, cwd: workDir });
-    const output = child.toString().trim();
-    expect(output).toEqual('doc/adr/0001-record-architecture-decisions.md\ndoc/adr/0002-first.md');
+    cli.run(['new', 'first'], { cwd: workDir });
+    const output = cli.run(['list'], { cwd: workDir }).replace(/\r\n/g, '\n');
+    expect(output).toEqual(
+      [path.join('doc', 'adr', '0001-record-architecture-decisions.md'), path.join('doc', 'adr', '0002-first.md')].join(
+        '\n'
+      )
+    );
   });
 
   it('should list when there are more', async () => {
-    childProcess.execSync(`${command} new first`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} new second`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} new third`, { timeout: 10000, cwd: workDir });
-    const child = childProcess.execSync(`${command} list`, { timeout: 10000, cwd: workDir });
-    const output = child.toString().trim();
+    cli.run(['new', 'first'], { cwd: workDir });
+    cli.run(['new', 'second'], { cwd: workDir });
+    cli.run(['new', 'third'], { cwd: workDir });
+    const output = cli.run(['list'], { cwd: workDir }).replace(/\r\n/g, '\n');
     expect(output).toEqual(
-      'doc/adr/0001-record-architecture-decisions.md\ndoc/adr/0002-first.md\ndoc/adr/0003-second.md\ndoc/adr/0004-third.md'
+      [
+        path.join('doc', 'adr', '0001-record-architecture-decisions.md'),
+        path.join('doc', 'adr', '0002-first.md'),
+        path.join('doc', 'adr', '0003-second.md'),
+        path.join('doc', 'adr', '0004-third.md')
+      ].join('\n')
     );
   });
 });

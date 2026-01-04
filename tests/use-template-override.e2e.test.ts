@@ -1,14 +1,14 @@
-import * as childProcess from 'child_process';
-import { realpathSync, rmdirSync } from 'node:fs';
+import { realpathSync, rmSync } from 'node:fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs/promises';
 /* eslint-disable no-sync */
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { createAdrCli } from './helpers/adr-cli';
 
 describe('Overriding templates', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx -y tsx ${adr}`;
+  const cli = createAdrCli(adr);
 
   let adrDirectory: string;
   let workDir: string;
@@ -18,12 +18,13 @@ describe('Overriding templates', () => {
     process.env.ADR_DATE = '1992-01-12';
     workDir = path.resolve(realpathSync(await fs.mkdtemp(path.join(os.tmpdir(), 'adr-'))));
     adrDirectory = path.join(workDir, 'doc/adr');
-    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 10000, cwd: workDir });
+    cli.run(['init', adrDirectory], { cwd: workDir });
   });
 
   afterEach(() => {
-    rmdirSync(workDir, {
+    rmSync(workDir, {
       recursive: true,
+      force: true,
       maxRetries: 3,
       retryDelay: 500
     });
@@ -36,8 +37,8 @@ describe('Overriding templates', () => {
       '# This is an override template\nTITLE\nDATE\nNUMBER\nSTATUS'
     );
 
-    childProcess.execSync(`${command} new Example ADR`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} new Another Example ADR`, { timeout: 10000, cwd: workDir });
+    cli.run(['new', 'Example', 'ADR'], { cwd: workDir });
+    cli.run(['new', 'Another', 'Example', 'ADR'], { cwd: workDir });
 
     const expectedFile: string = path.join(adrDirectory, '0002-example-adr.md');
     const expectedFile2: string = path.join(adrDirectory, '0003-another-example-adr.md');

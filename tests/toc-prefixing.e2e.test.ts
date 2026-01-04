@@ -1,14 +1,14 @@
-import * as childProcess from 'child_process';
-import { realpathSync, rmdirSync } from 'node:fs';
+import { realpathSync, rmSync } from 'node:fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs/promises';
 /* eslint-disable no-sync */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { createAdrCli } from './helpers/adr-cli';
 
 describe('Generating TOC', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx -y tsx ${adr}`;
+  const cli = createAdrCli(adr);
 
   let adrDirectory: string;
   let workDir: string;
@@ -22,18 +22,19 @@ describe('Generating TOC', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    rmdirSync(workDir, {
+    rmSync(workDir, {
       recursive: true,
+      force: true,
       maxRetries: 3,
       retryDelay: 500
     });
   });
 
   it('should add a path prefix to the toc when there is one supplied', async () => {
-    childProcess.execSync(`${command} new First Record`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} new Second Record`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} new Third Record`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} generate toc -p foo/doc/adr/`, { timeout: 10000, cwd: workDir });
+    cli.run(['new', 'First', 'Record'], { cwd: workDir });
+    cli.run(['new', 'Second', 'Record'], { cwd: workDir });
+    cli.run(['new', 'Third', 'Record'], { cwd: workDir });
+    cli.run(['generate', 'toc', '-p', 'foo/doc/adr/'], { cwd: workDir });
 
     const tocFilePath: string = path.join(adrDirectory, 'decisions.md');
     const tocContent = await fs.readFile(tocFilePath, 'utf8');

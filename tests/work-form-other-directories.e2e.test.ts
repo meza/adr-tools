@@ -1,13 +1,13 @@
-import * as childProcess from 'child_process';
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import * as os from 'os';
 import * as path from 'path';
 /* eslint-disable no-sync */
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { createAdrCli } from './helpers/adr-cli';
 
 describe('deep directories', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx -y tsx ${adr}`;
+  const cli = createAdrCli(adr);
 
   let adrDirectory: string;
   let workDir: string;
@@ -15,12 +15,13 @@ describe('deep directories', () => {
   beforeEach(() => {
     workDir = path.resolve(fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'adr-'))));
     adrDirectory = path.join(workDir, 'doc/adr');
-    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 10000, cwd: workDir });
+    cli.run(['init', adrDirectory], { cwd: workDir });
   });
 
   afterEach(() => {
-    fs.rmdirSync(workDir, {
+    fs.rmSync(workDir, {
       recursive: true,
+      force: true,
       maxRetries: 3,
       retryDelay: 500
     });
@@ -29,17 +30,18 @@ describe('deep directories', () => {
   it('can work', () => {
     const innerPath = path.join(fs.mkdtempSync(path.resolve(workDir) + '/'), 'inner');
     fs.mkdirSync(innerPath, { recursive: true });
-    childProcess.execSync(`${command} new this should exist`, { timeout: 10000, cwd: innerPath });
+    cli.run(['new', 'this', 'should', 'exist'], { cwd: innerPath });
     const expectedFile: string = path.join(adrDirectory, '0002-this-should-exist.md');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });
 
   it('can work when there has been no config initiated', () => {
-    childProcess.execSync(`rimraf ${adrDirectory} ${workDir}/.adr-dir`);
+    fs.rmSync(adrDirectory, { recursive: true, force: true });
+    fs.rmSync(path.join(workDir, '.adr-dir'), { force: true });
 
     const innerPath = path.join(fs.mkdtempSync(path.resolve(workDir) + '/'), 'inner');
     fs.mkdirSync(innerPath, { recursive: true });
-    childProcess.execSync(`${command} new this should exist`, { timeout: 10000, cwd: innerPath });
+    cli.run(['new', 'this', 'should', 'exist'], { cwd: innerPath });
     const expectedFile: string = path.join(innerPath, 'doc', 'adr', '0001-this-should-exist.md');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });

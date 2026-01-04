@@ -1,13 +1,13 @@
-import * as childProcess from 'child_process';
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import * as os from 'os';
 import * as path from 'path';
 /* eslint-disable no-sync */
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { createAdrCli } from './helpers/adr-cli';
 
 describe('New Adrs', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx -y tsx ${adr}`;
+  const cli = createAdrCli(adr);
 
   let adrDirectory: string;
   let workDir: string;
@@ -20,16 +20,17 @@ describe('New Adrs', () => {
   });
 
   afterEach(() => {
-    fs.rmdirSync(workDir, {
+    fs.rmSync(workDir, {
       recursive: true,
+      force: true,
       maxRetries: 3,
       retryDelay: 500
     });
   });
 
   it('should create a new one normally', () => {
-    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} new Example ADR`, { timeout: 10000, cwd: workDir });
+    cli.run(['init', adrDirectory], { cwd: workDir });
+    cli.run(['new', 'Example', 'ADR'], { cwd: workDir });
 
     const expectedNewFile: string = path.join(adrDirectory, '0002-example-adr.md');
     expect(fs.existsSync(expectedNewFile)).toBeTruthy();
@@ -39,7 +40,7 @@ describe('New Adrs', () => {
   });
 
   it('should create a new one even if no config exists', () => {
-    childProcess.execSync(`${command} new Example ADR`, { timeout: 10000, cwd: workDir });
+    cli.run(['new', 'Example', 'ADR'], { cwd: workDir });
 
     const expectedNewFile: string = path.join(adrDirectory, '0001-example-adr.md');
     expect(fs.existsSync(expectedNewFile)).toBeTruthy();
@@ -49,8 +50,8 @@ describe('New Adrs', () => {
   });
 
   it('should create a table of contents upon creation', () => {
-    childProcess.execSync(`${command} init ${adrDirectory}`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} new Example ADR`, { timeout: 10000, cwd: workDir });
+    cli.run(['init', adrDirectory], { cwd: workDir });
+    cli.run(['new', 'Example', 'ADR'], { cwd: workDir });
 
     const expectedNewFile: string = path.join(adrDirectory, 'decisions.md');
     expect(fs.existsSync(expectedNewFile)).toBeTruthy();

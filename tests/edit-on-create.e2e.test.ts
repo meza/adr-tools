@@ -1,15 +1,21 @@
-import * as childProcess from 'child_process';
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import * as os from 'os';
 import * as path from 'path';
 /* eslint-disable no-sync */
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { createAdrCli } from './helpers/adr-cli';
 
 describe('Edit new Adrs on creation', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx -y tsx ${adr}`;
-  const visualHelper = path.resolve(path.dirname(__filename), './fake-visual');
-  const editorHelper = path.resolve(path.dirname(__filename), './fake-editor');
+  const cli = createAdrCli(adr);
+  const visualHelper =
+    process.platform === 'win32'
+      ? path.resolve(path.dirname(__filename), './fake-visual.cmd')
+      : path.resolve(path.dirname(__filename), './fake-visual');
+  const editorHelper =
+    process.platform === 'win32'
+      ? path.resolve(path.dirname(__filename), './fake-editor.cmd')
+      : path.resolve(path.dirname(__filename), './fake-editor');
 
   let adrDirectory: string;
   let workDir: string;
@@ -22,38 +28,49 @@ describe('Edit new Adrs on creation', () => {
   });
 
   afterEach(() => {
-    fs.rmdirSync(workDir, {
+    fs.rmSync(workDir, {
       recursive: true,
+      force: true,
       maxRetries: 3,
       retryDelay: 500
     });
   });
 
   it('should open a new ADR in the VISUAL', () => {
-    childProcess.execSync(`VISUAL="${visualHelper}" ${command} new Example ADR`, { timeout: 10000, cwd: workDir });
+    cli.run(['new', 'Example', 'ADR'], {
+      cwd: workDir,
+      env: { VISUAL: visualHelper }
+    });
 
     const expectedNewFile: string = path.join(workDir, 'visual.out');
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
-    expect(fileContents.trim()).toEqual(`VISUAL ${adrDirectory}/0001-example-adr.md`);
+    const reported = fileContents.trim().replace(/^VISUAL\s+/, '');
+    expect(path.normalize(reported)).toEqual(path.normalize(`${adrDirectory}/0001-example-adr.md`));
   });
 
   it.skip('should open a new ADR in the EDITOR', () => {
-    childProcess.execSync(`EDITOR="${editorHelper}" ${command} new Example ADR`, { timeout: 10000, cwd: workDir });
+    cli.run(['new', 'Example', 'ADR'], {
+      cwd: workDir,
+      env: { EDITOR: editorHelper }
+    });
 
     const expectedNewFile: string = path.join(workDir, 'editor.out');
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
-    expect(fileContents.trim()).toEqual(`EDITOR ${adrDirectory}/0001-example-adr.md`);
+    const reported = fileContents.trim().replace(/^EDITOR\s+/, '');
+    expect(path.normalize(reported)).toEqual(path.normalize(`${adrDirectory}/0001-example-adr.md`));
   });
 
   it('should open a new ADR in the VISUAL if both VISUAL and EDITOR is supplied', () => {
-    childProcess.execSync(`EDITOR="${editorHelper}" VISUAL="${visualHelper}" ${command} new Example ADR`, {
-      cwd: workDir
+    cli.run(['new', 'Example', 'ADR'], {
+      cwd: workDir,
+      env: { EDITOR: editorHelper, VISUAL: visualHelper }
     });
 
     expect(fs.existsSync(path.join(workDir, 'editor.out'))).toBeFalsy();
 
     const expectedNewFile: string = path.join(workDir, 'visual.out');
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
-    expect(fileContents.trim()).toEqual(`VISUAL ${adrDirectory}/0001-example-adr.md`);
+    const reported = fileContents.trim().replace(/^VISUAL\s+/, '');
+    expect(path.normalize(reported)).toEqual(path.normalize(`${adrDirectory}/0001-example-adr.md`));
   });
 });

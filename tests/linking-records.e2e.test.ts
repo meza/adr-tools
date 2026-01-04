@@ -1,14 +1,14 @@
-import * as childProcess from 'child_process';
-import { realpathSync, rmdirSync } from 'node:fs';
+import { realpathSync, rmSync } from 'node:fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs/promises';
 /* eslint-disable no-sync */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { createAdrCli } from './helpers/adr-cli';
 
 describe('Linking Adrs', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx -y tsx ${adr}`;
+  const cli = createAdrCli(adr);
 
   let adrDirectory: string;
   let workDir: string;
@@ -22,17 +22,18 @@ describe('Linking Adrs', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    rmdirSync(workDir, {
+    rmSync(workDir, {
       recursive: true,
+      force: true,
       maxRetries: 3,
       retryDelay: 500
     });
   });
 
   it('should link adrs as expected with adr new', async () => {
-    childProcess.execSync(`${command} new First Record`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} new Second Record`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} new -q -l "1:Amends:Amended by" -l "2:Clarifies:Clarified by" Third Record`, {
+    cli.run(['new', 'First', 'Record'], { cwd: workDir });
+    cli.run(['new', 'Second', 'Record'], { cwd: workDir });
+    cli.run(['new', '-q', '-l', '1:Amends:Amended by', '-l', '2:Clarifies:Clarified by', 'Third', 'Record'], {
       cwd: workDir
     });
 
@@ -50,11 +51,11 @@ describe('Linking Adrs', () => {
   });
 
   it('should link adrs as expected with adr link', async () => {
-    childProcess.execSync(`${command} new First Record`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} new Second Record`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} new Third Record`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} link 3 Amends 1 "Amended by"`, { timeout: 10000, cwd: workDir });
-    childProcess.execSync(`${command} link 3 Clarifies 2 "Clarified by"`, { timeout: 10000, cwd: workDir });
+    cli.run(['new', 'First', 'Record'], { cwd: workDir });
+    cli.run(['new', 'Second', 'Record'], { cwd: workDir });
+    cli.run(['new', 'Third', 'Record'], { cwd: workDir });
+    cli.run(['link', '3', 'Amends', '1', 'Amended by'], { cwd: workDir });
+    cli.run(['link', '3', 'Clarifies', '2', 'Clarified by'], { cwd: workDir });
 
     const first: string = path.join(adrDirectory, '0001-first-record.md');
     const second: string = path.join(adrDirectory, '0002-second-record.md');

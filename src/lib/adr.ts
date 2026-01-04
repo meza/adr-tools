@@ -11,6 +11,87 @@ import { template } from './template.js';
 
 const __filename = fileURLToPath(import.meta.url);
 
+const normalizeEditorCommand = (raw: string | undefined): string | undefined => {
+  if (!raw) {
+    return undefined;
+  }
+
+  const trimmed = raw.trim();
+  if (!trimmed) {
+    return undefined;
+  }
+
+  const unquoted = trimmed.replace(/^['"](.+)['"]$/, '$1').trim();
+  if (!unquoted) {
+    return undefined;
+  }
+
+  const lowered = unquoted.toLowerCase();
+  if (lowered === 'true' || lowered === 'false') {
+    return undefined;
+  }
+
+  return unquoted;
+};
+
+const splitCommandLine = (commandLine: string): string[] => {
+  const tokens: string[] = [];
+  let current = '';
+  let inSingle = false;
+  let inDouble = false;
+
+  for (let i = 0; i < commandLine.length; i++) {
+    const ch = commandLine[i];
+
+    if (inDouble && ch === '\\' && i + 1 < commandLine.length) {
+      const next = commandLine[i + 1];
+      if (next === '"' || next === '\\') {
+        current += next;
+        i++;
+        continue;
+      }
+    }
+
+    if (!inDouble && ch === "'") {
+      inSingle = !inSingle;
+      continue;
+    }
+
+    if (!inSingle && ch === '"') {
+      inDouble = !inDouble;
+      continue;
+    }
+
+    if (!inSingle && !inDouble && /\s/.test(ch)) {
+      if (current) {
+        tokens.push(current);
+        current = '';
+      }
+      continue;
+    }
+
+    current += ch;
+  }
+
+  if (current) {
+    tokens.push(current);
+  }
+
+  return tokens;
+};
+
+const spawnEditor = (commandLine: string, filePath: string) => {
+  if (process.platform === 'win32') {
+    childProcess.spawn(`${commandLine} "${filePath}"`, { stdio: 'inherit', shell: true });
+    return;
+  }
+
+  const [command, ...args] = splitCommandLine(commandLine);
+  if (command) {
+    childProcess.spawn(command, [...args, filePath], { stdio: 'inherit' });
+  }
+};
+
 interface NewOptions {
   supersedes?: string[];
   date?: string | undefined;
@@ -167,18 +248,14 @@ export const newAdr = async (title: string, config?: NewOptions) => {
   await injectLinksTo(adrPath, config?.links, config?.suppressPrompts);
   await generateToc();
 
-  if (process.env.VISUAL) {
-    await childProcess.spawn(process.env.VISUAL, [adrPath], {
-      stdio: 'inherit',
-      shell: true
-    });
+  const visualCommand = normalizeEditorCommand(process.env.VISUAL);
+  if (visualCommand) {
+    spawnEditor(visualCommand, adrPath);
     return;
   }
-  if (process.env.EDITOR) {
-    await childProcess.spawn(process.env.EDITOR, [adrPath], {
-      stdio: 'inherit',
-      shell: true
-    });
+  const editorCommand = normalizeEditorCommand(process.env.EDITOR);
+  if (editorCommand) {
+    spawnEditor(editorCommand, adrPath);
     return;
   }
 };
