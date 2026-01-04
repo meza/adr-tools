@@ -35,7 +35,19 @@ adr new A new decision the team has made
 
 This will automatically figure out the numbering sequence, get the correct filename format and use the title inside of an ADR template.
 
-If you have an EDITOR or VISUAL environment variable set, that editor will open the newly created file.
+By default, `adr new` only writes the file. To open it after creation, pass `--open`:
+
+```
+adr new --open A new decision the team has made
+```
+
+You can also force a specific opener via `--open-with` (optionally with args):
+
+```
+adr new --open-with "code --wait" A new decision the team has made
+```
+
+When `--open` is set and `--open-with` is not, the tool prefers `VISUAL`, then `EDITOR` (but ignores npm-injected editor defaults), then falls back to the OS default opener.
 
 ### **Superseding previous decisions**
 

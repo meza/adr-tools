@@ -64,6 +64,11 @@ program
     '-q, --quiet',
     'Do not ask for clarification. If multiple files match the search pattern, an error will be thrown.'
   )
+  .option('--open', 'Open the created ADR after writing it (use OS default or `--open-with`).')
+  .option(
+    '--open-with <COMMAND>',
+    'Open the created ADR with a specific command (optionally with args); implies `--open`.'
+  )
   .option(
     '-s, --supersede <SUPERSEDE>',
     'A reference (number or partial filename) of a previous decision that the new decision supercedes.\n' +
@@ -87,7 +92,9 @@ program
         supersedes: options.supersede,
         date: process.env.ADR_DATE,
         suppressPrompts: options.quiet || false,
-        links: options.link
+        links: options.link,
+        open: options.open || Boolean(options.openWith),
+        openWith: options.openWith
       });
     } catch (e) {
       program.error(chalk.red((e as Error).message), { exitCode: 1 });

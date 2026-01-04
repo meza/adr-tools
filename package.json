@@ -45,7 +45,8 @@
     "commander": "12.1.0",
     "core-js": "3.42.0",
     "inquirer": "9.3.7",
-    "marked": "4.3.0"
+    "marked": "4.3.0",
+    "open": "9.1.0"
   },
   "commitlint": {
     "extends": [

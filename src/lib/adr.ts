@@ -1,7 +1,7 @@
-import childProcess from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'fs/promises';
+import open from 'open';
 import { getDir, workingDir } from './config.js';
 import { findMatchingFilesFor, getLinkDetails } from './links.js';
 import { getTitleFrom, injectLink, supersede } from './manipulator.js';
@@ -80,16 +80,58 @@ const splitCommandLine = (commandLine: string): string[] => {
   return tokens;
 };
 
-const spawnEditor = (commandLine: string, filePath: string) => {
-  if (process.platform === 'win32') {
-    childProcess.spawn(`${commandLine} "${filePath}"`, { stdio: 'inherit', shell: true });
-    return;
+type OpenPlan = { type: 'none' } | { type: 'default' } | { type: 'app'; name: string; args: string[] };
+
+const equalsIgnoreCase = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
+
+const isNpmInjectedEditor = (editor: string) => {
+  const env = process.env as NodeJS.ProcessEnv & {
+    npm_config_editor?: string;
+    npm_execpath?: string;
+  };
+  const npmEditor = normalizeEditorCommand(env.npm_config_editor);
+  if (!npmEditor) {
+    return false;
   }
 
-  const [command, ...args] = splitCommandLine(commandLine);
-  if (command) {
-    childProcess.spawn(command, [...args, filePath], { stdio: 'inherit' });
+  if (!equalsIgnoreCase(editor, npmEditor)) {
+    return false;
   }
+
+  return Boolean(env.npm_execpath);
+};
+
+export const chooseOpenPlan = (options?: { open?: boolean; openWith?: string }): OpenPlan => {
+  const openWith = normalizeEditorCommand(options?.openWith);
+  const shouldOpen = Boolean(options?.open) || Boolean(openWith);
+  if (!shouldOpen) {
+    return { type: 'none' };
+  }
+
+  if (openWith) {
+    const [name, ...args] = splitCommandLine(openWith);
+    if (name) {
+      return { type: 'app', name, args };
+    }
+  }
+
+  const visual = normalizeEditorCommand(process.env.VISUAL);
+  if (visual) {
+    const [name, ...args] = splitCommandLine(visual);
+    if (name) {
+      return { type: 'app', name, args };
+    }
+  }
+
+  const editor = normalizeEditorCommand(process.env.EDITOR);
+  if (editor && !isNpmInjectedEditor(editor)) {
+    const [name, ...args] = splitCommandLine(editor);
+    if (name) {
+      return { type: 'app', name, args };
+    }
+  }
+
+  return { type: 'default' };
 };
 
 interface NewOptions {
@@ -98,6 +140,8 @@ interface NewOptions {
   suppressPrompts?: boolean;
   template?: string;
   links?: string[];
+  open?: boolean;
+  openWith?: string;
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -248,15 +292,25 @@ export const newAdr = async (title: string, config?: NewOptions) => {
   await injectLinksTo(adrPath, config?.links, config?.suppressPrompts);
   await generateToc();
 
-  const visualCommand = normalizeEditorCommand(process.env.VISUAL);
-  if (visualCommand) {
-    spawnEditor(visualCommand, adrPath);
-    return;
-  }
-  const editorCommand = normalizeEditorCommand(process.env.EDITOR);
-  if (editorCommand) {
-    spawnEditor(editorCommand, adrPath);
-    return;
+  const openPlan = chooseOpenPlan(
+    config?.open !== undefined || config?.openWith
+      ? {
+          ...(config?.open !== undefined ? { open: config.open } : {}),
+          ...(config?.openWith ? { openWith: config.openWith } : {})
+        }
+      : undefined
+  );
+  switch (openPlan.type) {
+    case 'none':
+      return;
+    case 'default':
+      await open(adrPath, { wait: false });
+      return;
+    case 'app':
+      await open(adrPath, { app: { name: openPlan.name, arguments: openPlan.args }, wait: false });
+      return;
+    default:
+      return;
   }
 };
 

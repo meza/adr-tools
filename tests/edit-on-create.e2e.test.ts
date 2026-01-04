@@ -5,6 +5,17 @@ import * as path from 'path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { createAdrCli } from './helpers/adr-cli';
 
+const waitForFile = async (filePath: string, timeoutMs: number) => {
+  const startedAt = Date.now();
+  while (Date.now() - startedAt < timeoutMs) {
+    if (fs.existsSync(filePath)) {
+      return;
+    }
+    await new Promise((r) => setTimeout(r, 25));
+  }
+  throw new Error(`Timed out waiting for file: ${filePath}`);
+};
+
 describe('Edit new Adrs on creation', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
   const cli = createAdrCli(adr);
@@ -36,20 +47,21 @@ describe('Edit new Adrs on creation', () => {
     });
   });
 
-  it('should open a new ADR in the VISUAL', () => {
-    cli.run(['new', 'Example', 'ADR'], {
+  it('should open a new ADR in the VISUAL', async () => {
+    cli.run(['new', '--open', 'Example', 'ADR'], {
       cwd: workDir,
       env: { VISUAL: visualHelper }
     });
 
     const expectedNewFile: string = path.join(workDir, 'visual.out');
+    await waitForFile(expectedNewFile, 2000);
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
     const reported = fileContents.trim().replace(/^VISUAL\s+/, '');
     expect(path.normalize(reported)).toEqual(path.normalize(`${adrDirectory}/0001-example-adr.md`));
   });
 
   it.skip('should open a new ADR in the EDITOR', () => {
-    cli.run(['new', 'Example', 'ADR'], {
+    cli.run(['new', '--open', 'Example', 'ADR'], {
       cwd: workDir,
       env: { EDITOR: editorHelper }
     });
@@ -60,8 +72,8 @@ describe('Edit new Adrs on creation', () => {
     expect(path.normalize(reported)).toEqual(path.normalize(`${adrDirectory}/0001-example-adr.md`));
   });
 
-  it('should open a new ADR in the VISUAL if both VISUAL and EDITOR is supplied', () => {
-    cli.run(['new', 'Example', 'ADR'], {
+  it('should open a new ADR in the VISUAL if both VISUAL and EDITOR is supplied', async () => {
+    cli.run(['new', '--open', 'Example', 'ADR'], {
       cwd: workDir,
       env: { EDITOR: editorHelper, VISUAL: visualHelper }
     });
@@ -69,6 +81,7 @@ describe('Edit new Adrs on creation', () => {
     expect(fs.existsSync(path.join(workDir, 'editor.out'))).toBeFalsy();
 
     const expectedNewFile: string = path.join(workDir, 'visual.out');
+    await waitForFile(expectedNewFile, 2000);
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
     const reported = fileContents.trim().replace(/^VISUAL\s+/, '');
     expect(path.normalize(reported)).toEqual(path.normalize(`${adrDirectory}/0001-example-adr.md`));
