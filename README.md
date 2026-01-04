@@ -11,9 +11,9 @@ If you’re interested in reading more about what ADRs are and why they’re imp
 
 ## **ADR Location Convention**
 
-By convention we store the decisions in **<project_root>/docs/decisions**
+By convention we store the decisions in `doc/adr` (this repo is configured via `.adr-dir`).
 
-You can also check where the directory is by inspecting the **.adr-dir** file’s contents.
+You can also check where the directory is by inspecting the `.adr-dir` file’s contents.
 
 ## **ADR CLI in node land**
 
@@ -75,7 +75,7 @@ An ADR file MUST have a `# title` at the top and a `## Status` header.
 
 ## Local Development
 
-`yarn install`
+See `CONTRIBUTING.md` for the recommended local setup and verification commands.
 
 ### Commits
 
