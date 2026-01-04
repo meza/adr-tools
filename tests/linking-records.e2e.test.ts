@@ -8,7 +8,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('Linking Adrs', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx tsx ${adr}`;
+  const command = `npx -y tsx ${adr}`;
 
   let adrDirectory: string;
   let workDir: string;

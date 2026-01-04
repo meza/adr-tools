@@ -8,7 +8,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest
 
 describe('Generating Graphs', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx tsx ${adr}`;
+  const command = `npx -y tsx ${adr}`;
   let workDir: string;
 
   beforeAll(async () => {

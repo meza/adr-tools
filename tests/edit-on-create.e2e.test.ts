@@ -7,7 +7,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('Edit new Adrs on creation', () => {
   const adr = path.resolve(path.dirname(__filename), '../src/index.ts');
-  const command = `npx tsx ${adr}`;
+  const command = `npx -y tsx ${adr}`;
   const visualHelper = path.resolve(path.dirname(__filename), './fake-visual');
   const editorHelper = path.resolve(path.dirname(__filename), './fake-editor');
 

@@ -6,21 +6,19 @@ This guide shows how to set up a working dev environment, run the checks CI runs
 ## Prerequisites
 
 - Node.js 22 (CI uses `22.x`)
-- Corepack (ships with Node; used to run Yarn reliably)
 
 ## Quick start
 
 Install dependencies:
 
 ```bash
-corepack enable
-corepack yarn install --pure-lockfile
+yarn install
 ```
 
 Run the full local verification (what CI runs):
 
 ```bash
-corepack yarn ci
+yarn ci
 ```
 
 ## How the repo is laid out
@@ -46,26 +44,26 @@ All commands are defined in `package.json`. Prefer running scripts instead of ca
 
 ```bash
 # Lint + typecheck
-corepack yarn lint
+yarn lint
 
 # Unit tests (under src/)
-corepack yarn test:unit
+yarn test:unit
 
 # E2E tests (under tests/)
-corepack yarn test:e2e
+yarn test:e2e
 
 # Build dist/ (tsc + template copy)
-corepack yarn build
+yarn build
 
 # Clean build artifacts
-corepack yarn clean
+yarn clean
 ```
 
 If you want coverage reports locally, add `--coverage`:
 
 ```bash
-corepack yarn test:unit --coverage
-corepack yarn test:e2e --coverage
+yarn test:unit --coverage
+yarn test:e2e --coverage
 ```
 
 ## Required local checks
@@ -73,7 +71,7 @@ corepack yarn test:e2e --coverage
 Before opening a PR, run:
 
 ```bash
-corepack yarn ci
+yarn ci
 ```
 
 This runs linting and tests in parallel using the repo's configured tooling.
@@ -90,7 +88,7 @@ This repo uses Conventional Commits (enforced by commitlint).
 If you want an interactive prompt for commit messages:
 
 ```bash
-corepack yarn commit
+yarn commit
 ```
 
 Do not edit `CHANGELOG.md` in PRs unless you are fixing an obvious mistake; releases are handled by semantic-release.
@@ -107,7 +105,7 @@ npx -y -p @meza/adr-tools -- adr list
 
 ## CI and releases (maintainers)
 
-CI runs `corepack yarn ci` on PRs and on pushes to `main` and `next`.
+CI runs `yarn ci` on PRs and on pushes to `main` and `next`.
 Releases are performed via semantic-release and require credentials; they are typically handled by maintainers.
 
 ## Windows verification (maintainers)

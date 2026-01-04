@@ -219,7 +219,7 @@ Write user-facing docs in a conversational, guide-like tone:
 
 - [ ] Review every line of code for adherence to coding standards
 - [ ] Attempt to simplify or improve any code in the changeset for clarity and maintainability
-- [ ] Ensure `corepack yarn ci` passes
+- [ ] Ensure `yarn ci` passes
 - [ ] Documentation updated if needed
 - [ ] Implementation matches every cited spec section; list the sections in your report and explain how the change satisfies each one.
 - [ ] Code review approved
