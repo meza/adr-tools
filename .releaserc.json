@@ -27,14 +27,19 @@
         "presetConfig": {}
       }
     ],
-    "@semantic-release/npm",
+    [
+      "@semantic-release/npm",
+      {
+        "tarballDir": "build"
+      }
+    ],
     [
       "@semantic-release/github",
       {
         "assets": [
           {
-            "path": ["dist/**"],
-            "name": "adr-tools-${nextRelease.gitTag}.zip",
+            "path": "build/*.tgz",
+            "name": "adr-tools-${nextRelease.gitTag}.tgz",
             "label": "ADR-Tools ${nextRelease.gitTag}"
           }
         ]
