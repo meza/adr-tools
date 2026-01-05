@@ -372,11 +372,16 @@ export const listAdrs = async () => {
   const toc = files
     .map((f) => {
       const adrFile = f.match(/^0*(\d+)-.*$/);
-      if (adrFile) {
-        return path.resolve(dir, adrFile[0]);
+      if (!adrFile) {
+        return null;
       }
-      return '';
+      return {
+        number: Number.parseInt(adrFile[1], 10),
+        path: path.resolve(dir, adrFile[0])
+      };
     })
-    .filter((f) => f !== '');
+    .filter((entry): entry is { number: number; path: string } => Boolean(entry))
+    .sort((a, b) => a.number - b.number)
+    .map((entry) => entry.path);
   return toc;
 };

@@ -362,4 +362,15 @@ describe('adr helpers', () => {
     const result = await listAdrs();
     expect(result).toEqual([path.resolve('/repo/doc/adr', '0001-first.md')]);
   });
+
+  it('lists adr files sorted by number', async () => {
+    vi.mocked(getDir).mockResolvedValue('/repo/doc/adr');
+    mockReaddir.mockResolvedValueOnce(['0010-ten.md', '0002-two.md', 'notes.txt', '0001-one.md']);
+    const result = await listAdrs();
+    expect(result).toEqual([
+      path.resolve('/repo/doc/adr', '0001-one.md'),
+      path.resolve('/repo/doc/adr', '0002-two.md'),
+      path.resolve('/repo/doc/adr', '0010-ten.md')
+    ]);
+  });
 });
