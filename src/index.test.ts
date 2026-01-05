@@ -86,6 +86,20 @@ describe('adr CLI', () => {
     expect(output).toContain('0001-one.html');
   });
 
+  it('escapes graph labels and urls', async () => {
+    const deps = createDeps();
+    deps.listAdrs.mockResolvedValue(['/repo/doc/adr/0001-one.md']);
+    deps.readFile.mockResolvedValue('# Title');
+    deps.getTitleFrom.mockReturnValue('ADR "Title" \\\\ path\nline');
+    deps.getLinksFrom.mockReturnValue([]);
+    await run(['node', 'adr', 'generate', 'graph', '-e', '.md', '-p', '/p/"weird"/'], deps);
+    const output = deps.log.mock.calls[0][0] as string;
+    const match = output.match(/label="([\s\S]*?)"; URL="([^"]+)"/);
+    expect(match?.[1]).toContain(String.raw`ADR \"Title\" \\\\ path\\nline`);
+    expect(match?.[1]).not.toContain('\n');
+    expect(output).toContain(String.raw`URL="/p/\"weird\"/0001-one.md"`);
+  });
+
   it('routes link command', async () => {
     const deps = createDeps();
     await run(['node', 'adr', 'link', '1', 'Amends', '2', 'Amended by'], deps);

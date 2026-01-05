@@ -33,8 +33,11 @@ describe('--open-with', () => {
     adrDirectory = path.resolve(path.join(workDir, 'doc/adr'));
   });
 
-  afterEach(() => {
-    fs.rmSync(workDir, { recursive: true, force: true, maxRetries: 3, retryDelay: 500 });
+  afterEach(async () => {
+    if (process.platform === 'win32') {
+      await new Promise((r) => setTimeout(r, 500));
+    }
+    fs.rmSync(workDir, { recursive: true, force: true, maxRetries: 10, retryDelay: 250 });
   });
 
   it('opens the created ADR with the provided command', async () => {

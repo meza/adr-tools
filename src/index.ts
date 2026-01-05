@@ -54,6 +54,12 @@ const defaultDeps: ProgramDeps = {
   log: console.log
 };
 
+const escapeDotString = (value: string) =>
+  value
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"')
+    .replace(/\r\n|\n|\r/g, '\\\\n');
+
 const generateGraph = async (deps: ProgramDeps, options?: { prefix: string; extension: string }) => {
   let text = 'digraph {\n';
   text += '  node [shape=plaintext];\n';
@@ -65,7 +71,8 @@ const generateGraph = async (deps: ProgramDeps, options?: { prefix: string; exte
     const adrPath = adrs[i];
     const contents = await deps.readFile(adrPath, 'utf8');
     const title = deps.getTitleFrom(contents);
-    text += `    _${n} [label="${title}"; URL="${options?.prefix || ''}${path.basename(adrPath, '.md')}${options?.extension}"];\n`;
+    const url = `${options?.prefix || ''}${path.basename(adrPath, '.md')}${options?.extension}`;
+    text += `    _${n} [label="${escapeDotString(title)}"; URL="${escapeDotString(url)}"];\n`;
     if (n > 1) {
       text += `    _${n - 1} -> _${n} [style="dotted", weight=1];\n`;
     }
