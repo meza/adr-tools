@@ -13,6 +13,13 @@ export default defineConfig({
       }
     },
     coverage: {
+      thresholds: {
+        branches: 100,
+        functions: 100,
+        lines: 100,
+        statements: 100,
+        perFile: true
+      },
       reportsDirectory: './reports/coverage/unit',
       reporter: ['text', 'json', 'html']
     }
