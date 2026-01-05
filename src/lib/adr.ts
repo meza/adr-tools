@@ -284,7 +284,7 @@ const injectLinksTo = async (sourcePath: string, links: string[] = [], suppressP
 export const generateToc = async (options?: { prefix?: string }) => {
   const adrDir = await getDir();
   const files = await fs.readdir(adrDir);
-  const toc = files.filter((file) => file.match(/^\d{4}-.*\.md$/)).sort();
+  const toc = files.filter((file) => file.match(/^\d{4,}-.*\.md$/)).sort();
 
   const titles = toc.map(async (file) => {
     const title = getTitleFrom(await fs.readFile(path.join(adrDir, file), 'utf8'));

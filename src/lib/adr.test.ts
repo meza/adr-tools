@@ -78,6 +78,32 @@ describe('adr helpers', () => {
     );
   });
 
+  it('includes ADRs with more than four digits', async () => {
+    vi.mocked(getDir).mockResolvedValueOnce('/repo/doc/adr');
+    mockReaddir.mockResolvedValueOnce(['10000-future.md']);
+    vi.mocked(fs.readFile).mockResolvedValueOnce('# Future ADR');
+    vi.mocked(getTitleFrom).mockReturnValueOnce('ADR 10000: Future');
+
+    await generateToc();
+    expect(fs.writeFile).toHaveBeenCalledWith(
+      path.resolve('/repo/doc/adr', 'decisions.md'),
+      '# Table of Contents\n\n- [ADR 10000: Future](10000-future.md)'
+    );
+  });
+
+  it('excludes ADRs with fewer than four digits', async () => {
+    vi.mocked(getDir).mockResolvedValueOnce('/repo/doc/adr');
+    mockReaddir.mockResolvedValueOnce(['123-short.md', '0001-first.md']);
+    vi.mocked(fs.readFile).mockResolvedValueOnce('# First ADR');
+    vi.mocked(getTitleFrom).mockReturnValueOnce('ADR 1: First');
+
+    await generateToc();
+    expect(fs.writeFile).toHaveBeenCalledWith(
+      path.resolve('/repo/doc/adr', 'decisions.md'),
+      '# Table of Contents\n\n- [ADR 1: First](0001-first.md)'
+    );
+  });
+
   it('creates a new adr without opening', async () => {
     vi.mocked(newNumber).mockResolvedValueOnce(1);
     vi.mocked(template).mockResolvedValueOnce('DATE\nTITLE\nNUMBER\nSTATUS\n');
