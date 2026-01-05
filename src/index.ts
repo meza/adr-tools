@@ -33,6 +33,7 @@ type ProgramDeps = {
   version: string;
   onError: (program: Command, error: Error) => void;
   log: (message: string) => void;
+  warn: (message: string) => void;
 };
 
 export const defaultOnError = (program: Command, error: Error) => {
@@ -51,7 +52,8 @@ const defaultDeps: ProgramDeps = {
   getTitleFrom,
   version: LIB_VERSION,
   onError: defaultOnError,
-  log: console.log
+  log: console.log,
+  warn: console.warn
 };
 
 const escapeDotString = (value: string) =>
@@ -60,39 +62,84 @@ const escapeDotString = (value: string) =>
     .replace(/"/g, '\\"')
     .replace(/\r\n|\n|\r/g, '\\\\n');
 
-const generateGraph = async (deps: ProgramDeps, options?: { prefix: string; extension: string }) => {
-  let text = 'digraph {\n';
-  text += '  node [shape=plaintext];\n';
-  text += '  subgraph {\n';
+const getAdrNumberFromPath = (adrPath: string): number | undefined => {
+  const baseName = path.basename(adrPath, '.md');
+  const match = baseName.match(/^0*(\d+)-/);
+  if (!match) {
+    return undefined;
+  }
+  return Number.parseInt(match[1], 10);
+};
 
-  const adrs = await deps.listAdrs();
-  for (let i = 0; i < adrs.length; i++) {
-    const n = i + 1;
-    const adrPath = adrs[i];
+type GraphNode = { adrPath: string; number: number };
+
+const resolveGraphNodes = (adrs: string[]): GraphNode[] =>
+  adrs
+    .map((adrPath) => ({ adrPath, number: getAdrNumberFromPath(adrPath) }))
+    .filter((node): node is GraphNode => node.number !== undefined);
+
+const appendGraphNodes = async (
+  deps: ProgramDeps,
+  nodes: GraphNode[],
+  options: { prefix?: string; extension?: string } | undefined,
+  lines: string[]
+) => {
+  for (let i = 0; i < nodes.length; i++) {
+    const n = nodes[i].number;
+    const adrPath = nodes[i].adrPath;
     const contents = await deps.readFile(adrPath, 'utf8');
     const title = deps.getTitleFrom(contents);
     const url = `${options?.prefix || ''}${path.basename(adrPath, '.md')}${options?.extension}`;
-    text += `    _${n} [label="${escapeDotString(title)}"; URL="${escapeDotString(url)}"];\n`;
-    if (n > 1) {
-      text += `    _${n - 1} -> _${n} [style="dotted", weight=1];\n`;
+    lines.push(`    _${n} [label="${escapeDotString(title)}"; URL="${escapeDotString(url)}"];`);
+    const previous = nodes[i - 1]?.number;
+    if (previous !== undefined) {
+      lines.push(`    _${previous} -> _${n} [style="dotted", weight=1];`);
     }
   }
-  text += '  }\n';
-  for (let i = 0; i < adrs.length; i++) {
-    const n = i + 1;
-    const adrPath = adrs[i];
-    const contents = await deps.readFile(adrPath, 'utf8');
-    const linksInADR = deps.getLinksFrom(contents);
+};
 
-    for (let j = 0; j < linksInADR.length; j++) {
-      if (!linksInADR[j].label.endsWith('by')) {
-        text += `  _${n} -> _${linksInADR[j].targetNumber} [label="${linksInADR[j].label}", weight=0]\n`;
+const resolveTargetNodeId = (nodeIds: Set<number>, targetNumber: string): number | undefined => {
+  const number = Number.parseInt(targetNumber, 10);
+  if (!Number.isFinite(number) || !nodeIds.has(number)) {
+    return undefined;
+  }
+  return number;
+};
+
+const appendGraphEdges = async (deps: ProgramDeps, nodes: GraphNode[], lines: string[]) => {
+  const nodeIds = new Set(nodes.map((node) => node.number));
+  for (const node of nodes) {
+    const contents = await deps.readFile(node.adrPath, 'utf8');
+    const linksInADR = deps.getLinksFrom(contents);
+    for (const link of linksInADR) {
+      if (link.label.endsWith('by')) {
+        continue;
+      }
+      const target = resolveTargetNodeId(nodeIds, link.targetNumber);
+      if (target !== undefined) {
+        lines.push(`  _${node.number} -> _${target} [label="${link.label}", weight=0]`);
+      } else {
+        deps.warn(`Skipping graph link from ADR ${node.number} to missing ADR ${link.targetNumber}: ${link.label}`);
       }
     }
   }
+};
 
-  text += '}\n';
-  deps.log(text);
+const generateGraph = async (deps: ProgramDeps, options?: { prefix: string; extension: string }) => {
+  const lines: string[] = [];
+  lines.push('digraph {');
+  lines.push('  node [shape=plaintext];');
+  lines.push('  subgraph {');
+
+  const adrs = await deps.listAdrs();
+  const nodes = resolveGraphNodes(adrs);
+  await appendGraphNodes(deps, nodes, options, lines);
+
+  lines.push('  }');
+  await appendGraphEdges(deps, nodes, lines);
+  lines.push('}');
+
+  deps.log(`${lines.join('\n')}\n`);
 };
 
 export const buildProgram = (deps: ProgramDeps = defaultDeps) => {

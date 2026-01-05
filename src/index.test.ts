@@ -18,7 +18,8 @@ const createDeps = () => {
     getTitleFrom: vi.fn(),
     version: '1.2.3',
     onError: vi.fn(),
-    log: vi.fn()
+    log: vi.fn(),
+    warn: vi.fn()
   };
 
   return deps;
@@ -84,6 +85,42 @@ describe('adr CLI', () => {
     await run(['node', 'adr', 'generate', 'graph'], deps);
     const output = deps.log.mock.calls[0][0] as string;
     expect(output).toContain('0001-one.html');
+  });
+
+  it('links graph nodes by adr number', async () => {
+    const deps = createDeps();
+    deps.listAdrs.mockResolvedValue(['/repo/doc/adr/0001-one.md', '/repo/doc/adr/0003-three.md']);
+    deps.readFile.mockResolvedValue('# Title');
+    deps.getTitleFrom.mockReturnValue('ADR Title');
+    deps.getLinksFrom.mockReturnValue([{ label: 'Relates to', targetNumber: '3' }]);
+    await run(['node', 'adr', 'generate', 'graph'], deps);
+    const output = deps.log.mock.calls[0][0] as string;
+    expect(output).toContain('_1 -> _3 [style="dotted"');
+    expect(output).toContain('_1 -> _3 [label="Relates to"');
+  });
+
+  it('skips graph links that target missing nodes', async () => {
+    const deps = createDeps();
+    deps.listAdrs.mockResolvedValue(['/repo/doc/adr/0001-one.md']);
+    deps.readFile.mockResolvedValue('# Title');
+    deps.getTitleFrom.mockReturnValue('ADR Title');
+    deps.getLinksFrom.mockReturnValue([{ label: 'Relates to', targetNumber: '99' }]);
+    await run(['node', 'adr', 'generate', 'graph'], deps);
+    const output = deps.log.mock.calls[0][0] as string;
+    expect(output).not.toContain('_1 -> _99');
+    expect(deps.warn).toHaveBeenCalledWith('Skipping graph link from ADR 1 to missing ADR 99: Relates to');
+  });
+
+  it('skips files without numeric prefixes', async () => {
+    const deps = createDeps();
+    deps.listAdrs.mockResolvedValue(['/repo/doc/adr/notes.md', '/repo/doc/adr/0001-one.md']);
+    deps.readFile.mockResolvedValue('# Title');
+    deps.getTitleFrom.mockReturnValue('ADR Title');
+    deps.getLinksFrom.mockReturnValue([]);
+    await run(['node', 'adr', 'generate', 'graph'], deps);
+    expect(deps.readFile).toHaveBeenCalledTimes(2);
+    expect(deps.readFile).toHaveBeenNthCalledWith(1, '/repo/doc/adr/0001-one.md', 'utf8');
+    expect(deps.readFile).toHaveBeenNthCalledWith(2, '/repo/doc/adr/0001-one.md', 'utf8');
   });
 
   it('escapes graph labels and urls', async () => {
