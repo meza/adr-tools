@@ -1,5 +1,17 @@
 {
   "extends": ["@meza/biome"],
+  "files": {
+    "includes": [
+      "**/*.ts",
+      "**/*.css",
+      "**/*.tsx",
+      "**/*.json",
+      "!**/*.snap",
+      "!**/node_modules",
+      "!**/dist",
+      "!reports/**"
+    ]
+  },
   "linter": {
     "rules": {
       "complexity": {

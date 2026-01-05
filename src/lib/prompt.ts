@@ -1,7 +1,7 @@
 import chalk from 'chalk';
-import inquirer from 'inquirer';
 
 export const askForClarification = async (searchString: string, matches: string[]) => {
+  const { default: inquirer } = await import('inquirer');
   const selection = await inquirer.prompt([
     {
       type: 'list',

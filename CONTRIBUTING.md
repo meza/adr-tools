@@ -59,10 +59,10 @@ yarn build
 yarn clean
 ```
 
-If you want coverage reports locally, add `--coverage`:
+Unit tests run with coverage by default. For e2e coverage, add `--coverage`:
 
 ```bash
-yarn test:unit --coverage
+yarn test:unit
 yarn test:e2e --coverage
 ```
 
@@ -91,8 +91,6 @@ If you want an interactive prompt for commit messages:
 yarn commit
 ```
 
-Do not edit `CHANGELOG.md` in PRs unless you are fixing an obvious mistake; releases are handled by semantic-release.
-
 ## ADRs in this repo
 
 ADRs for this repository live under `doc/adr/`. The location is configured by the `.adr-dir` file in the repo root.
@@ -102,12 +100,3 @@ To list ADRs:
 ```bash
 npx -y -p @meza/adr-tools -- adr list
 ```
-
-## CI and releases (maintainers)
-
-CI runs `yarn ci` on PRs and on pushes to `main` and `next`.
-Releases are performed via semantic-release and require credentials; they are typically handled by maintainers.
-
-## Windows verification (maintainers)
-
-If you have access to the Windows verification host, follow `winstructions.md`.

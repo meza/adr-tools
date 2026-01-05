@@ -1,7 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'fs/promises';
-import open from 'open';
 import { getDir, workingDir } from './config.js';
 import { findMatchingFilesFor, getLinkDetails } from './links.js';
 import { getTitleFrom, injectLink, supersede } from './manipulator.js';
@@ -34,53 +33,78 @@ const normalizeEditorCommand = (raw: string | undefined): string | undefined => 
   return unquoted;
 };
 
-const splitCommandLine = (commandLine: string): string[] => {
-  const tokens: string[] = [];
-  let current = '';
-  let inSingle = false;
-  let inDouble = false;
-
-  for (let i = 0; i < commandLine.length; i++) {
-    const ch = commandLine[i];
-
-    if (inDouble && ch === '\\' && i + 1 < commandLine.length) {
-      const next = commandLine[i + 1];
-      if (next === '"' || next === '\\') {
-        current += next;
+const unescapeDoubleQuoted = (value: string): string => {
+  let result = '';
+  for (let i = 0; i < value.length; i++) {
+    const ch = value[i];
+    if (ch === '\\' && i + 1 < value.length) {
+      const next = value[i + 1];
+      if (next === '\\' || next === '"') {
+        result += next;
         i++;
         continue;
       }
     }
+    result += ch;
+  }
+  return result;
+};
 
-    if (!inDouble && ch === "'") {
-      inSingle = !inSingle;
-      continue;
-    }
-
-    if (!inSingle && ch === '"') {
-      inDouble = !inDouble;
-      continue;
-    }
-
-    if (!inSingle && !inDouble && /\s/.test(ch)) {
-      if (current) {
-        tokens.push(current);
-        current = '';
-      }
-      continue;
-    }
-
-    current += ch;
+const splitCommandLine = (commandLine: string): string[] => {
+  const tokens = commandLine.match(/(?:[^\s"']+|"[^"]*"|'[^']*')+/g);
+  if (!tokens) {
+    return [];
   }
 
-  if (current) {
-    tokens.push(current);
-  }
+  return tokens.map((token) => {
+    if (token.startsWith('"') && token.endsWith('"')) {
+      return unescapeDoubleQuoted(token.slice(1, -1));
+    }
 
-  return tokens;
+    if (token.startsWith("'") && token.endsWith("'")) {
+      return token.slice(1, -1);
+    }
+
+    return token;
+  });
 };
 
 type OpenPlan = { type: 'none' } | { type: 'default' } | { type: 'app'; name: string; args: string[] };
+
+const openAdr = async (
+  adrPath: string,
+  options: { app?: { name: string; arguments: string[] }; wait: false },
+  openPromise: Promise<typeof import('open')>
+) => {
+  const { default: open } = await openPromise;
+  await open(adrPath, options);
+};
+
+const resolveOpenPlan = (config?: NewOptions): OpenPlan => {
+  if (!config || (config.open === undefined && !config.openWith)) {
+    return chooseOpenPlan(undefined);
+  }
+
+  return chooseOpenPlan({
+    ...(config.open !== undefined ? { open: config.open } : {}),
+    ...(config.openWith ? { openWith: config.openWith } : {})
+  });
+};
+
+const shouldLoadOpenLibrary = (openPlan: OpenPlan) => openPlan.type !== 'none';
+
+const openNewAdr = async (openPlan: OpenPlan, adrPath: string, openPromise?: Promise<typeof import('open')>) => {
+  if (openPlan.type === 'none') {
+    return;
+  }
+
+  if (openPlan.type === 'default') {
+    await openAdr(adrPath, { wait: false }, openPromise!);
+    return;
+  }
+
+  await openAdr(adrPath, { app: { name: openPlan.name, arguments: openPlan.args }, wait: false }, openPromise!);
+};
 
 const equalsIgnoreCase = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 
@@ -101,33 +125,41 @@ const isNpmInjectedEditor = (editor: string) => {
   return Boolean(env.npm_execpath);
 };
 
+const toAppPlan = (commandLine: string | undefined): OpenPlan | undefined => {
+  const normalized = normalizeEditorCommand(commandLine);
+  if (!normalized) {
+    return undefined;
+  }
+
+  const [name, ...args] = splitCommandLine(normalized);
+  if (!name) {
+    return undefined;
+  }
+
+  return { type: 'app', name, args };
+};
+
 export const chooseOpenPlan = (options?: { open?: boolean; openWith?: string }): OpenPlan => {
-  const openWith = normalizeEditorCommand(options?.openWith);
-  const shouldOpen = Boolean(options?.open) || Boolean(openWith);
+  const openWithPlan = toAppPlan(options?.openWith);
+  const shouldOpen = Boolean(options?.open) || Boolean(openWithPlan);
   if (!shouldOpen) {
     return { type: 'none' };
   }
 
-  if (openWith) {
-    const [name, ...args] = splitCommandLine(openWith);
-    if (name) {
-      return { type: 'app', name, args };
-    }
+  if (openWithPlan) {
+    return openWithPlan;
   }
 
-  const visual = normalizeEditorCommand(process.env.VISUAL);
-  if (visual) {
-    const [name, ...args] = splitCommandLine(visual);
-    if (name) {
-      return { type: 'app', name, args };
-    }
+  const visualPlan = toAppPlan(process.env.VISUAL);
+  if (visualPlan) {
+    return visualPlan;
   }
 
-  const editor = normalizeEditorCommand(process.env.EDITOR);
-  if (editor && !isNpmInjectedEditor(editor)) {
-    const [name, ...args] = splitCommandLine(editor);
-    if (name) {
-      return { type: 'app', name, args };
+  const editorCommand = normalizeEditorCommand(process.env.EDITOR);
+  if (editorCommand && !isNpmInjectedEditor(editorCommand)) {
+    const editorPlan = toAppPlan(editorCommand);
+    if (editorPlan) {
+      return editorPlan;
     }
   }
 
@@ -182,8 +214,6 @@ const actuallyLink = async (task: LinkTask) => {
         `${task.reverseLink} [${newTitle}](${path.relative(await getDir(), task.sourcePath)})`
       );
       dirtyNew = injectLink(newAdrContent, `${task.link} [${oldTitle}](${task.targetPath})`);
-      break;
-    default:
       break;
   }
 
@@ -268,6 +298,9 @@ export const generateToc = async (options?: { prefix?: string }) => {
 };
 
 export const newAdr = async (title: string, config?: NewOptions) => {
+  const openPlan = resolveOpenPlan(config);
+  const openPromise = shouldLoadOpenLibrary(openPlan) ? import('open') : undefined;
+
   const newNum = await newNumber();
   const formattedDate = config?.date || new Date().toISOString().split('T')[0] || 'ERROR';
   const tpl = await template(config?.template);
@@ -292,26 +325,7 @@ export const newAdr = async (title: string, config?: NewOptions) => {
   await injectLinksTo(adrPath, config?.links, config?.suppressPrompts);
   await generateToc();
 
-  const openPlan = chooseOpenPlan(
-    config?.open !== undefined || config?.openWith
-      ? {
-          ...(config?.open !== undefined ? { open: config.open } : {}),
-          ...(config?.openWith ? { openWith: config.openWith } : {})
-        }
-      : undefined
-  );
-  switch (openPlan.type) {
-    case 'none':
-      return;
-    case 'default':
-      await open(adrPath, { wait: false });
-      return;
-    case 'app':
-      await open(adrPath, { app: { name: openPlan.name, arguments: openPlan.args }, wait: false });
-      return;
-    default:
-      return;
-  }
+  await openNewAdr(openPlan, adrPath, openPromise);
 };
 
 export const init = async (directory?: string) => {

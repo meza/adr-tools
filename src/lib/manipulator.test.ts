@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getLinksFrom, getTitleFrom, injectLink } from './manipulator.js';
+import { getLinksFrom, getTitleFrom, injectLink, supersede } from './manipulator.js';
 
 describe('The ADR manipulator', () => {
   const original =
@@ -64,10 +64,34 @@ describe('The ADR manipulator', () => {
     expect(test).toEqual(expected);
   });
 
+  it('throws when status section is missing for supersede', () => {
+    const noStatus = '# NUMBER. TITLE\n';
+    const test = () => supersede(noStatus, 'Superseded by [ADR 1](0001-adr.md)');
+    expect(test).toThrowError('Could not find status section');
+  });
+
+  it('throws when status section has no paragraph', () => {
+    const noStatusParagraph = '# NUMBER. TITLE\n\n## Status\n\n## Context\n';
+    const test = () => supersede(noStatusParagraph, 'Superseded by [ADR 1](0001-adr.md)');
+    expect(test).toThrowError('There is no status paragraph. Please format your adr properly');
+  });
+
+  it('replaces status paragraph when superseding', () => {
+    const markdown = '# NUMBER. TITLE\n\n## Status\n\nAccepted\n\n## Context\n';
+    const link = 'Superseded by [ADR 1](0001-adr.md)';
+    const result = supersede(markdown, link);
+    expect(result).toEqual('# NUMBER. TITLE\n\n## Status\n\nSuperseded by [ADR 1](0001-adr.md)\n\n## Context\n');
+  });
+
   it('can return the title and number', () => {
     const original = '# 2. This is the title\n';
     const test = getTitleFrom(original);
     expect(test).toEqual('2. This is the title');
+  });
+
+  it('throws when main heading is missing', () => {
+    const test = () => getTitleFrom('No heading here');
+    expect(test).toThrowError('No main heading found');
   });
 
   it('can extract links from the status section', () => {

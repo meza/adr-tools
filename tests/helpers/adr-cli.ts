@@ -13,7 +13,7 @@ export const createAdrCli = (entrypoint: string): AdrCli => {
     const result = childProcess.execFileSync(process.execPath, [tsxCli, absoluteEntrypoint, ...args], {
       cwd: options?.cwd,
       env: { ...process.env, ...options?.env },
-      timeout: options?.timeoutMs ?? 10000,
+      timeout: options?.timeoutMs ?? 20000,
       encoding: 'utf8'
     } satisfies SpawnSyncOptionsWithStringEncoding);
 

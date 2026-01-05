@@ -34,4 +34,12 @@ describe('The numbering logic', () => {
     const num = await newNumber();
     expect(num).toEqual(3);
   });
+
+  it('ignores non-adr filenames when deriving numbers', async () => {
+    const fakeFiles: string[] = ['notes.txt', '0005-fifth.md'];
+    vi.mocked(fs.readFile).mockRejectedValueOnce('no sequence file');
+    vi.mocked(fs.readdir as unknown as ReaddirMock).mockResolvedValueOnce(fakeFiles);
+    const num = await newNumber();
+    expect(num).toEqual(6);
+  });
 });

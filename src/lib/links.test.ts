@@ -7,13 +7,17 @@ vi.mock('./config.js');
 vi.mock('fs/promises');
 
 describe('The link lib', () => {
+  const mockReaddir = vi.mocked(fs.readdir) as unknown as {
+    mockResolvedValueOnce: (value: string[]) => void;
+  };
+
   afterEach(() => {
     vi.resetAllMocks();
   });
 
   it('does not care if there are no matches', async () => {
     vi.mocked(getDir).mockResolvedValueOnce('/');
-    vi.mocked(fs.readdir).mockResolvedValueOnce([] as any);
+    mockReaddir.mockResolvedValueOnce([]);
     const linkString = '1:overrides:overriden by';
     const response = await getLinkDetails(linkString);
     expect(response).toEqual({
@@ -27,7 +31,7 @@ describe('The link lib', () => {
 
   it('does handles multiple matches', async () => {
     vi.mocked(getDir).mockResolvedValueOnce('/');
-    vi.mocked(fs.readdir).mockResolvedValueOnce(['1-one', '1-two', '1-three'] as any);
+    mockReaddir.mockResolvedValueOnce(['1-one', '1-two', '1-three']);
     const linkString = '1:overrides:overriden by';
     const response = await getLinkDetails(linkString);
     expect(response).toEqual({
@@ -41,7 +45,7 @@ describe('The link lib', () => {
 
   it('returns only files that match the pattern', async () => {
     vi.mocked(getDir).mockResolvedValueOnce('/');
-    vi.mocked(fs.readdir).mockResolvedValueOnce(['on1e', '1-two', 'three'] as any);
+    mockReaddir.mockResolvedValueOnce(['on1e', '1-two', 'three']);
     const linkString = '1:overrides:overriden by';
     const response = await getLinkDetails(linkString);
     expect(response).toEqual({
@@ -55,7 +59,7 @@ describe('The link lib', () => {
 
   it('handles superseding', async () => {
     vi.mocked(getDir).mockResolvedValueOnce('/');
-    vi.mocked(fs.readdir).mockResolvedValueOnce([] as any);
+    mockReaddir.mockResolvedValueOnce([]);
     const linkString = '1';
     const supersede = true;
     const response = await getLinkDetails(linkString, supersede);
