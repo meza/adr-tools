@@ -17,8 +17,8 @@
   "types": "dist/index.d.ts",
   "private": false,
   "scripts": {
-    "prebuild": "./scripts/inject-version.sh ./src/version.ts",
-    "prepack": "./scripts/inject-version.sh ./src/version.ts && tsc && yarn copy ",
+    "prebuild": "node ./scripts/inject-version.mjs ./src/version.ts",
+    "prepack": "node ./scripts/inject-version.mjs ./src/version.ts && tsc && yarn copy ",
     "copy": "copyfiles -u 1 ./src/templates/** ./dist",
     "build": "tsc && yarn copy",
     "start": "ts-node src/index.ts",

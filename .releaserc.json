@@ -21,6 +21,7 @@
       {
         "assets": [
           {
+            "path": ["dist/**"],
             "name": "adr-tools-${nextRelease.gitTag}.zip",
             "label": "ADR-Tools ${nextRelease.gitTag}"
           }
