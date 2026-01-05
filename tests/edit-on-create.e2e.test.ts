@@ -60,13 +60,14 @@ describe('Edit new Adrs on creation', () => {
     expect(path.normalize(reported)).toEqual(path.normalize(`${adrDirectory}/0001-example-adr.md`));
   });
 
-  it.skip('should open a new ADR in the EDITOR', () => {
+  it('should open a new ADR in the EDITOR', async () => {
     cli.run(['new', '--open', 'Example', 'ADR'], {
       cwd: workDir,
       env: { EDITOR: editorHelper }
     });
 
     const expectedNewFile: string = path.join(workDir, 'editor.out');
+    await waitForFile(expectedNewFile, 2000);
     const fileContents = fs.readFileSync(expectedNewFile, 'utf8');
     const reported = fileContents.trim().replace(/^EDITOR\s+/, '');
     expect(path.normalize(reported)).toEqual(path.normalize(`${adrDirectory}/0001-example-adr.md`));

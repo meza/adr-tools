@@ -310,11 +310,7 @@ export const newAdr = async (title: string, config?: NewOptions) => {
     .replace('NUMBER', newNum.toString())
     .replace('STATUS', 'Accepted');
   const paddedNumber = newNum.toString().padStart(4, '0');
-  const cleansedTitle = title
-    .toLowerCase()
-    .replace(/\W/g, '-')
-    .replace(/^(.*)\W$/, '$1')
-    .replace(/^\W(.*)$/, '$1');
+  const cleansedTitle = title.toLowerCase().replace(/\W+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
   const fileName = `${paddedNumber}-${cleansedTitle}.md`;
   const adrDirectory = await getDir();
   const adrPath = path.resolve(path.join(adrDirectory, fileName));

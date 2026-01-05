@@ -9,7 +9,7 @@ import { createAdrCli } from './helpers/adr-cli';
 
 const __filename = fileURLToPath(import.meta.url);
 
-describe.skip('Funny Characters', () => {
+describe('Funny Characters', () => {
   const adr: string = path.resolve(path.dirname(__filename), '../src/index.ts');
   const cli = createAdrCli(adr);
 
@@ -37,13 +37,13 @@ describe.skip('Funny Characters', () => {
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });
 
-  it.skip('should handle titles with slashes in them', async () => {
+  it('should handle titles with slashes in them', async () => {
     cli.run(['new', 'Slash/Slash/Slash/'], { cwd: workDir });
     const expectedFile: string = path.join(adrDirectory, '0002-slash-slash-slash.md');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
   });
 
-  it.skip('should handle titles with other weirdness in them', async () => {
+  it('should handle titles with other weirdness in them', async () => {
     cli.run(['new', '--', '-Bar-'], { cwd: workDir });
     const expectedFile: string = path.join(adrDirectory, '0002-bar.md');
     expect(fs.existsSync(expectedFile)).toBeTruthy();
