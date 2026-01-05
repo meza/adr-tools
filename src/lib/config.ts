@@ -1,6 +1,6 @@
 import { constants } from 'fs';
-import path from 'path';
 import fs from 'fs/promises';
+import path from 'path';
 
 export const workingDir = () => process.cwd();
 const rootDir = path.parse(process.cwd()).root;

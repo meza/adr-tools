@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import * as path from 'path';
 import chalk from 'chalk';
 import { Command } from 'commander';
 import fs from 'fs/promises';
+import * as path from 'path';
 import { generateToc, init, link, listAdrs, newAdr } from './lib/adr.js';
 import { workingDir } from './lib/config.js';
 import { getLinksFrom, getTitleFrom } from './lib/manipulator.js';

@@ -1,7 +1,7 @@
 import { realpathSync, rmSync } from 'node:fs';
+import * as fs from 'fs/promises';
 import * as os from 'os';
 import * as path from 'path';
-import * as fs from 'fs/promises';
 /* eslint-disable no-sync */
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { createAdrCli } from './helpers/adr-cli';
