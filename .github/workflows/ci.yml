@@ -18,7 +18,7 @@ env:
 jobs:
   build:
 
-    runs-on: self-hosted
+    runs-on: meza-ubuntu-slim
 
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
   release:
     needs: [build]
     name: Release
-    runs-on: self-hosted
+    runs-on: meza-ubuntu-slim
     if: ${{ github.ref_name == 'main' || github.ref_name == 'next' }}
     steps:
       - name: Checkout
