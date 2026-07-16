@@ -44,7 +44,7 @@
     "@types/inquirer": "9.0.10",
     "@types/node": "22.15.21",
     "chalk": "5.4.1",
-    "commander": "12.1.0",
+    "commander": "15.0.0",
     "core-js": "3.42.0",
     "inquirer": "14.0.2",
     "marked": "4.3.0",
