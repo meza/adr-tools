@@ -42,8 +42,8 @@ describe('Edit new Adrs on creation', () => {
     fs.rmSync(workDir, {
       recursive: true,
       force: true,
-      maxRetries: 3,
-      retryDelay: 500
+      maxRetries: 10,
+      retryDelay: 250
     });
   });
 
