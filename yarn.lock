@@ -559,19 +559,18 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@meza/adr-tools@1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@meza/adr-tools/-/adr-tools-1.0.10.tgz#32a674565654f6c2dc9d5b48cff11764d2daae5f"
-  integrity sha512-Y+ZetaNapyIs+sgHqCac3GUrlH/Npp/EKEvQsxRqNx15PsXesdaTk8QjARldjSPrH+jslTTVARMGykWn5/HdGA==
+"@meza/adr-tools@1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@meza/adr-tools/-/adr-tools-1.0.12.tgz#8b71bc57e740863bb4bda003e3df2c0d77b3b5c3"
+  integrity sha512-dV9q7xKz2FqAirBJrGjHrCOH/9Z9j0eh1IkR1t8odr9d6XaXCG+1IVUqfx0OD0qdgcNcjvbhUiIfhR5JzrqNZg==
   dependencies:
-    "@types/inquirer" "^8.2.1"
-    "@types/marked" "^4.0.3"
-    "@types/node" "^18.0.0"
-    chalk "^4.1.2"
-    commander "^9.3.0"
-    core-js "^3.19.1"
-    inquirer "^8.2.4"
-    marked "^4.0.17"
+    "@types/inquirer" "9.0.8"
+    "@types/node" "22.15.21"
+    chalk "5.4.1"
+    commander "12.1.0"
+    core-js "3.42.0"
+    inquirer "9.3.7"
+    marked "4.3.0"
 
 "@meza/biome@1.1.3":
   version "1.1.3"
@@ -1270,15 +1269,7 @@
     "@types/through" "*"
     rxjs "^7.2.0"
 
-"@types/inquirer@^8.2.1":
-  version "8.2.12"
-  resolved "https://registry.yarnpkg.com/@types/inquirer/-/inquirer-8.2.12.tgz#c26da8d8fe5baff78382a1035059ef4967cee7a0"
-  integrity sha512-YxURZF2ZsSjU5TAe06tW0M3sL4UI9AMPA6dd8I72uOtppzNafcY38xkYgCZ/vsVOAyNdzHmvtTpLWilOrbP0dQ==
-  dependencies:
-    "@types/through" "*"
-    rxjs "^7.2.0"
-
-"@types/marked@^4.0.3":
+"@types/marked@4.3.2":
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/@types/marked/-/marked-4.3.2.tgz#e2e0ad02ebf5626bd215c5bae2aff6aff0ce9eac"
   integrity sha512-a79Yc3TOk6dGdituy8hmTTJXjOkZ7zsFYV10L337ttq/rec8lRMDBpV7fL3uLx6TgbFCa5DU/h8FmIBQPSbU0w==
@@ -1289,13 +1280,6 @@
   integrity sha512-EV/37Td6c+MgKAbkcLG6vqZ2zEYHD7bvSrzqqs2RIhbA6w3x+Dqz8MZM3sP6kGTeLrdoOgKZe+Xja7tUB2DNkQ==
   dependencies:
     undici-types "~6.21.0"
-
-"@types/node@^18.0.0":
-  version "18.19.130"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.130.tgz#da4c6324793a79defb7a62cba3947ec5add00d59"
-  integrity sha512-GRaXQx6jGfL8sKfaIDD6OupbIHBr9jv7Jnaml9tB7l4v068PAOXqfcujMMo5PhbIs6ggR1XODELqahT2R8v0fg==
-  dependencies:
-    undici-types "~5.26.4"
 
 "@types/normalize-package-data@^2.4.3", "@types/normalize-package-data@^2.4.4":
   version "2.4.4"
@@ -1714,7 +1698,7 @@ chalk@^2.3.2, chalk@^2.4.1:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
+chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
   integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
@@ -1899,11 +1883,6 @@ commander@12.1.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-12.1.0.tgz#01423b36f501259fdaac4d0e4d60c96c991585d3"
   integrity sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==
 
-commander@^9.3.0:
-  version "9.5.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-9.5.0.tgz#bc08d1eb5cedf7ccb797a96199d41c7bc3e60d30"
-  integrity sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==
-
 common-ancestor-path@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/common-ancestor-path/-/common-ancestor-path-1.0.1.tgz#4f7d2d1394d91b7abdf51871c62f71eadb0182a7"
@@ -2011,7 +1990,7 @@ copyfiles@2.4.1:
     untildify "^4.0.0"
     yargs "^16.1.0"
 
-core-js@3.42.0, core-js@^3.19.1:
+core-js@3.42.0:
   version "3.42.0"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.42.0.tgz#edbe91f78ac8cfb6df8d997e74d368a68082fe37"
   integrity sha512-Sz4PP4ZA+Rq4II21qkNqOEDTDrCvcANId3xpIgB34NDkWc3UduWj2dqEtN9yZIq8Dk3HyPI33x9sqqU5C8sr0g==
@@ -2962,7 +2941,7 @@ inquirer@9.3.7, inquirer@^9.2.15:
     wrap-ansi "^6.2.0"
     yoctocolors-cjs "^2.1.2"
 
-inquirer@^8.2.2, inquirer@^8.2.4:
+inquirer@^8.2.2:
   version "8.2.7"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.2.7.tgz#62f6b931a9b7f8735dc42db927316d8fb6f71de8"
   integrity sha512-UjOaSel/iddGZJ5xP/Eixh6dY1XghiBw4XK13rCCIJcJfyhhoul/7KhLLUGtebEj6GDYM6Vnx/mVsjx2L/mFIA==
@@ -3660,7 +3639,7 @@ marked-terminal@^7.3.0:
     node-emoji "^2.2.0"
     supports-hyperlinks "^3.1.0"
 
-marked@4.3.0, marked@^4.0.17:
+marked@4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/marked/-/marked-4.3.0.tgz#796362821b019f734054582038b116481b456cf3"
   integrity sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==
@@ -5476,11 +5455,6 @@ uglify-js@^3.1.4:
   version "3.19.3"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.19.3.tgz#82315e9bbc6f2b25888858acd1fff8441035b77f"
   integrity sha512-v3Xu+yuwBXisp6QYTcH4UbH+xYJXqnq2m/LtQVWKWzYc1iehYnLixoQDN9FH6/j9/oybfd6W9Ghwkl8+UMKTKQ==
-
-undici-types@~5.26.4:
-  version "5.26.5"
-  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-5.26.5.tgz#bcd539893d00b56e964fd2657a4866b221a65617"
-  integrity sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==
 
 undici-types@~6.21.0:
   version "6.21.0"
