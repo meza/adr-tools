@@ -9,7 +9,8 @@
       "!**/*.snap",
       "!**/node_modules",
       "!**/dist",
-      "!reports/**"
+      "!reports/**",
+      "!.yarn"
     ]
   },
   "linter": {
