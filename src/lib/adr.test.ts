@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import open from 'open';
 import path from 'path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { generateToc, init, link, listAdrs, newAdr } from './adr.js';
+import { chooseOpenPlan, generateToc, init, link, listAdrs, newAdr } from './adr.js';
 import { getDir, workingDir } from './config.js';
 import { findMatchingFilesFor, getLinkDetails } from './links.js';
 import { getTitleFrom, injectLink, supersede } from './manipulator.js';
@@ -50,6 +50,19 @@ describe('adr helpers', () => {
   afterEach(() => {
     vi.resetAllMocks();
     vi.unstubAllEnvs();
+  });
+
+  it('preserves non-escape backslashes in quoted editor arguments', () => {
+    expect(chooseOpenPlan({ openWith: String.raw`code "C:\temp\record.md"` })).toEqual({
+      type: 'app',
+      name: 'code',
+      args: [String.raw`C:\temp\record.md`]
+    });
+  });
+
+  it('falls back to the default opener for an incomplete editor quote', () => {
+    vi.stubEnv('EDITOR', '"');
+    expect(chooseOpenPlan({ open: true })).toEqual({ type: 'default' });
   });
 
   it('generates the toc from adr files', async () => {
