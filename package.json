@@ -91,7 +91,7 @@
     "tsx": "4.23.0",
     "typescript": "5.9.3",
     "uuid": "14.0.1",
-    "vitest": "3.2.7",
+    "vitest": "4.1.10",
     "yarn": "1.22.22"
   },
   "repository": {
