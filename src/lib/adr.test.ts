@@ -156,7 +156,7 @@ describe('adr helpers', () => {
     const adrPath = path.resolve('/repo/doc/adr', '0001-example-adr.md');
     expect(open).toHaveBeenCalledWith(adrPath, {
       app: { name: 'code', arguments: ['--wait'] },
-      wait: false
+      wait: process.platform === 'win32'
     });
   });
 
@@ -182,7 +182,7 @@ describe('adr helpers', () => {
       await newAdr('Example ADR', { openWith: 'code --wait' });
       expect(open).toHaveBeenCalledWith(path.resolve('/repo/doc/adr', '0001-example-adr.md'), {
         app: { name: 'code', arguments: ['--wait'] },
-        wait: false
+        wait: true
       });
     } finally {
       Object.defineProperty(process, 'platform', { value: originalPlatform });
