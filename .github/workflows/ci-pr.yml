@@ -11,8 +11,12 @@ env:
 
 jobs:
   verifypr:
-    name: Verify PR
-    runs-on: meza-ubuntu-slim
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [meza-ubuntu-slim, meza-windows-latest]
+    name: Verify PR on ${{ matrix.runner }}
+    runs-on: ${{ matrix.runner }}
 
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -29,3 +33,19 @@ jobs:
 
       - run: yarn --pure-lockfile
       - run: yarn ci
+
+  verify:
+    name: Verify PR
+    needs: verifypr
+    if: ${{ always() }}
+    runs-on: ubuntu-slim
+
+    steps:
+      - name: Require successful platform verification
+        env:
+          VERIFY_RESULT: ${{ needs.verifypr.result }}
+        run: |
+          if [ "$VERIFY_RESULT" != "success" ]; then
+            echo "::error::One or more platform verification jobs did not succeed."
+            exit 1
+          fi
