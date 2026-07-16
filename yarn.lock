@@ -1924,14 +1924,7 @@ conventional-changelog-angular@^9.0.0:
   dependencies:
     "@conventional-changelog/template" "^1.2.1"
 
-conventional-changelog-conventionalcommits@9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/conventional-changelog-conventionalcommits/-/conventional-changelog-conventionalcommits-9.1.0.tgz#34e5f35c80c1375a5464df2a8067a1facbb2d858"
-  integrity sha512-MnbEysR8wWa8dAEvbj5xcBgJKQlX/m0lhS8DsyAAWDHdfs2faDJxTgzRYlRYpXSe7UiKrIIlB4TrBKU9q9DgkA==
-  dependencies:
-    compare-func "^2.0.0"
-
-conventional-changelog-conventionalcommits@^10.0.0:
+conventional-changelog-conventionalcommits@10.2.1, conventional-changelog-conventionalcommits@^10.0.0:
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/conventional-changelog-conventionalcommits/-/conventional-changelog-conventionalcommits-10.2.1.tgz#dfa7cd9b3c6762bc65b2e7c97636097a3b426217"
   integrity sha512-n4Kr1HFMTf3iMbES0TMxKIcYtUUv4rKqyQQp2JwfOEfFCOfGT3Tq4mCyJ8S9/YPyWhydjfKrrvnyl+gCjA+mJQ==
