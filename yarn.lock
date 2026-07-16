@@ -1398,11 +1398,6 @@
     "@types/through" "*"
     rxjs "^7.2.0"
 
-"@types/marked@4.3.2":
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-4.3.2.tgz#e2e0ad02ebf5626bd215c5bae2aff6aff0ce9eac"
-  integrity sha512-a79Yc3TOk6dGdituy8hmTTJXjOkZ7zsFYV10L337ttq/rec8lRMDBpV7fL3uLx6TgbFCa5DU/h8FmIBQPSbU0w==
-
 "@types/node@*", "@types/node@24.13.3":
   version "24.13.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-24.13.3.tgz#49f18bd3c647866dcda51a0756c145e14590ce16"
@@ -3827,6 +3822,11 @@ marked-terminal@^7.3.0:
     cli-table3 "^0.6.5"
     node-emoji "^2.2.0"
     supports-hyperlinks "^3.1.0"
+
+marked@18.0.5:
+  version "18.0.5"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-18.0.5.tgz#c229c0ac6ad1e275ae8e5037c6168f76d2f42e61"
+  integrity sha512-S6GcvALHg6K4ohtu4E7x0a1AqhAjp6cV8KhLSyN9qVapnzJkusVBxZRcIU9AeYsbe6P1hKDusSbEOzGyyuce6w==
 
 marked@4.3.0:
   version "4.3.0"

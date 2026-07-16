@@ -47,7 +47,7 @@
     "commander": "15.0.0",
     "core-js": "3.49.0",
     "inquirer": "14.0.2",
-    "marked": "4.3.0",
+    "marked": "18.0.5",
     "open": "11.0.0"
   },
   "commitlint": {
@@ -72,7 +72,6 @@
     "@semantic-release/github": "12.0.9",
     "@semantic-release/npm": "13.1.5",
     "@semantic-release/release-notes-generator": "14.1.1",
-    "@types/marked": "4.3.2",
     "@types/uuid": "10.0.0",
     "@vitest/coverage-v8": "3.2.7",
     "@vitest/ui": "3.2.7",
