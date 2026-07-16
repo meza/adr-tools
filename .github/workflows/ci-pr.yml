@@ -12,7 +12,7 @@ env:
 jobs:
   verifypr:
     name: Verify PR
-    runs-on: self-hosted
+    runs-on: meza-ubuntu-slim
 
     steps:
       - uses: actions/checkout@v4
