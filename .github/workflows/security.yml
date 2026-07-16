@@ -1,0 +1,49 @@
+name: Security Scan
+on:
+  pull_request: {}
+
+jobs:
+  osv:
+    name: OSV Scan
+    runs-on: meza-ubuntu-slim
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Run OSV Scan
+        run: |
+          osv-scanner --recursive --json osv-results.json .
+
+      - name: Upload results
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: osv-results
+          path: 'osv-results.json'
+
+  semgrep:
+    name: Semgrep Scan
+    runs-on: meza-ubuntu-slim
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Run Semgrep Scan
+        run: |
+          semgrep scan \
+            --config p/default \
+            --metrics off \
+            --error \
+            --strict \
+            --scan-unknown-extensions \
+            --verbose \
+            --matching-explanations \
+            --json-output semgrep-results.json \
+            .
+
+      - name: Upload results
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: semgrep-results
+          path: 'semgrep-results.json'
