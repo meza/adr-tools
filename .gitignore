@@ -1,6 +1,7 @@
 .idea
 .env
 .cache
+.yarn
 package-lock.json
 dist/
 reports/

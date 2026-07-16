@@ -15,7 +15,7 @@
   "license": "GPL-3.0",
   "type": "module",
   "types": "dist/index.d.ts",
-  "private": false,
+  "packageManager": "yarn@4.17.1",
   "scripts": {
     "prebuild": "node ./scripts/inject-version.mjs ./src/version.ts",
     "prepack": "node ./scripts/inject-version.mjs ./src/version.ts && tsc && yarn copy ",
