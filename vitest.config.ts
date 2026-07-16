@@ -3,6 +3,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     dir: 'src',
+    isolate: true,
     testTimeout: 30000,
     hookTimeout: 30000,
     pool: 'threads',
@@ -10,12 +11,6 @@ export default defineConfig({
     fileParallelism: false,
     maxWorkers: 1,
     minWorkers: 1,
-    poolOptions: {
-      threads: {
-        isolate: true,
-        singleThread: true
-      }
-    },
     coverage: {
       include: ['src/**/*.ts'],
       exclude: ['**/node_modules/**', '**/*.d.ts'],
