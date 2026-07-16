@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'fs/promises';
+import type { Options as OpenOptions } from 'open';
 import { getDir, workingDir } from './config.js';
 import { findMatchingFilesFor, getLinkDetails } from './links.js';
 import { getTitleFrom, injectLink, supersede } from './manipulator.js';
@@ -71,11 +72,7 @@ const splitCommandLine = (commandLine: string): string[] => {
 
 type OpenPlan = { type: 'none' } | { type: 'default' } | { type: 'app'; name: string; args: string[] };
 
-const openAdr = async (
-  adrPath: string,
-  options: { app?: { name: string; arguments: string[] }; wait: false },
-  openPromise: Promise<typeof import('open')>
-) => {
+const openAdr = async (adrPath: string, options: OpenOptions, openPromise: Promise<typeof import('open')>) => {
   const { default: open } = await openPromise;
   await open(adrPath, options);
 };
@@ -103,7 +100,11 @@ const openNewAdr = async (openPlan: OpenPlan, adrPath: string, openPromise?: Pro
     return;
   }
 
-  await openAdr(adrPath, { app: { name: openPlan.name, arguments: openPlan.args }, wait: false }, openPromise!);
+  await openAdr(
+    adrPath,
+    { app: { name: openPlan.name, arguments: openPlan.args }, wait: process.platform === 'win32' },
+    openPromise!
+  );
 };
 
 const equalsIgnoreCase = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
