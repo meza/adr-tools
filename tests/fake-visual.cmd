@@ -1,2 +1,4 @@
 @echo off
-echo VISUAL %~1 > visual.out
+set "OUTPUT=%CD%\visual.out"
+cd /d "%TEMP%"
+echo VISUAL %~1 > "%OUTPUT%"

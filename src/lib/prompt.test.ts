@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import inquirer, { ListQuestion, Question } from 'inquirer';
+import inquirer, { Question } from 'inquirer';
 import { describe, expect, it, vi } from 'vitest';
 import { askForClarification } from './prompt.js';
 
@@ -21,8 +21,8 @@ describe('The prompt helper', () => {
 
     expect(prompt).toHaveBeenCalledOnce();
     const calledWith = prompt.mock.calls[0][0] as Question[];
-    expect(calledWith[0].type).toEqual('list');
-    expect((calledWith[0] as ListQuestion).choices).toEqual(randomChoices);
+    expect(calledWith[0].type).toEqual('select');
+    expect(calledWith[0].choices).toEqual(randomChoices);
     expect(calledWith[0].message).toMatchInlineSnapshot(
       '"Which file do you want to link to for BLUE[this is the search string]?"'
     );

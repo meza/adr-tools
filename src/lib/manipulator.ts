@@ -1,6 +1,6 @@
-import { marked } from 'marked';
+import { marked, type Token, type Tokens } from 'marked';
 
-const convertToMd = (tokens: marked.Token[]) => {
+const convertToMd = (tokens: Token[]) => {
   return tokens.map((token) => token.raw).join('');
 };
 
@@ -10,7 +10,7 @@ export const getLinksFrom = (markdown: string) => {
   const links = tokens.filter((token) => token.type === 'paragraph' && linkRegex.test(token.text));
 
   return links.map((link) => {
-    const linkToken = link as marked.Tokens.Paragraph;
+    const linkToken = link as Tokens.Paragraph;
     const linkMatches = linkToken.text.match(linkRegex);
     if (!linkMatches || linkMatches.length < 3) {
       throw new Error(`Could not parse link from "${linkToken.text}"`);
@@ -31,7 +31,7 @@ export const getTitleFrom = (adr: string) => {
   if (!mainHead) {
     throw new Error('No main heading found');
   }
-  return (mainHead as marked.Tokens.Heading).text.trim();
+  return (mainHead as Tokens.Heading).text.trim();
 };
 
 export const supersede = (markdown: string, link: string) => {
@@ -40,7 +40,7 @@ export const supersede = (markdown: string, link: string) => {
   if (statusIndex < 0) {
     throw new Error('Could not find status section');
   }
-  const statusDepth = (tokens[statusIndex] as marked.Tokens.Heading).depth;
+  const statusDepth = (tokens[statusIndex] as Tokens.Heading).depth;
   const followingHeadingIndex = tokens.findIndex(
     (token, index) => token.type === 'heading' && token.depth === statusDepth && index > statusIndex
   );
@@ -74,7 +74,7 @@ export const injectLink = (markdown: string, link: string) => {
     throw new Error('Could not find status section');
   }
 
-  const statusDepth = (tokens[statusIndex] as marked.Tokens.Heading).depth;
+  const statusDepth = (tokens[statusIndex] as Tokens.Heading).depth;
   let followingHeadingIndex = tokens.findIndex(
     (token, index) => token.type === 'heading' && token.depth === statusDepth && index > statusIndex
   );
