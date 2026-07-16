@@ -1,3 +1,5 @@
 #!/bin/bash
 
-echo EDITOR "$@" > editor.out
+output="$PWD/editor.out"
+cd "${TMPDIR:-/tmp}"
+echo EDITOR "$@" > "$output"
