@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 env:
-  NODE_VERSION: 25.x
+  NODE_VERSION: 24.x
 
 jobs:
   verifypr:
@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
-      - uses: mskelton/setup-yarn@cce646f2f2ae52c83e702de2e7bd9097876f3318 # v4.0.0
+      - uses: mskelton/setup-yarn@28f8f658e3991e4d2dd615e2370ec5da0bc64429 # v4.0.0
         with:
           node-version:  ${{ env.NODE_VERSION }}
 

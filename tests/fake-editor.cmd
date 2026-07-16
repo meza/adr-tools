@@ -1,2 +1,4 @@
 @echo off
-echo EDITOR %~1 > editor.out
+set "OUTPUT=%CD%\editor.out"
+cd /d "%TEMP%"
+echo EDITOR %~1 > "%OUTPUT%"

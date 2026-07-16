@@ -6,11 +6,9 @@ export default defineConfig({
     testTimeout: 30000,
     hookTimeout: 30000,
     pool: 'threads',
-    poolOptions: {
-      threads: {
-        singleThread: true
-      }
-    },
+    fileParallelism: false,
+    maxWorkers: 1,
+    minWorkers: 1,
     watch: false,
     coverage: {
       reportsDirectory: './reports/coverage/e2e',

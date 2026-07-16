@@ -228,6 +228,16 @@ describe('adr CLI', () => {
     expect(deps.listAdrs).toHaveBeenCalled();
   });
 
+  it('handles rejected direct runs without an unhandled rejection', async () => {
+    const deps = createDeps();
+    deps.listAdrs.mockRejectedValueOnce(new Error('boom'));
+    const indexPath = path.resolve(process.cwd(), 'src/index.ts');
+
+    expect(maybeRun(['node', indexPath, 'list'], deps)).toBe(true);
+    await vi.waitFor(() => expect(deps.listAdrs).toHaveBeenCalled());
+    await new Promise<void>((resolve) => setImmediate(resolve));
+  });
+
   it('formats errors with the default handler', () => {
     const errorHandler = vi.fn();
     const program = { error: errorHandler } as unknown as Command;
