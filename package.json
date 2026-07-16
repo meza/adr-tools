@@ -48,7 +48,7 @@
     "core-js": "3.42.0",
     "inquirer": "14.0.2",
     "marked": "4.3.0",
-    "open": "9.1.0"
+    "open": "11.0.0"
   },
   "commitlint": {
     "extends": [

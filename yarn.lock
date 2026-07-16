@@ -1781,6 +1781,13 @@ bundle-name@^3.0.0:
   dependencies:
     run-applescript "^5.0.0"
 
+bundle-name@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/bundle-name/-/bundle-name-4.1.0.tgz#f3b96b34160d6431a19d7688135af7cfb8797889"
+  integrity sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q==
+  dependencies:
+    run-applescript "^7.0.0"
+
 cac@^6.7.14:
   version "6.7.14"
   resolved "https://registry.yarnpkg.com/cac/-/cac-6.7.14.tgz#804e1e6f506ee363cb0e3ccbb09cad5dd9870959"
@@ -2230,6 +2237,11 @@ default-browser-id@^3.0.0:
     bplist-parser "^0.2.0"
     untildify "^4.0.0"
 
+default-browser-id@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/default-browser-id/-/default-browser-id-5.0.1.tgz#f7a7ccb8f5104bf8e0f71ba3b1ccfa5eafdb21e8"
+  integrity sha512-x1VCxdX4t+8wVfd1so/9w+vQ4vx7lKd2Qp5tDRutErwmR85OgmfX7RlLRMWafRMY7hbEiXIbudNrjOAPa/hL8Q==
+
 default-browser@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/default-browser/-/default-browser-4.0.0.tgz#53c9894f8810bf86696de117a6ce9085a3cbc7da"
@@ -2239,6 +2251,14 @@ default-browser@^4.0.0:
     default-browser-id "^3.0.0"
     execa "^7.1.1"
     titleize "^3.0.0"
+
+default-browser@^5.4.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/default-browser/-/default-browser-5.5.0.tgz#2792e886f2422894545947cc80e1a444496c5976"
+  integrity sha512-H9LMLr5zwIbSxrmvikGuI/5KGhZ8E2zH3stkMgM5LpOWDutGM2JZaj460Udnf1a+946zc7YBgrqEWwbk7zHvGw==
+  dependencies:
+    bundle-name "^4.1.0"
+    default-browser-id "^5.0.0"
 
 defaults@^1.0.3:
   version "1.0.4"
@@ -3188,6 +3208,11 @@ is-glob@^4.0.0:
   dependencies:
     is-extglob "^2.1.1"
 
+is-in-ssh@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/is-in-ssh/-/is-in-ssh-1.0.0.tgz#8eb73c1cabba77748d389588eeea132a63057622"
+  integrity sha512-jYa6Q9rH90kR1vKB6NM7qqd1mge3Fx4Dhw5TVlK1MUBqhEOuCagrEHMevNuCcbECmXZ0ThXkRm+Ymr51HwEPAw==
+
 is-inside-container@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-inside-container/-/is-inside-container-1.0.0.tgz#e81fba699662eb31dbdaf26766a61d4814717ea4"
@@ -3256,6 +3281,13 @@ is-wsl@^2.2.0:
   integrity sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==
   dependencies:
     is-docker "^2.0.0"
+
+is-wsl@^3.1.0:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/is-wsl/-/is-wsl-3.1.1.tgz#327897b26832a3eb117da6c27492d04ca132594f"
+  integrity sha512-e6rvdUCiQCAuumZslxRJWR/Doq4VpPR82kqclvcS0efgt430SlGIk05vdCN58+VrzgtIcfNODjozVielycD4Sw==
+  dependencies:
+    is-inside-container "^1.0.0"
 
 isarray@0.0.1:
   version "0.0.1"
@@ -4287,6 +4319,18 @@ onetime@^7.0.0:
   dependencies:
     mimic-function "^5.0.0"
 
+open@11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/open/-/open-11.0.0.tgz#897e6132f994d3554cbcf72e0df98f176a7e5f62"
+  integrity sha512-smsWv2LzFjP03xmvFoJ331ss6h+jixfA4UUV/Bsiyuu4YJPfN+FIQGOIiv4w9/+MoHkfkJ22UIaQWRVFRfH6Vw==
+  dependencies:
+    default-browser "^5.4.0"
+    define-lazy-prop "^3.0.0"
+    is-in-ssh "^1.0.0"
+    is-inside-container "^1.0.0"
+    powershell-utils "^0.1.0"
+    wsl-utils "^0.3.0"
+
 open@9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/open/-/open-9.1.0.tgz#684934359c90ad25742f5a26151970ff8c6c80b6"
@@ -4610,6 +4654,11 @@ postcss@^8.5.6:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
+powershell-utils@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/powershell-utils/-/powershell-utils-0.1.0.tgz#5a42c9a824fb4f2f251ccb41aaae73314f5d6ac2"
+  integrity sha512-dM0jVuXJPsDN6DvRpea484tCUaMiXWjuCn++HGTqUWzGDjv5tZkEZldAJ/UMlqRYGFrD/etByo4/xOuC/snX2A==
+
 pretty-ms@^9.2.0:
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/pretty-ms/-/pretty-ms-9.3.0.tgz#dd2524fcb3c326b4931b2272dfd1e1a8ed9a9f5a"
@@ -4905,6 +4954,11 @@ run-applescript@^5.0.0:
   integrity sha512-XcT5rBksx1QdIhlFOCtgZkB99ZEouFZ1E2Kc2LHqNW13U3/74YGdkQRmThTwxy4QIyookibDKYZOPqX//6BlAg==
   dependencies:
     execa "^5.0.0"
+
+run-applescript@^7.0.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/run-applescript/-/run-applescript-7.1.0.tgz#2e9e54c4664ec3106c5b5630e249d3d6595c4911"
+  integrity sha512-DPe5pVFaAsinSaV6QjQ6gdiedWDcRCbUuiQfQa2wmWV7+xC9bGulGI8+TdRmoFkAPaBXk8CrAbnlY2ISniJ47Q==
 
 run-async@^2.4.0:
   version "2.4.1"
@@ -5874,6 +5928,14 @@ write-file-atomic@^7.0.0:
   dependencies:
     imurmurhash "^0.1.4"
     signal-exit "^4.0.1"
+
+wsl-utils@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/wsl-utils/-/wsl-utils-0.3.1.tgz#9479836ddf03be267aad3abfc3cb1f6e0c9f1ed1"
+  integrity sha512-g/eziiSUNBSsdDJtCLB8bdYEUMj4jR7AGeUo96p/3dTafgjHhpF4RiCFPiRILwjQoDXx5MqkBr4fwWtR3Ky4Wg==
+  dependencies:
+    is-wsl "^3.1.0"
+    powershell-utils "^0.1.0"
 
 xtend@~4.0.1:
   version "4.0.2"
