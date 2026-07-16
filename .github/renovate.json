@@ -1,6 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>stateshifters/renovate-common"],
-  "baseBranches": ["dependency-update"],
-  "schedule": ["* 10 1 * *"]
+  "extends": ["github>stateshifters/renovate-common"]
 }
