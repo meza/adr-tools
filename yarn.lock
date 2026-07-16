@@ -547,10 +547,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@meza/adr-tools@1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@meza/adr-tools/-/adr-tools-1.0.12.tgz#8b71bc57e740863bb4bda003e3df2c0d77b3b5c3"
-  integrity sha512-dV9q7xKz2FqAirBJrGjHrCOH/9Z9j0eh1IkR1t8odr9d6XaXCG+1IVUqfx0OD0qdgcNcjvbhUiIfhR5JzrqNZg==
+"@meza/adr-tools@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@meza/adr-tools/-/adr-tools-2.0.1.tgz#39cec24d0770489ad2853b46de7c4af43e6ca639"
+  integrity sha512-gNxWlrDhRosZtcNv9Bw1RwOa4ayNcNGXrHjo3YdyIo9a34HJRopB8OwRA4ZQCghwvAyfINpQkNiPdgu1LDyjSQ==
   dependencies:
     "@types/inquirer" "9.0.8"
     "@types/node" "22.15.21"
@@ -559,6 +559,7 @@
     core-js "3.42.0"
     inquirer "9.3.7"
     marked "4.3.0"
+    open "9.1.0"
 
 "@meza/biome@1.1.3":
   version "1.1.3"
