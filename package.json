@@ -89,8 +89,8 @@
     "ts-node": "10.9.2",
     "tsx": "^4.21.0",
     "typescript": "5.8.3",
-    "uuid": "11.1.0",
-    "vitest": "3.1.4",
+    "uuid": "11.1.1",
+    "vitest": "3.2.6",
     "yarn": "1.22.22"
   },
   "repository": {
