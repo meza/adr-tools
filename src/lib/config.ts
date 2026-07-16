@@ -7,13 +7,14 @@ const rootDir = path.parse(process.cwd()).root;
 
 const findTopLevelDir = async (dir: string): Promise<string> => {
   try {
-    await fs.access(path.join(dir, '.adr-dir'), constants.F_OK);
+    // CLI paths may point anywhere the invoking user can access; OS permissions are the security boundary.
+    await fs.access(path.join(dir, '.adr-dir'), constants.F_OK); // nosemgrep: javascript.lang.security.audit.path-traversal.path-join-resolve-traversal.path-join-resolve-traversal
     return dir;
   } catch (_e) {
     if (dir === rootDir) {
       throw new Error('No ADR directory config found');
     }
-    const newDir = path.join(dir, '..');
+    const newDir = path.join(dir, '..'); // nosemgrep: javascript.lang.security.audit.path-traversal.path-join-resolve-traversal.path-join-resolve-traversal
     return findTopLevelDir(newDir);
   }
 };
