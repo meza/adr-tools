@@ -1,2 +1,3 @@
 - Read the [Readme](./README.md) for project overview for end users.
 - Follow the [CONTRIBUTING](./CONTRIBUTING.md) to the letter, it contains your main directives.
+- look for skills in the `.agents/skills` folder

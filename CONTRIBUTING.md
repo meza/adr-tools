@@ -21,14 +21,46 @@ Run the full local verification (what CI runs):
 yarn ci
 ```
 
-## How the repo is laid out
+## Contributing to the codebase
 
-- `src/`: library + CLI entrypoint
-- `src/templates/`: ADR templates that ship with the package
-- `tests/`: e2e tests (exercise the CLI against a temp workspace)
-- `doc/adr/`: ADRs for this repo (the tool itself)
+### Design Principles
 
-## Development workflow
+- **Simplicity**: Keep the codebase simple and easy to understand.
+- **Consistency**: Follow established patterns and conventions throughout the codebase.
+- **Testability**: Ensure that all code is easily testable, with a focus on unit tests.
+- **Maintainability**: Write code that is easy to maintain and extend in the future.
+- **Documentation**: Keep documentation up to date and clear, especially for new features and changes.
+- **Error Handling**: Implement robust error handling to provide clear feedback to users and developers.
+- **Performance**: Optimize for performance where necessary, but prioritize clarity and maintainability.
+- **Security**: Follow best practices for security, especially when handling user data or network requests.
+- **Modularity**: Structure the code in a modular way to allow for easy updates and changes without affecting the entire codebase.
+- **Monitoring**: Using the telemetry system to monitor usage patterns and improve the user experience based on real data.
+- **Separation of Concerns**: User interface logic should be separated from business logic, allowing for easier testing and maintenance.
+
+### Software Hygiene
+- **Boy Scout Rule**: Leave code cleaner than you found it
+- Clear separation of concerns
+- Meaningful variable and function names
+- Proper error handling
+- No magic numbers or hardcoded values
+- Follow existing patterns and conventions
+
+### Development workflow
+
+1. Verify that the local verification checks pass before your work
+2. identify the problem/feature to be solved
+3. use a TDD approach to deliver the solution
+4. run the required verification checks
+5. commit with conventional commit messages
+
+
+### Verification gates - non-negotiable
+
+- The resulting app and the development workflow is cross-platform compatible across linux, windows and macos
+- `yarn ci` passes
+- 100% _meaningful_ test coverage
+
+## Good to know
 
 ### Run the CLI locally
 
@@ -69,34 +101,7 @@ yarn test:unit
 yarn test:e2e --coverage
 ```
 
-## Required local checks
-
-Before opening a PR, run:
-
-```bash
-yarn ci
-```
-
-This runs linting, tests, and package validation using the repo's configured tooling. Package validation builds the
-publishable files, checks the npm package with publint, and verifies ESM and TypeScript resolution with Are the Types
-Wrong.
-
-## Code style
-
-- Formatting and linting are enforced with Biome (`biome.json`).
-- Keep changes small and focused. Add or update tests when behavior changes.
-
-## Commits and changelog
-
-This repo uses Conventional Commits (enforced by commitlint).
-
-If you want an interactive prompt for commit messages:
-
-```bash
-yarn commit
-```
-
-## ADRs in this repo
+### ADRs in this repo
 
 ADRs for this repository live under `doc/adr/`. The location is configured by the `.adr-dir` file in the repo root.
 
