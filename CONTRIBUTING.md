@@ -5,7 +5,7 @@ This guide shows how to set up a working dev environment, run the checks CI runs
 
 ## Prerequisites
 
-- Node.js 22 (CI uses `22.x`)
+- Node.js 22.13 or later (CI uses `24.x`)
 
 ## Quick start
 
@@ -55,6 +55,9 @@ yarn test:e2e
 # Build dist/ (tsc + template copy)
 yarn build
 
+# Validate the npm package contents and entry points
+yarn check:package
+
 # Clean build artifacts
 yarn clean
 ```
@@ -74,7 +77,9 @@ Before opening a PR, run:
 yarn ci
 ```
 
-This runs linting and tests in parallel using the repo's configured tooling.
+This runs linting, tests, and package validation using the repo's configured tooling. Package validation builds the
+publishable files, checks the npm package with publint, and verifies ESM and TypeScript resolution with Are the Types
+Wrong.
 
 ## Code style
 
