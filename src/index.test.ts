@@ -1,8 +1,10 @@
+import { mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import chalk from 'chalk';
 import type { Command } from 'commander';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { buildProgram, defaultOnError, isDirectRun, maybeRun, run } from './index.js';
 
 const createDeps = () => {
@@ -26,6 +28,14 @@ const createDeps = () => {
 };
 
 describe('adr CLI', () => {
+  const tempDirs: string[] = [];
+
+  afterEach(() => {
+    for (const tempDir of tempDirs.splice(0)) {
+      rmSync(tempDir, { recursive: true, force: true });
+    }
+  });
+
   it('wires program metadata', () => {
     const deps = createDeps();
     const program = buildProgram(deps);
@@ -188,6 +198,21 @@ describe('adr CLI', () => {
     const moduleUrl = pathToFileURL(indexPath).href;
     expect(isDirectRun(['node', indexPath], moduleUrl)).toBe(true);
     expect(isDirectRun(['node'], moduleUrl)).toBe(false);
+  });
+
+  it('returns true when argv[1] is a symlink to the module (npm .bin link)', () => {
+    const tempDir = mkdtempSync(path.join(tmpdir(), 'adr-tools-'));
+    tempDirs.push(tempDir);
+    const distDir = path.join(tempDir, 'dist');
+    const binDir = path.join(tempDir, '.bin');
+    mkdirSync(distDir, { recursive: true });
+    mkdirSync(binDir, { recursive: true });
+    const targetPath = path.join(distDir, 'index.js');
+    const linkPath = path.join(binDir, 'adr');
+    writeFileSync(targetPath, 'export {};\n');
+    symlinkSync(targetPath, linkPath);
+    const moduleUrl = pathToFileURL(targetPath).href;
+    expect(isDirectRun(['node', linkPath], moduleUrl)).toBe(true);
   });
 
   it('returns false when maybeRun is not direct', () => {

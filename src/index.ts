@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { realpathSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -246,7 +247,12 @@ export const isDirectRun = (argv = process.argv, moduleUrl = import.meta.url) =>
   if (!argv[1]) {
     return false;
   }
-  return path.resolve(argv[1]) === fileURLToPath(moduleUrl);
+  const modulePath = fileURLToPath(moduleUrl);
+  try {
+    return realpathSync(path.resolve(argv[1])) === modulePath;
+  } catch {
+    return path.resolve(argv[1]) === modulePath;
+  }
 };
 
 export const maybeRun = (argv = process.argv, deps?: ProgramDeps) => {
