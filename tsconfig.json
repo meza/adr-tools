@@ -39,6 +39,7 @@
     "skipLibCheck": true,
     "preserveSymlinks": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "declarationDir": "./dist/types",
     "isolatedModules": true,
     "sourceRoot": "src",
