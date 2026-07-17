@@ -16,15 +16,21 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": "conventionalcommits",
-        "presetConfig": {}
+        "config": "@meza/mezas-conventional-changelog"
       }
     ],
     [
       "@semantic-release/release-notes-generator",
       {
-        "preset": "conventionalcommits",
-        "presetConfig": {}
+        "config": "@meza/mezas-conventional-changelog"
+      }
+    ],
+    "semantic-release-export-data",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogTitle": "# Changelog",
+        "changelogFile": "CHANGELOG.md"
       }
     ],
     [
