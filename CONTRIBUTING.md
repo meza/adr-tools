@@ -60,6 +60,16 @@ yarn ci
 - `yarn ci` passes
 - 100% _meaningful_ test coverage
 
+## Releases
+
+The [release workflow](.github/workflows/release.yml) evaluates `main` for a release every Tuesday at 09:00
+`Europe/London`. It runs the full verification suite before invoking semantic-release. Semantic-release analyzes all
+unreleased commits and decides whether to publish and which version to use.
+
+Maintainers can also run the release workflow manually from GitHub Actions and select any ref. The branch configuration
+in `.releaserc.json` remains authoritative, so selecting a ref does not override semantic-release's release channels or
+branch rules.
+
 ## Good to know
 
 ### Run the CLI locally
