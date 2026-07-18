@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [meza-ubuntu-slim, meza-windows-latest]
+        runner: [meza-ubuntu-slim, meza-windows-slim]
     name: Verify PR on ${{ matrix.runner }}
     runs-on: ${{ matrix.runner }}
 
@@ -35,7 +35,7 @@ jobs:
     name: Verify PR
     needs: verifypr
     if: ${{ always() }}
-    runs-on: ubuntu-slim
+    runs-on: meza-ubuntu-slim
 
     steps:
       - name: Require successful platform verification
