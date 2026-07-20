@@ -37,8 +37,10 @@ describe('Init an ADR Repository', () => {
 
     const fileContents = fs.readFileSync(expectedFile, 'utf8');
     const lockFileContents = fs.readFileSync(expectedLockFile, 'utf8');
+    const configFileContents = fs.readFileSync(path.join(workDir, '.adr-dir'), 'utf8');
     expect(fileContents).toMatchSnapshot();
     expect(lockFileContents).toEqual('1');
+    expect(configFileContents).toEqual('doc/adr');
   });
 
   it('should use an alternate directory', () => {

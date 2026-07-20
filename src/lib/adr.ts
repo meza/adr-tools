@@ -328,7 +328,8 @@ export const newAdr = async (title: string, config?: NewOptions) => {
 export const init = async (directory?: string) => {
   const dir = directory || (await getDir());
   await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(path.join(workingDir(), '.adr-dir'), path.relative(workingDir(), dir));
+  const adrDirectoryConfig = path.relative(workingDir(), dir).split(path.sep).join(path.posix.sep);
+  await fs.writeFile(path.join(workingDir(), '.adr-dir'), adrDirectoryConfig);
   await newAdr('Record Architecture Decisions', {
     date: process.env.ADR_DATE,
     template: path.resolve(path.dirname(__filename), '../templates/init.md')

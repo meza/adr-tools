@@ -295,7 +295,7 @@ describe('adr helpers', () => {
 
     await init('/repo/doc/adr');
     expect(fs.mkdir).toHaveBeenCalledWith('/repo/doc/adr', { recursive: true });
-    expect(fs.writeFile).toHaveBeenCalledWith(path.join('/repo', '.adr-dir'), path.join('doc', 'adr'));
+    expect(fs.writeFile).toHaveBeenCalledWith(path.join('/repo', '.adr-dir'), 'doc/adr');
   });
 
   it('initializes using default directory when none provided', async () => {
