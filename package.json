@@ -19,7 +19,7 @@
   "type": "module",
   "sideEffects": true,
   "types": "./dist/types/index.d.ts",
-  "packageManager": "yarn@4.17.1",
+  "packageManager": "yarn@4.18.0",
   "engines": {
     "node": ">=22.13.0"
   },
