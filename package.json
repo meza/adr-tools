@@ -55,7 +55,7 @@
     "commander": "15.0.0",
     "core-js": "3.49.0",
     "inquirer": "14.0.2",
-    "marked": "18.0.6",
+    "marked": "18.0.11",
     "open": "11.0.0"
   },
   "commitlint": {
