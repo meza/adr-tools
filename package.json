@@ -88,7 +88,7 @@
     "install-deps-postmerge": "2.0.1",
     "is-ci": "4.1.0",
     "lefthook": "2.1.10",
-    "lint-staged": "17.0.8",
+    "lint-staged": "17.4.1",
     "mock-cwd": "1.0.0",
     "npm-run-all2": "9.0.2",
     "publint": "0.3.21",
