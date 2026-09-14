@@ -1073,7 +1073,7 @@ __metadata:
     is-ci: "npm:4.1.0"
     lefthook: "npm:2.1.10"
     lint-staged: "npm:17.0.8"
-    marked: "npm:18.0.6"
+    marked: "npm:18.0.12"
     mock-cwd: "npm:1.0.0"
     npm-run-all2: "npm:9.0.2"
     open: "npm:11.0.0"
@@ -5287,12 +5287,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:18.0.6":
-  version: 18.0.6
-  resolution: "marked@npm:18.0.6"
+"marked@npm:18.0.12":
+  version: 18.0.12
+  resolution: "marked@npm:18.0.12"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/85827aa9d7293b0eb5470c40bb0f60bdbd4a1d6647cfce3602afaa3b8e42ed229c74d1d61d3c41d4e7822d56df179862da970f2e11012e94c1a788387e69d36d
+  checksum: 10c0/16cee41cc0bbed129d79997841252eec6842137f877a8cc061443b9d9b6583065a91f636b55c49c3744eee886ca93063d59dc37907442919147b8b98b5a3c91b
   languageName: node
   linkType: hard
 
