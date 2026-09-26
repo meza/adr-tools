@@ -82,7 +82,7 @@
     "@semantic-release/release-notes-generator": "14.1.1",
     "@vitest/coverage-v8": "4.1.10",
     "@vitest/ui": "4.1.10",
-    "conventional-changelog-conventionalcommits": "10.2.1",
+    "conventional-changelog-conventionalcommits": "10.4.0",
     "copyfiles": "2.4.1",
     "cross-env": "10.1.0",
     "install-deps-postmerge": "2.0.1",
